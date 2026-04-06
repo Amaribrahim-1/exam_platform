@@ -1,1 +1,176 @@
+/* 1. Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;600;700&display=swap');
+
+/* 2. Tailwind v4 Engine Import */
 @import "tailwindcss";
+
+/* 3. Theme Configuration (The v4 Way) */
+@theme {
+    /* Colors - This automatically creates classes like bg-surface, text-primary, etc. */
+    --color-bg: #0F1117;
+    --color-surface: #1A1D2E;
+    --color-surface-2: #232741;
+    --color-border: #2E3250;
+    --color-primary: #6C8EF5;
+    --color-primary-glow: rgba(108, 142, 245, 0.2);
+    --color-accent: #5ECFB1;
+    --color-warning: #F5A623;
+    --color-danger: #E05C6A;
+    --color-text: #E8EAF6;
+    --color-text-muted: #7B82A8;
+    --color-text-faint: #3D4166;
+
+    /* Spacing & Radii */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 40px;
+    --spacing-2xl: 64px;
+
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+
+    /* Fonts */
+    --font-sans: "DM Sans", ui-sans-serif, system-ui;
+    --font-display: "Sora", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 24px rgba(108, 142, 245, 0.2);
+
+    /* Transitions */
+    --animate-pulse-red: pulse-red 1s infinite;
+    --animate-shake: shake 0.4s ease-in-out;
+    --animate-shimmer: shimmer 2s infinite linear;
+    --animate-slide-in: slide-in-right 250ms ease forwards;
+    --animate-fade-scale: fade-scale-in 250ms ease forwards;
+    --animate-toast: slide-in-toast 250ms ease forwards;
+
+    @keyframes pulse-red {
+
+        0%,
+        100% {
+            color: var(--color-danger);
+            text-shadow: 0 0 8px rgba(224, 92, 106, 0.5);
+        }
+
+        50% {
+            color: #ff8a98;
+            text-shadow: 0 0 16px rgba(224, 92, 106, 0.8);
+        }
+    }
+
+    @keyframes shake {
+
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+
+        25% {
+            transform: translateX(-4px);
+        }
+
+        75% {
+            transform: translateX(4px);
+        }
+    }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -1000px 0;
+        }
+
+        100% {
+            background-position: 1000px 0;
+        }
+    }
+
+    @keyframes slide-in-right {
+        from {
+            transform: translateX(20px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes fade-scale-in {
+        from {
+            transform: scale(0.95);
+            opacity: 0;
+        }
+
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slide-in-toast {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+}
+
+/* 4. Global Base Styles */
+@layer base {
+    body {
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: var(--font-display);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--color-bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--color-surface-2);
+        border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--color-border);
+    }
+}
+
+/* 5. Utility Layer for Complex Backgrounds */
+@layer utilities {
+    .bg-shimmer-grad {
+        background: linear-gradient(to right, var(--color-surface-2) 4%, var(--color-border) 25%, var(--color-surface-2) 36%);
+        background-size: 1000px 100%;
+    }
+}
