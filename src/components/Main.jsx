@@ -1,7 +1,7 @@
 function Main({ children }) {
   return (
-    <main className="flex-1 md:flex-initial overflow-y-auto p-sm md:p-xl bg-bg">
-      <div className="w-full md:max-w-5xl mx-auto animate-fade-scale">
+    <main className='p-sm md:p-md bg-bg flex-1 overflow-y-auto md:flex-initial'>
+      <div className='animate-fade-scale mx-auto w-full md:max-w-6xl'>
         {children}
       </div>
     </main>
