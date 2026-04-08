@@ -1,21 +1,12 @@
-import { useSearchParams } from "react-router-dom";
-import BasicInfo from "../features/exam-wizard/components/BasicInfo";
-import ProgressIndicator from "../components/ProgressIndicator";
 import PageHeader from "../components/PageHeader";
+import ProgressIndicator from "../components/ProgressIndicator";
+import BasicInfo from "../features/exam-wizard/components/BasicInfo";
+import Questions from "../features/exam-wizard/components/Questions";
+
+import { useWizard } from "../features/exam-wizard/hooks/useWizard";
 
 function CreateExamPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const step_param = Number(searchParams.get("step")) || 1;
-
-  function handleStepChange() {
-    searchParams.set("step", step_param + 1);
-    setSearchParams(searchParams);
-  }
-
-  function handleBackStep() {
-    searchParams.set("step", step_param - 1);
-    setSearchParams(searchParams);
-  }
+  const { step_param } = useWizard();
 
   return (
     <div className='flex flex-col gap-8'>
@@ -24,13 +15,11 @@ function CreateExamPage() {
         description='  Follow the steps to build and publish your exam.'
       />
 
-      <ProgressIndicator step_param={step_param} />
+      <ProgressIndicator />
 
-      <BasicInfo
-        onChangeStep={handleStepChange}
-        onBackStep={handleBackStep}
-        step={step_param}
-      />
+      {step_param === 1 && <BasicInfo />}
+
+      {step_param === 2 && <Questions />}
     </div>
   );
 }

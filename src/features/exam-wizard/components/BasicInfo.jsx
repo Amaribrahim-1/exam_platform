@@ -1,27 +1,24 @@
 import { useForm } from "react-hook-form";
 import Button from "../../../components/Button";
-import FormRow from "../../../components/FormRow"; // المكون اللي عملناه فوق
+import FormRow from "../../../components/FormRow";
+import { useWizard } from "../hooks/useWizard";
 
-function BasicInfo({ onChangeStep, step, onBackStep }) {
+function BasicInfo() {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
+  const { step_param, handleStepChange, handleBackStep } = useWizard();
+
   const onSubmit = (data) => {
     console.log(data);
-    onChangeStep();
+    handleStepChange();
   };
 
   const inputClass = (fieldError) => `
     w-full px-md py-sm text-sm font-medium rounded-md border bg-surface-2 text-text
-    transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-0
-    ${fieldError ? "border-danger focus:border-danger focus:ring-danger/20" : "border-border focus:border-primary focus:ring-primary/20"}
-  `;
-
-  const textareaClass = (fieldError) => `
-    w-full px-md py-sm text-sm font-medium rounded-md border bg-surface-2 text-text resize-none
     transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-0
     ${fieldError ? "border-danger focus:border-danger focus:ring-danger/20" : "border-border focus:border-primary focus:ring-primary/20"}
   `;
@@ -112,13 +109,13 @@ function BasicInfo({ onChangeStep, step, onBackStep }) {
 
         {/* Buttons Section */}
         <div
-          className={`mt-lg flex items-center ${step > 1 ? "justify-between" : "justify-end"}`}
+          className={`mt-lg flex items-center ${step_param > 1 ? "justify-between" : "justify-end"}`}
         >
-          {step > 1 && (
+          {step_param > 1 && (
             <Button
               variation='secondary'
               size='sm'
-              onClick={onBackStep}
+              onClick={handleBackStep}
               type='button'
             >
               ← Back

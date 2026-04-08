@@ -13,6 +13,9 @@ import CreateExamPage from "./pages/CreateExamPage";
 import ExamsManagementPage from "./pages/ExamsManagementPage";
 import StudentsPage from "./pages/StudentsPage";
 import ExamResultsPage from "./pages/ExamResultsPage";
+import { WizardProvider } from "./features/exam-wizard/context/WizardContext";
+import { ExamDataProvider } from "./features/exam-wizard/context/ExamDataContext";
+import { Flip, ToastContainer } from "react-toastify";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,7 +28,7 @@ const queryClient = new QueryClient({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to="/instructor/dashboard" replace />,
+    element: <Navigate to='/instructor/dashboard' replace />,
   },
   {
     path: "/instructor",
@@ -37,7 +40,13 @@ const router = createBrowserRouter([
       },
       {
         path: "exam-wizard",
-        element: <CreateExamPage />,
+        element: (
+          <WizardProvider>
+            <ExamDataProvider>
+              <CreateExamPage />
+            </ExamDataProvider>
+          </WizardProvider>
+        ),
       },
       {
         path: "exams-management",
@@ -56,7 +65,7 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: (
-      <div className="p-10 text-center text-2xl">404 - Page Not Found</div>
+      <div className='p-10 text-center text-2xl'>404 - Page Not Found</div>
     ),
   },
 ]);
@@ -68,6 +77,19 @@ function App() {
         <ReactQueryDevtools initialIsOpen={false} />
         <RouterProvider router={router} />
       </QueryClientProvider>
+
+      <ToastContainer
+        position='top-center'
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        transition={Flip}
+      />
     </>
   );
 }

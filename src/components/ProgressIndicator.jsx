@@ -1,9 +1,15 @@
-function ProgressIndicator({ step_param }) {
+import { useWizard } from "../features/exam-wizard/hooks/useWizard";
+
+function ProgressIndicator() {
+  const { step_param } = useWizard();
+
   const steps = [
     { id: 1, label: "Basic Info" },
     { id: 2, label: "Questions" },
     { id: 3, label: "Review & Publish" },
   ];
+
+  if (!step_param) return null;
 
   return (
     <div className='flex items-center justify-around'>
