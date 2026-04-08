@@ -1,21 +1,21 @@
 import { useForm } from "react-hook-form";
 import Button from "../../../components/Button";
 import FormRow from "../../../components/FormRow";
-import { useWizard } from "../hooks/useWizard";
+import { useExamData } from "../hooks/useExamData";
 
-function BasicInfo() {
+function BasicInfo({ step, onNext }) {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
-  const { step_param, handleStepChange, handleBackStep } = useWizard();
+  const { handleExamDetails } = useExamData();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    handleStepChange();
-  };
+  function onSubmit(data) {
+    handleExamDetails(data);
+    onNext();
+  }
 
   const inputClass = (fieldError) => `
     w-full px-md py-sm text-sm font-medium rounded-md border bg-surface-2 text-text
@@ -109,18 +109,8 @@ function BasicInfo() {
 
         {/* Buttons Section */}
         <div
-          className={`mt-lg flex items-center ${step_param > 1 ? "justify-between" : "justify-end"}`}
+          className={`mt-lg flex items-center ${step > 1 ? "justify-between" : "justify-end"}`}
         >
-          {step_param > 1 && (
-            <Button
-              variation='secondary'
-              size='sm'
-              onClick={handleBackStep}
-              type='button'
-            >
-              ← Back
-            </Button>
-          )}
           <Button variation='primary' size='md' type='submit'>
             Next (Add Questions) →
           </Button>

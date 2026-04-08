@@ -1,21 +1,20 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import InstructorLayout from "./layouts/InstructorLayout";
 
-import DashboardPage from "./pages/DashboardPage";
+import { Flip, ToastContainer } from "react-toastify";
+import { ExamDataProvider } from "./features/exam-wizard/context/ExamDataContext";
 import CreateExamPage from "./pages/CreateExamPage";
+import DashboardPage from "./pages/DashboardPage";
+import ExamResultsPage from "./pages/ExamResultsPage";
 import ExamsManagementPage from "./pages/ExamsManagementPage";
 import StudentsPage from "./pages/StudentsPage";
-import ExamResultsPage from "./pages/ExamResultsPage";
-import { WizardProvider } from "./features/exam-wizard/context/WizardContext";
-import { ExamDataProvider } from "./features/exam-wizard/context/ExamDataContext";
-import { Flip, ToastContainer } from "react-toastify";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,11 +40,9 @@ const router = createBrowserRouter([
       {
         path: "exam-wizard",
         element: (
-          <WizardProvider>
-            <ExamDataProvider>
-              <CreateExamPage />
-            </ExamDataProvider>
-          </WizardProvider>
+          <ExamDataProvider>
+            <CreateExamPage />
+          </ExamDataProvider>
         ),
       },
       {

@@ -1,7 +1,5 @@
-import { useWizard } from "../features/exam-wizard/hooks/useWizard";
-
-function ProgressIndicator() {
-  const { step_param } = useWizard();
+function ProgressIndicator({ step_param }) {
+  // const { step_param } = useWizard();
 
   const steps = [
     { id: 1, label: "Basic Info" },

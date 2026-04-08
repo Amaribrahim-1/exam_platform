@@ -7,11 +7,18 @@ function ExamDataProvider({ children }) {
     const saved = localStorage.getItem("exam-questions");
     return saved ? JSON.parse(saved) : [];
   });
+
+  const [examDetails, setExamDetails] = useState(() => {
+    const saved = localStorage.getItem("exam-details");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const [questionType, setQuestionType] = useState("MCQ");
   // [{ type: "MCQ", id: 1 , question: "Question 1" , options: ["Option 1", "Option 2", "Option 3", "Option 4"]}, { type: "TrueFalse", id: 2 }]
   function handleAddMCQ(question) {
     setQuestions((prev) => [...prev, question]);
   }
+
   function handleAddTrueFalse(question) {
     setQuestions((prev) => [...prev, question]);
   }
@@ -20,12 +27,23 @@ function ExamDataProvider({ children }) {
     setQuestions((prev) => prev.filter((question) => question.id !== id));
   }
 
+  function handleExamDetails(details) {
+    setExamDetails({ ...details });
+  }
+
   useEffect(
     function () {
       // Temporarily using localStorage to persist questions, can be replaced with API calls later
       localStorage.setItem("exam-questions", JSON.stringify(questions));
     },
     [questions],
+  );
+
+  useEffect(
+    function () {
+      localStorage.setItem("exam-details", JSON.stringify(examDetails));
+    },
+    [examDetails],
   );
 
   return (
@@ -37,6 +55,8 @@ function ExamDataProvider({ children }) {
         handleDelete,
         questionType,
         setQuestionType,
+        examDetails,
+        handleExamDetails,
       }}
     >
       {children}
