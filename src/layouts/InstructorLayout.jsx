@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Main from "../components/Main";
 import { useState } from "react";
+import ScrollToTop from "../components/ScrollToUP";
 
 function InstructorLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -18,8 +19,8 @@ function InstructorLayout() {
   return (
     <div className='bg-bg flex h-screen w-full flex-col overflow-hidden font-sans md:grid md:grid-cols-[260px_1fr] md:grid-rows-[64px_1fr]'>
       {/* Mobile and Desktop Sidebar */}
+      <ScrollToTop />
       <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
-
       {/* Navbar */}
       <Navbar onMenuClick={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 

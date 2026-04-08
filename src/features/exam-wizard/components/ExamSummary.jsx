@@ -7,7 +7,6 @@ import QuestionsPreview from "./QuestionsPreview";
 function ExamSummary({ step, onBack }) {
   const { examDetails, questions } = useExamData();
 
-  // Stats for the top section
   const stats = [
     {
       label: "Start Time",
@@ -26,9 +25,6 @@ function ExamSummary({ step, onBack }) {
       value: questions.length,
     },
   ];
-
-  console.log(examDetails);
-  // console.log(examDetails.startTime);
 
   return (
     <div className='gap-lg flex flex-col'>

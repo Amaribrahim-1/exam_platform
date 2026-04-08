@@ -1,6 +1,7 @@
-import { TrashIcon } from "lucide-react";
+import { Edit2Icon, TrashIcon } from "lucide-react";
 
-function QuestionsPreview({ questions, handleDelete }) {
+function QuestionsPreview({ questions, handleDelete, handleEdit }) {
+  console.log(questions);
   return (
     <div className='gap-lg flex flex-col'>
       <div className='flex items-center justify-between'>
@@ -14,7 +15,7 @@ function QuestionsPreview({ questions, handleDelete }) {
       <div className='space-y-md'>
         {questions.map((question, index) => (
           <div
-            key={question.id}
+            key={index}
             className='border-border bg-surface-2 p-lg hover:border-text-faint rounded-lg border transition-all'
           >
             <div className='mb-md flex items-center justify-between'>
@@ -26,15 +27,27 @@ function QuestionsPreview({ questions, handleDelete }) {
                   {question.marks} pts
                 </span>
               </span>
-              <span className='text-text-muted text-md flex items-center gap-2.5 font-medium uppercase'>
-                {question.type}
-                {handleDelete && (
-                  <TrashIcon
-                    onClick={() => handleDelete(question.id)}
-                    className='text-danger cursor-pointer'
-                  />
-                )}
-              </span>
+              <div className='gap-md flex items-center'>
+                <span className='text-text-muted text-md font-medium uppercase'>
+                  {question.type}
+                </span>
+                <div className='flex items-center gap-3'>
+                  {handleEdit && (
+                    <Edit2Icon
+                      size={20}
+                      onClick={() => handleEdit(question.id)}
+                      className='text-primary cursor-pointer transition-colors'
+                    />
+                  )}
+                  {handleDelete && (
+                    <TrashIcon
+                      size={20}
+                      onClick={() => handleDelete(question.id)}
+                      className='text-danger cursor-pointer transition-opacity hover:opacity-80'
+                    />
+                  )}
+                </div>
+              </div>
             </div>
             <p className='mb-md text-text font-medium' dir='auto'>
               {question.question}
@@ -44,7 +57,7 @@ function QuestionsPreview({ questions, handleDelete }) {
                 <div
                   key={optIdx}
                   className={`gap-sm px-md py-sm flex items-center rounded ${
-                    optIdx === question.correctOption
+                    optIdx === question.correctAnswerIndex
                       ? "bg-opacity-20 border-accent text-accent border-l-2"
                       : "text-text-muted"
                   }`}
@@ -53,7 +66,7 @@ function QuestionsPreview({ questions, handleDelete }) {
                     {String.fromCharCode(65 + optIdx)}.
                   </span>
                   <span>{option}</span>
-                  {optIdx === question.correctOption && (
+                  {optIdx === question.correctAnswerIndex && (
                     <span className='ml-auto text-xs font-bold uppercase'>
                       ✓ Correct
                     </span>

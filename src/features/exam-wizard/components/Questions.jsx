@@ -15,6 +15,7 @@ function Questions({ step, onNext, onBack }) {
     handleAddMCQ,
     handleAddTrueFalse,
     handleDelete,
+    handleEdit,
   } = useExamData();
 
   function handleNext() {
@@ -86,7 +87,11 @@ function Questions({ step, onNext, onBack }) {
         </div>
       </div>
 
-      <QuestionsPreview questions={questions} handleDelete={handleDelete} />
+      <QuestionsPreview
+        questions={questions}
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
+      />
     </div>
   );
 }

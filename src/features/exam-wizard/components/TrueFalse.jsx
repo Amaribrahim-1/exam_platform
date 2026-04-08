@@ -1,23 +1,42 @@
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { useExamData } from "../hooks/useExamData";
 
 function TrueFalse({ onAdd }) {
-  const { register, handleSubmit, reset } = useForm();
+  const { questions, editingQuestionId, handleAddQuestion } = useExamData();
+
+  const questionToEdit =
+    questions?.find((q) => q.id === editingQuestionId) || null;
+
+  console.log(questionToEdit);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    values: editingQuestionId ? questionToEdit : {},
+  });
 
   function onSubmit(data) {
-    console.log(data);
-
     const question = {
-      // eslint-disable-next-line react-hooks/purity
-      id: Date.now(),
       type: "TrueFalse",
       question: data.question,
       options: ["True", "False"],
-      correctOption: Number(data.correctAnswerIndex),
+      correctAnswerIndex: Number(data.correctAnswerIndex),
       marks: Number(data.marks),
     };
 
-    onAdd(question);
-    reset();
+    // onAdd(question);
+    handleAddQuestion(question);
+    reset({
+      question: "",
+      options: ["", ""],
+      correctAnswerIndex: null,
+      marks: "",
+    });
   }
 
   return (
@@ -35,6 +54,7 @@ function TrueFalse({ onAdd }) {
           className='border-border bg-surface-2 p-md text-text placeholder-text-muted focus:border-primary min-h-20 w-full rounded-lg border transition-colors outline-none'
           placeholder='Enter your question here...'
         ></textarea>
+        <ErrorMessage message={errors.question?.message} />
       </div>
 
       <div className='gap-lg flex flex-col'>
@@ -45,7 +65,7 @@ function TrueFalse({ onAdd }) {
         <label className='gap-lg border-border bg-surface-2 p-lg hover:border-accent flex cursor-pointer items-center rounded-lg border transition-all'>
           <input
             type='radio'
-            value={0}
+            value='0'
             {...register("correctAnswerIndex", { required: true })}
             className='accent-accent h-5 w-5 cursor-pointer'
           />
@@ -55,12 +75,20 @@ function TrueFalse({ onAdd }) {
         <label className='gap-lg border-border bg-surface-2 p-lg hover:border-accent flex cursor-pointer items-center rounded-lg border transition-all'>
           <input
             type='radio'
-            value={1}
+            value='1'
             {...register("correctAnswerIndex", { required: true })}
             className='accent-accent h-5 w-5 cursor-pointer'
           />
           <span className='text-text text-base font-medium'>False</span>
         </label>
+
+        <ErrorMessage
+          message={
+            errors.correctAnswerIndex
+              ? "Please select the correct answer"
+              : undefined
+          }
+        />
       </div>
 
       <div className='gap-sm flex flex-col'>
@@ -74,13 +102,14 @@ function TrueFalse({ onAdd }) {
           placeholder='Enter marks'
           {...register("marks", { required: "Marks are required" })}
         />
+        <ErrorMessage message={errors.marks?.message} />
       </div>
 
       <button
         type='submit'
         className='bg-accent px-lg py-md text-bg hover:bg-opacity-90 w-full cursor-pointer rounded-lg font-bold transition-all active:scale-95'
       >
-        Add True/False Question
+        {editingQuestionId ? "Update Question" : "Add True/False Question"}
       </button>
     </form>
   );

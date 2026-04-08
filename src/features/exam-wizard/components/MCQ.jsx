@@ -1,23 +1,45 @@
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { useExamData } from "../hooks/useExamData";
 
 function MCQ({ onAdd }) {
-  const { register, handleSubmit, reset } = useForm();
+  const { questions, editingQuestionId, handleAddQuestion } = useExamData();
+
+  const questionToEdit =
+    questions?.find((q) => q.id === editingQuestionId) || null;
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    values: editingQuestionId ? questionToEdit : {},
+  });
 
   function onSubmit(data) {
-    const optionsArray = Object.values(data.options);
+    // حولنا الـ Object لـ Array عشان يتخزن صح
+    const optionsArray = Array.isArray(data.options)
+      ? data.options
+      : Object.values(data.options);
 
-    const question = {
-      // eslint-disable-next-line react-hooks/purity
-      id: Date.now(),
+    const finalQuestion = {
       type: "MCQ",
       question: data.question,
       options: optionsArray,
-      correctOption: Number(data.correctAnswerIndex),
+      correctAnswerIndex: Number(data.correctAnswerIndex), // تأكد من الاسم هنا
       marks: Number(data.marks),
     };
 
-    onAdd(question);
-    reset();
+    // onAdd(finalQuestion);
+    handleAddQuestion(finalQuestion);
+    reset({
+      question: "",
+      options: ["", "", "", ""],
+      correctAnswerIndex: null,
+      marks: "",
+    });
   }
 
   const optionsList = [1, 2, 3, 4];
@@ -37,6 +59,7 @@ function MCQ({ onAdd }) {
           className='border-border bg-surface-2 p-md text-text placeholder-text-muted focus:border-primary min-h-20 w-full rounded-lg border transition-colors outline-none'
           placeholder='Enter your question here...'
         ></textarea>
+        <ErrorMessage message={errors.question?.message} />
       </div>
 
       <div className='gap-lg flex flex-col'>
@@ -52,7 +75,9 @@ function MCQ({ onAdd }) {
             <input
               type='radio'
               value={num - 1}
-              {...register("correctAnswerIndex", { required: true })}
+              {...register("correctAnswerIndex", {
+                required: "Please select the correct answer.",
+              })}
               className='accent-accent h-5 w-5 cursor-pointer'
             />
 
@@ -60,12 +85,16 @@ function MCQ({ onAdd }) {
               type='text'
               placeholder={`Option ${num}`}
               className='text-text placeholder-text-faint flex-1 border-none bg-transparent outline-none'
-              {...register(`options.${num}`, {
+              {...register(`options.${num - 1}`, {
                 required: "Option is required",
               })}
             />
+            {errors.options?.[num - 1] && (
+              <ErrorMessage message={errors.options?.[num - 1]?.message} />
+            )}
           </div>
         ))}
+        <ErrorMessage message={errors.correctAnswerIndex?.message} />
       </div>
 
       <div className='gap-lg flex items-end'>
@@ -80,6 +109,7 @@ function MCQ({ onAdd }) {
             placeholder='Enter marks'
             {...register("marks", { required: "Marks are required" })}
           />
+          <ErrorMessage message={errors.marks?.message} />
         </div>
       </div>
 
@@ -87,7 +117,7 @@ function MCQ({ onAdd }) {
         type='submit'
         className='bg-primary px-lg py-md text-bg hover:bg-opacity-90 w-full cursor-pointer rounded-lg font-bold transition-all active:scale-95'
       >
-        Add MCQ Question
+        {editingQuestionId ? "Update MCQ Question" : "Add MCQ Question"}
       </button>
     </form>
   );
