@@ -4,8 +4,12 @@ import { formatExamDate } from "../../../Utils/formatDate";
 import { useExamData } from "../hooks/useExamData";
 import QuestionsPreview from "./QuestionsPreview";
 
+import Loader from "../../../components/Loader";
+import usePublishExam from "../hooks/usePublishExam";
+
 function ExamSummary({ step, onBack }) {
   const { examDetails, questions } = useExamData();
+  const { publishExamDetails, isPending, isError } = usePublishExam();
 
   const stats = [
     {
@@ -25,6 +29,47 @@ function ExamSummary({ step, onBack }) {
       value: questions.length,
     },
   ];
+
+  function handlePublish() {
+    const examDetailsToPublish = {
+      title: examDetails.title,
+      subject: examDetails.subject,
+      start_date: examDetails.startDate,
+      end_date: examDetails.endDate,
+      duration: examDetails.duration,
+      difficulty: examDetails.difficulty,
+      status: "published",
+    };
+
+    const questionsToPublish = questions.map((q) => ({
+      question: q.question,
+      options: q.options,
+      correct_answer_index: q.correctAnswerIndex,
+      type: q.type,
+      marks: q.marks,
+    }));
+
+    publishExamDetails({
+      examDetails: examDetailsToPublish,
+      examQuestions: questionsToPublish,
+    });
+  }
+
+  if (isPending) {
+    return (
+      <div className='flex items-center justify-center'>
+        <Loader />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className='text-center text-red-500'>
+        <p>Failed to publish exam. Please try again.</p>
+      </div>
+    );
+  }
 
   return (
     <div className='gap-lg flex flex-col'>
@@ -79,7 +124,12 @@ function ExamSummary({ step, onBack }) {
             ← Edit Questions
           </Button>
         )}
-        <Button variation='primary' size='md' type='button'>
+        <Button
+          onClick={handlePublish}
+          variation='primary'
+          size='md'
+          type='button'
+        >
           ✓ Confirm & Publish
         </Button>
       </div>
