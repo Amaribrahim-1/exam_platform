@@ -8,12 +8,21 @@ function BasicInfo({ step, onNext }) {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
+    reset,
+  } = useForm({
+    defaultValues: localStorage.getItem("exam-details")
+      ? JSON.parse(localStorage.getItem("exam-details"))
+      : {},
+  });
 
   const { handleExamDetails } = useExamData();
 
   function onSubmit(data) {
-    handleExamDetails(data);
+    handleExamDetails({
+      ...data,
+      status: "draft",
+      instructorId: "d3608b52-2c2d-4b00-b898-2241f9329279",
+    });
     onNext();
   }
 
@@ -108,9 +117,25 @@ function BasicInfo({ step, onNext }) {
         </div>
 
         {/* Buttons Section */}
-        <div
-          className={`mt-lg flex items-center ${step > 1 ? "justify-between" : "justify-end"}`}
-        >
+        <div className={`mt-lg gap-md flex items-center justify-end`}>
+          <Button
+            variation='secondary'
+            size='md'
+            onClick={() => {
+              reset({
+                title: "",
+                subject: "",
+                duration: "",
+                difficulty: "",
+                startDate: "",
+                endDate: "",
+              });
+              localStorage.removeItem("exam-details");
+            }}
+          >
+            Clear Data
+          </Button>
+
           <Button variation='primary' size='md' type='submit'>
             Next (Add Questions) →
           </Button>

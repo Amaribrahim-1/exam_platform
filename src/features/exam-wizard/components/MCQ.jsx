@@ -2,9 +2,15 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import ErrorMessage from "../../../components/ErrorMessage";
 import { useExamData } from "../hooks/useExamData";
+import Button from "../../../components/Button";
 
-function MCQ({ onAdd }) {
-  const { questions, editingQuestionId, handleAddQuestion } = useExamData();
+function MCQ() {
+  const {
+    questions,
+    editingQuestionId,
+    setEditingQuestionId,
+    handleAddQuestion,
+  } = useExamData();
 
   const questionToEdit =
     questions?.find((q) => q.id === editingQuestionId) || null;
@@ -32,8 +38,12 @@ function MCQ({ onAdd }) {
       marks: Number(data.marks),
     };
 
-    // onAdd(finalQuestion);
     handleAddQuestion(finalQuestion);
+
+    toast.success(
+      `Question ${editingQuestionId ? "updated" : "added"} successfully!`,
+    );
+
     reset({
       question: "",
       options: ["", "", "", ""],
@@ -119,6 +129,24 @@ function MCQ({ onAdd }) {
       >
         {editingQuestionId ? "Update MCQ Question" : "Add MCQ Question"}
       </button>
+
+      {editingQuestionId && (
+        <button
+          onClick={() => {
+            reset({
+              question: "",
+              options: ["", "", "", ""],
+              correctAnswerIndex: null,
+              marks: "",
+            });
+            setEditingQuestionId(null);
+          }}
+          type='button'
+          className='bg-surface-2 px-lg py-md text-text hover:bg-opacity-90 w-full cursor-pointer rounded-lg font-bold transition-all active:scale-95'
+        >
+          Cancel
+        </button>
+      )}
     </form>
   );
 }

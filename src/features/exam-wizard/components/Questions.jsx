@@ -16,13 +16,12 @@ function Questions({ step, onNext, onBack }) {
     handleAddTrueFalse,
     handleDelete,
     handleEdit,
+    editingQuestionId,
   } = useExamData();
 
   function handleNext() {
     if (questions.length === 0) {
-      toast.error("Please add at least one question before proceeding.", {
-        theme: "dark",
-      });
+      toast.error("Please add at least one question before proceeding.");
       return;
     }
     onNext();
@@ -37,7 +36,12 @@ function Questions({ step, onNext, onBack }) {
         <div className='gap-md flex items-center'>
           <button
             onClick={() => setQuestionType("MCQ")}
-            className={`px-md py-sm cursor-pointer rounded-lg font-semibold transition-all ${
+            disabled={editingQuestionId !== null}
+            className={`px-md py-sm rounded-lg font-semibold transition-all ${
+              editingQuestionId !== null
+                ? "cursor-not-allowed opacity-50"
+                : "cursor-pointer"
+            } ${
               questionType === "MCQ"
                 ? "bg-primary text-bg"
                 : "border-border bg-surface-2 text-text hover:border-primary border"
@@ -47,7 +51,12 @@ function Questions({ step, onNext, onBack }) {
           </button>
           <button
             onClick={() => setQuestionType("TrueFalse")}
-            className={`px-md py-sm cursor-pointer rounded-lg font-semibold transition-all ${
+            disabled={editingQuestionId !== null}
+            className={`px-md py-sm rounded-lg font-semibold transition-all ${
+              editingQuestionId !== null
+                ? "cursor-not-allowed opacity-50"
+                : "cursor-pointer "
+            } ${
               questionType === "TrueFalse"
                 ? "bg-accent text-bg"
                 : "border-border bg-surface-2 text-text hover:border-accent border"
@@ -72,6 +81,7 @@ function Questions({ step, onNext, onBack }) {
               size='md'
               onClick={onBack}
               type='button'
+              disabled={editingQuestionId !== null}
             >
               ← Back
             </Button>
@@ -81,6 +91,7 @@ function Questions({ step, onNext, onBack }) {
             variation='primary'
             size='md'
             type='button'
+            disabled={editingQuestionId !== null}
           >
             Next (Review & Publish) →
           </Button>

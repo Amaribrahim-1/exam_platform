@@ -20,11 +20,10 @@ function InstructorLayout() {
     <div className='bg-bg flex h-screen w-full flex-col overflow-hidden font-sans md:grid md:grid-cols-[260px_1fr] md:grid-rows-[64px_1fr]'>
       {/* Mobile and Desktop Sidebar */}
       <ScrollToTop />
+
       <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
-      {/* Navbar */}
       <Navbar onMenuClick={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 
-      {/* Main Content */}
       <Main>
         <Outlet />
       </Main>

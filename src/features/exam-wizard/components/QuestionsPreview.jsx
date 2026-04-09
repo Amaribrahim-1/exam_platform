@@ -1,7 +1,10 @@
 import { Edit2Icon, TrashIcon } from "lucide-react";
+import { useExamData } from "../hooks/useExamData";
+import Button from "../../../components/Button";
 
 function QuestionsPreview({ questions, handleDelete, handleEdit }) {
-  console.log(questions);
+  const { editingQuestionId } = useExamData();
+
   return (
     <div className='gap-lg flex flex-col'>
       <div className='flex items-center justify-between'>
@@ -33,18 +36,28 @@ function QuestionsPreview({ questions, handleDelete, handleEdit }) {
                 </span>
                 <div className='flex items-center gap-3'>
                   {handleEdit && (
-                    <Edit2Icon
-                      size={20}
-                      onClick={() => handleEdit(question.id)}
-                      className='text-primary cursor-pointer transition-colors'
-                    />
+                    <button
+                      disabled={editingQuestionId !== null}
+                      className={`${editingQuestionId !== null ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+                    >
+                      <Edit2Icon
+                        size={20}
+                        onClick={() => handleEdit(question.id)}
+                        className='text-primarytransition-colors'
+                      />
+                    </button>
                   )}
                   {handleDelete && (
-                    <TrashIcon
-                      size={20}
-                      onClick={() => handleDelete(question.id)}
-                      className='text-danger cursor-pointer transition-opacity hover:opacity-80'
-                    />
+                    <button
+                      disabled={editingQuestionId !== null}
+                      className={`${editingQuestionId !== null ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+                    >
+                      <TrashIcon
+                        size={20}
+                        onClick={() => handleDelete(question.id)}
+                        className='text-danger transition-opacity hover:opacity-80'
+                      />
+                    </button>
                   )}
                 </div>
               </div>

@@ -1,9 +1,8 @@
 import { useEffect } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const ScrollToTop = () => {
   const location = useLocation();
-  console.log(location);
 
   useEffect(() => {
     // بنستهدف العنصر اللي فيه السكرول فعلياً

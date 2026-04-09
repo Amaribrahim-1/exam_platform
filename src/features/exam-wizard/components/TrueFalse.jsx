@@ -2,9 +2,15 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import ErrorMessage from "../../../components/ErrorMessage";
 import { useExamData } from "../hooks/useExamData";
+import Button from "../../../components/Button";
 
-function TrueFalse({ onAdd }) {
-  const { questions, editingQuestionId, handleAddQuestion } = useExamData();
+function TrueFalse() {
+  const {
+    questions,
+    editingQuestionId,
+    setEditingQuestionId,
+    handleAddQuestion,
+  } = useExamData();
 
   const questionToEdit =
     questions?.find((q) => q.id === editingQuestionId) || null;
@@ -29,8 +35,12 @@ function TrueFalse({ onAdd }) {
       marks: Number(data.marks),
     };
 
-    // onAdd(question);
     handleAddQuestion(question);
+
+    toast.success(
+      `Question ${editingQuestionId ? "updated" : "added"} successfully!`,
+    );
+
     reset({
       question: "",
       options: ["", ""],
@@ -111,6 +121,24 @@ function TrueFalse({ onAdd }) {
       >
         {editingQuestionId ? "Update Question" : "Add True/False Question"}
       </button>
+
+      {editingQuestionId && (
+        <button
+          onClick={() => {
+            reset({
+              question: "",
+              options: ["", ""],
+              correctAnswerIndex: null,
+              marks: "",
+            });
+            setEditingQuestionId(null);
+          }}
+          type='button'
+          className='bg-surface-2 px-lg py-md text-text hover:bg-opacity-90 w-full cursor-pointer rounded-lg font-bold transition-all active:scale-95'
+        >
+          Cancel
+        </button>
+      )}
     </form>
   );
 }

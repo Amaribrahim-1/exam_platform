@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const ExamDataContext = createContext();
 
@@ -16,19 +17,6 @@ function ExamDataProvider({ children }) {
   const [questionType, setQuestionType] = useState("MCQ");
 
   const [editingQuestionId, setEditingQuestionId] = useState(null);
-  // [{ type: "MCQ", id: 1 , question: "Question 1" , options: ["Option 1", "Option 2", "Option 3", "Option 4"]}, { type: "TrueFalse", id: 2 }]
-  // function handleAddMCQ(question, updatedQuestion = null) {
-  //   if (editingQuestionId) {
-  //     setQuestions((prev) =>
-  //       prev.map((q) =>
-  //         q.id === editingQuestionId ? { ...q, ...updatedQuestion } : q,
-  //       ),
-  //     );
-  //     setEditingQuestionId(null);
-  //   } else {
-  //     setQuestions((prev) => [...prev, question]);
-  //   }
-  // }
 
   function handleAddQuestion(questionData) {
     if (editingQuestionId) {
@@ -42,34 +30,11 @@ function ExamDataProvider({ children }) {
       setQuestions((prev) => [...prev, { ...questionData, id: Date.now() }]);
     }
   }
-  // function handleAddMCQ(questionData) {
-  //   if (editingQuestionId) {
-  //     setQuestions((prev) =>
-  //       prev.map((q) =>
-  //         q.id === editingQuestionId ? { ...questionData, id: q.id } : q,
-  //       ),
-  //     );
-  //     setEditingQuestionId(null); // لازم نصفر الـ ID بعد التعديل
-  //   } else {
-  //     setQuestions((prev) => [...prev, { ...questionData, id: Date.now() }]);
-  //   }
-  // }
-
-  // function handleAddTrueFalse(question) {
-  //   if (editingQuestionId) {
-  //     setQuestions((prev) =>
-  //       prev.map((q) =>
-  //         q.id === editingQuestionId ? { ...question, id: q.id } : q,
-  //       ),
-  //     );
-  //     setEditingQuestionId(null); // لازم نصفر الـ ID بعد التعديل
-  //   } else {
-  //     setQuestions((prev) => [...prev, { ...question, id: Date.now() }]);
-  //   }
-  // }
 
   function handleDelete(id) {
     setQuestions((prev) => prev.filter((question) => question.id !== id));
+
+    toast.success("Question deleted successfully!");
   }
 
   function handleExamDetails(details) {
@@ -77,7 +42,6 @@ function ExamDataProvider({ children }) {
   }
 
   function handleEdit(id) {
-    // 1. دور على السؤال اللي ضغطنا عليه عشان نعرف نوعه
     const questionToEdit = questions.find((q) => q.id === id);
 
     if (questionToEdit) {
@@ -85,8 +49,14 @@ function ExamDataProvider({ children }) {
 
       setEditingQuestionId(id);
 
-      const element = document.getElementById("main-content");
-      element?.scrollTo({ top: 0, behavior: "smooth" });
+      // setTimeout is used to ensure that the form is rendered before we try to scroll,
+      // preventing potential issues with the element not being found
+      setTimeout(() => {
+        const element = document.getElementById("main-content");
+        if (element) {
+          element.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }, 10);
     }
   }
 
@@ -116,6 +86,7 @@ function ExamDataProvider({ children }) {
         examDetails,
         handleExamDetails,
         editingQuestionId,
+        setEditingQuestionId,
         handleEdit,
       }}
     >
