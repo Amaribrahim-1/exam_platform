@@ -21,7 +21,12 @@ function MCQ() {
     reset,
     formState: { errors },
   } = useForm({
-    values: editingQuestionId ? questionToEdit : {},
+    values: editingQuestionId
+      ? {
+          ...questionToEdit,
+          correctAnswerIndex: String(questionToEdit.correctAnswerIndex),
+        }
+      : {},
   });
 
   function onSubmit(data) {

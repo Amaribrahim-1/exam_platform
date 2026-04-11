@@ -1,5 +1,11 @@
+import ExamsList from "../features/exam-management/components/ExamsList";
+
 function ExamsManagementPage() {
-  return <div>ExamsManagementPage</div>;
+  return (
+    <div>
+      <ExamsList />
+    </div>
+  );
 }
 
 export default ExamsManagementPage;

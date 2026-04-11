@@ -38,7 +38,7 @@ function ExamSummary({ step, onBack }) {
       end_date: examDetails.endDate,
       duration: examDetails.duration,
       difficulty: examDetails.difficulty,
-      status: "published",
+      status: "active",
     };
 
     const questionsToPublish = questions.map((q) => ({

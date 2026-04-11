@@ -12,3 +12,18 @@ export const formatExamDate = (dateString) => {
 };
 
 // مثال: "2026-04-08T22:46" هتظهر -> 08/04, 10:46 PM
+
+// const formatDateTime = (dateStr) => {
+//   if (!dateStr) return "";
+
+//   // 1. لو التاريخ جاي فيه مسافة (زي اللي طالع من الداتا بيز عندك)
+//   // هنبدل المسافة بحرف T عشان المتصفح يفهمه
+//   let formattedDate = dateStr.replace(" ", "T");
+
+//   // 2. لو فيه +00 أو أي منطقة زمنية في الآخر، هنشيلها
+//   // لأن datetime-local مش بيقبل timezone offsets
+//   formattedDate = formattedDate.split("+")[0];
+
+//   // 3. نأخد أول 16 حرف بس (YYYY-MM-DDTHH:mm)
+//   return formattedDate.slice(0, 16);
+// };

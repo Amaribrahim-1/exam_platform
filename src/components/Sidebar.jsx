@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import SidebarLink from "./SidebarLink";
+import { seedExams } from "../services/examApi";
 
 const navItems = [
   { to: "/instructor/dashboard", label: "Dashboard", icon: <GraduationCap /> },
@@ -52,7 +53,6 @@ function Sidebar({ isOpen, onClose }) {
         >
           <X size={24} />
         </button>
-
         {/* Logo Section */}
         <NavLink
           to='/instructor/dashboard'
@@ -65,7 +65,6 @@ function Sidebar({ isOpen, onClose }) {
             Exam.io
           </h1>
         </NavLink>
-
         {/* Navigation Links */}
         <nav className='space-y-sm flex-1'>
           <p className='text-text-faint px-sm mb-lg text-xs font-bold tracking-widest uppercase'>
@@ -82,6 +81,13 @@ function Sidebar({ isOpen, onClose }) {
             />
           ))}
         </nav>
+
+        <button
+          className='p-xs hover:text-primary bg-surface-2 border-border px-md py-md mb-lg text-text text-md cursor-pointer rounded-lg border font-bold transition-colors'
+          onClick={() => seedExams(10)}
+        >
+          Generate 10 Fake Exams
+        </button>
 
         {/* User Profile Card (Bottom) */}
         <div className='p-sm bg-surface-2 border-border gap-sm mt-auto flex items-center rounded-lg border'>

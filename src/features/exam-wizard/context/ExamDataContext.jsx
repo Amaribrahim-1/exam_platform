@@ -11,7 +11,7 @@ function ExamDataProvider({ children }) {
 
   const [examDetails, setExamDetails] = useState(() => {
     const saved = localStorage.getItem("exam-details");
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : {};
   });
 
   const [questionType, setQuestionType] = useState("MCQ");
@@ -38,7 +38,19 @@ function ExamDataProvider({ children }) {
   }
 
   function handleExamDetails(details) {
-    setExamDetails({ ...details });
+    setExamDetails(details);
+
+    // setExamDetails((prev) => {
+    //   const updated = { ...prev, ...details };
+    //   return updated;
+    // });
+  }
+
+  function clearExamData() {
+    setQuestions([]);
+    setExamDetails({});
+    localStorage.removeItem("exam-questions");
+    localStorage.removeItem("exam-details");
   }
 
   function handleEdit(id) {
@@ -88,6 +100,7 @@ function ExamDataProvider({ children }) {
         editingQuestionId,
         setEditingQuestionId,
         handleEdit,
+        clearExamData,
       }}
     >
       {children}

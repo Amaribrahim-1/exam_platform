@@ -10,6 +10,7 @@ function CreateExamPage() {
   const step = Number(searchParams.get("step")) || 1;
 
   const next = () => setSearchParams({ step: step + 1 });
+
   const back = () => setSearchParams({ step: step - 1 });
 
   return (

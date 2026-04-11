@@ -3,14 +3,14 @@ import Button from "../../../components/Button";
 import FormRow from "../../../components/FormRow";
 import { useExamData } from "../hooks/useExamData";
 
-function BasicInfo({ step, onNext }) {
+function BasicInfo({ onNext }) {
   const {
     register,
     formState: { errors },
     handleSubmit,
     reset,
   } = useForm({
-    defaultValues: localStorage.getItem("exam-details")
+    values: localStorage.getItem("exam-details")
       ? JSON.parse(localStorage.getItem("exam-details"))
       : {},
   });
