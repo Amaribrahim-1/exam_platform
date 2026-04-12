@@ -1,7 +1,14 @@
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
-const Modal = ({ isOpen, onClose, title, children, actions = null }) => {
+const Modal = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  actions = null,
+  pad = true,
+}) => {
   if (!isOpen) return null;
 
   const modalContent = (
@@ -29,7 +36,7 @@ const Modal = ({ isOpen, onClose, title, children, actions = null }) => {
         </div>
 
         {/* Content */}
-        <div className='text-text px-6 py-6'>{children}</div>
+        <div className={`text-text ${pad && "px-6 py-6"}`}>{children}</div>
 
         {/* Footer */}
         {actions && (

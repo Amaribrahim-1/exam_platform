@@ -1,20 +1,20 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
 } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Flip, ToastContainer } from "react-toastify";
 
+import ExamWizardProvider from "./features/instructor/exam-wizard/context/ExamWizardContext";
 import InstructorLayout from "./layouts/InstructorLayout";
 
-import { Flip, ToastContainer } from "react-toastify";
-import { ExamDataProvider } from "./features/exam-wizard/context/ExamDataContext";
-import CreateExamPage from "./pages/CreateExamPage";
-import DashboardPage from "./pages/DashboardPage";
-import ExamResultsPage from "./pages/ExamResultsPage";
-import ExamsManagementPage from "./pages/ExamsManagementPage";
-import StudentsPage from "./pages/StudentsPage";
+import CreateExamPage from "./features/instructor/exam-wizard/CreateExamPage";
+import DashboardPage from "./features/instructor/dashboard/DashboardPage";
+import ExamResultsPage from "./features/instructor/results/ExamResultsPage";
+import ExamsManagementPage from "./features/instructor/exam-management/ExamManagementPage";
+import StudentsPage from "./features/instructor/students/StudentsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,9 +40,9 @@ const router = createBrowserRouter([
       {
         path: "exam-wizard",
         element: (
-          <ExamDataProvider>
+          <ExamWizardProvider>
             <CreateExamPage />
-          </ExamDataProvider>
+          </ExamWizardProvider>
         ),
       },
       {

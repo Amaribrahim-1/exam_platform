@@ -1,9 +1,10 @@
-import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
-import Main from "../components/Main";
 import { useState } from "react";
-import ScrollToTop from "../components/ScrollToUP";
+import { Outlet } from "react-router-dom";
+
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
+import Main from "../components/Main";
+import ScrollToTop from "../components/ScrollToTop";
 
 function InstructorLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
