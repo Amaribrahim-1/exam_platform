@@ -6,10 +6,7 @@ export async function publishExam(examDetails, examQuestions) {
     .insert([examDetails])
     .select();
 
-  if (detailsError) {
-    console.error("Error fetching exams:", detailsError);
-    return [];
-  }
+  if (detailsError) throw new Error(detailsError.message);
 
   const examId = examsInfo[0].id;
   const finalQuestions = examQuestions.map((q) => ({
@@ -22,10 +19,7 @@ export async function publishExam(examDetails, examQuestions) {
     .insert(finalQuestions)
     .select();
 
-  if (questionsError) {
-    console.error("Error fetching questions:", questionsError);
-    return [];
-  }
+  if (questionsError) throw new Error(questionsError.message);
 
   return { examId, questions };
 }
@@ -33,10 +27,7 @@ export async function publishExam(examDetails, examQuestions) {
 export async function fetchExams() {
   const { data, error } = await supabase.from("exams").select("*");
 
-  if (error) {
-    console.error("Error fetching exams:", error);
-    return [];
-  }
+  if (error) throw new Error(error.message);
 
   return data;
 }
@@ -50,10 +41,7 @@ export async function fetchExam(examId) {
 
   console.log(data);
 
-  if (error) {
-    console.error("Error fetching exams:", error);
-    return null;
-  }
+  if (error) throw new Error(error.message);
 
   return data;
 }
@@ -64,10 +52,7 @@ export async function fetchExamQuestions(examId) {
     .select("*")
     .eq("exam_id", examId);
 
-  if (error) {
-    console.error("Error fetching questions:", error);
-    return [];
-  }
+  if (error) throw new Error(error.message);
 
   return data;
 }
@@ -78,15 +63,11 @@ export async function deleteExam(examId) {
     .delete()
     .eq("exam_id", examId);
 
-  if (questionsError) {
-    console.error("Error deleting questions:", questionsError);
-  }
+  if (questionsError) throw new Error(error.message);
 
   const { error } = await supabase.from("exams").delete().eq("id", examId);
 
-  if (error) {
-    console.error("Error deleting exam:", error);
-  }
+  if (error) throw new Error(error.message);
 }
 
 export async function updateExamStatus(examId, newStatus) {
@@ -97,10 +78,7 @@ export async function updateExamStatus(examId, newStatus) {
     .select()
     .single();
 
-  if (error) {
-    console.error("Error updating exam status:", error);
-    return null;
-  }
+  if (error) throw new Error(error.message);
 
   return data;
 }
@@ -142,11 +120,7 @@ export async function seedExams(count = 5) {
     .insert(dummyExams)
     .select();
 
-  if (error) {
-    console.error("Error seeding exams:", error);
-    return null;
-  }
+  if (error) throw new Error(error.message);
 
-  console.log(`Successfully seeded ${data.length} exams!`);
   return data;
 }
