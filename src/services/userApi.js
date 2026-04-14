@@ -1,0 +1,76 @@
+import supabase, { supabaseUrl } from "./supabase";
+
+const profileTable = {
+  student: "student_profiles",
+  instructor: "instructor_profiles",
+  admin: "admin_profiles",
+};
+
+export async function updateUser(fullName, avatar, extraFields, userId, role) {
+  let avatarUrl = null;
+  if (avatar) {
+    const avatarName = `${Date.now()}-${avatar.name}`;
+    avatarUrl = `${supabaseUrl}/storage/v1/object/public/avatars/${avatarName}`;
+    const { error } = await supabase.storage
+      .from("avatars")
+      .upload(avatarName, avatar);
+    if (error) throw new Error(error.message);
+  }
+
+  const { data, error } = await supabase.auth.updateUser({
+    data: {
+      fullName,
+      ...(avatarUrl && { avatar: avatarUrl }),
+    },
+  });
+
+  if (error) throw new Error(error.message);
+
+  if (extraFields && Object.keys(extraFields).length > 0) {
+    const table = profileTable[role];
+    const { error: profileError } = await supabase
+      .from(table)
+      .upsert({ id: userId, ...extraFields });
+
+    if (profileError) throw new Error(profileError.message);
+  }
+
+  return data;
+}
+
+export async function fetchStudentProfile(userId) {
+  const { data, error } = await supabase
+    .from("student_profiles")
+    .select("*")
+    .eq("id", userId)
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export async function updatePassword(oldPassword, newPassword) {
+  const { error } = await supabase.auth.updateUser({
+    password: newPassword,
+    nonce: oldPassword, // الباسورد القديم
+  });
+
+  if (error) throw new Error(error.message);
+}
+
+export async function resetPassword(newPassword) {
+  const { error } = await supabase.auth.updateUser({
+    password: newPassword,
+  });
+
+  if (error) throw new Error(error.message);
+}
+
+export async function forgotPassword(email) {
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `http://localhost:5173/reset-password`,
+  });
+
+  if (error) throw new Error(error.message);
+}

@@ -2,7 +2,7 @@ function GenericTable({ columns, data }) {
   return (
     <div>
       {/* ===== Desktop: Table ===== */}
-      <div className='border-border bg-surface hidden overflow-hidden rounded-md border px-6 py-3 sm:block'>
+      <div className='border-border bg-surface hidden rounded-md border px-6 py-3 sm:block'>
         <table className='w-full border-collapse'>
           {/* Header */}
           <thead className='bg-surface'>

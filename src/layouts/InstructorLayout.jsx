@@ -1,10 +1,38 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
-import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
+import {
+  BookOpen,
+  CirclePlus,
+  ClipboardMinus,
+  GraduationCap,
+  UserRound,
+} from "lucide-react";
+
 import Main from "../components/Main";
+import Navbar from "../components/Navbar";
 import ScrollToTop from "../components/ScrollToTop";
+import Sidebar from "../components/Sidebar";
+
+const instructorNavItems = [
+  { to: "/instructor/dashboard", label: "Dashboard", icon: <GraduationCap /> },
+  { to: "/instructor/exam-wizard", label: "Create Exam", icon: <CirclePlus /> },
+  {
+    to: "/instructor/exams-management",
+    label: "Exams Management",
+    icon: <BookOpen />,
+  },
+  {
+    to: "/instructor/results",
+    label: "Results & Reports",
+    icon: <ClipboardMinus />,
+  },
+  {
+    to: "/instructor/students",
+    label: "Students",
+    icon: <UserRound />,
+  },
+];
 
 function InstructorLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -22,7 +50,11 @@ function InstructorLayout() {
       {/* Mobile and Desktop Sidebar */}
       <ScrollToTop />
 
-      <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={closeSidebar}
+        navItems={instructorNavItems}
+      />
       <Navbar onMenuClick={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 
       <Main>

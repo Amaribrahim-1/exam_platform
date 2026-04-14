@@ -25,6 +25,7 @@ function usePublishExam() {
     onError: (error) => {
       toast.error("Failed to publish exam. Please try again.");
       console.log(error);
+      navigate("/instructor/exams-management");
     },
   });
 

@@ -7,7 +7,6 @@ function useUser() {
     queryFn: getCurrentUser,
   });
 
-  console.log(user);
   return { user, isFetchingUser };
 }
 

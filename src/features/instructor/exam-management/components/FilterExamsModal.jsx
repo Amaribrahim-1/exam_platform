@@ -1,3 +1,4 @@
+import { X } from "lucide-react";
 import { useState } from "react";
 
 const FilterExamsModal = ({
@@ -5,20 +6,10 @@ const FilterExamsModal = ({
   searchParams,
   setSearchParams,
   setIsFilterOpen,
+  tabs,
+  lists,
 }) => {
   const [activeTab, setActiveTab] = useState("status");
-
-  const tabs = [
-    { id: "difficulty", label: "Difficulty" },
-    { id: "subject", label: "Subject" },
-    { id: "status", label: "Status" },
-  ];
-
-  const lists = {
-    difficulty: ["All", "Easy", "Medium", "Hard"],
-    subject: subjects,
-    status: ["All", "Active", "Draft", "Closed"],
-  };
 
   const renderContent = () => {
     const list = lists[activeTab] || [];
@@ -85,7 +76,7 @@ const FilterExamsModal = ({
             return (
               <span
                 key={id}
-                className='bg-primary/10 text-primary border-primary/30 flex items-center gap-1 rounded-full border px-3 py-1 text-sm'
+                className='bg-primary/10 text-primary border-primary/30 flex items-center gap-1 rounded-full border px-3 py-1'
               >
                 {label}: {val}
                 <button
@@ -93,9 +84,9 @@ const FilterExamsModal = ({
                     searchParams.delete(id);
                     setSearchParams(searchParams);
                   }}
-                  className='hover:text-danger ml-1 cursor-pointer text-lg'
+                  className='hover:text-danger cursor-pointer'
                 >
-                  ×
+                  <X size={16} />
                 </button>
               </span>
             );

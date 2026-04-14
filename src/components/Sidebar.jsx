@@ -6,31 +6,17 @@ import {
   UserRound,
   X,
 } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import SidebarLink from "./SidebarLink";
 import { seedExams } from "../services/examApi";
+import useUser from "@/features/auth/hooks/useUser";
 
-const navItems = [
-  { to: "/instructor/dashboard", label: "Dashboard", icon: <GraduationCap /> },
-  { to: "/instructor/exam-wizard", label: "Create Exam", icon: <CirclePlus /> },
-  {
-    to: "/instructor/exams-management",
-    label: "Exams Management",
-    icon: <BookOpen />,
-  },
-  {
-    to: "/instructor/results",
-    label: "Results & Reports",
-    icon: <ClipboardMinus />,
-  },
-  {
-    to: "/instructor/students",
-    label: "Students",
-    icon: <UserRound />,
-  },
-];
+function Sidebar({ isOpen, onClose, navItems }) {
+  const location = useLocation();
+  const pageTitle = location.pathname.includes("instructor");
+  const { user } = useUser();
+  const role = user?.role || "Student";
 
-function Sidebar({ isOpen, onClose }) {
   return (
     <>
       {/* Overlay for Mobile */}
@@ -58,12 +44,22 @@ function Sidebar({ isOpen, onClose }) {
           to='/instructor/dashboard'
           className='mb-xl px-sm pt-2 md:pt-0'
         >
-          <h1 className='font-display text-primary gap-sm flex items-center text-xl font-bold'>
-            <span className='text-primary flex h-8 w-8 items-center justify-center rounded-md text-lg'>
-              <GraduationCap className='h-8 w-8' />
-            </span>
-            Exam.io
-          </h1>
+          <div className='font-display text-primary gap-sm flex items-center'>
+            <GraduationCap size={50} />
+            <div className='flex flex-col items-start'>
+              <h1 className='text-primary flex items-center justify-center rounded-md text-xl font-bold'>
+                Clarify
+              </h1>
+              <p className='text-primary-faint text-xs font-medium'>
+                {role === "student"
+                  ? "Student"
+                  : role === "Instructor"
+                    ? "Instructor"
+                    : "Admin"}{" "}
+                Portal
+              </p>
+            </div>
+          </div>
         </NavLink>
         {/* Navigation Links */}
         <nav className='space-y-sm flex-1'>
@@ -82,21 +78,35 @@ function Sidebar({ isOpen, onClose }) {
           ))}
         </nav>
 
-        <button
-          className='p-xs hover:text-primary bg-surface-2 border-border px-md py-md mb-lg text-text text-md cursor-pointer rounded-lg border font-bold transition-colors'
-          onClick={() => seedExams(10)}
-        >
-          Generate 10 Fake Exams
-        </button>
+        {pageTitle && (
+          <button
+            className='p-xs hover:text-primary bg-surface-2 border-border px-md py-md mb-lg text-text text-md cursor-pointer rounded-lg border font-bold transition-colors'
+            onClick={() => seedExams(10)}
+          >
+            Generate 10 Fake Exams
+          </button>
+        )}
 
         {/* User Profile Card (Bottom) */}
         <div className='p-sm bg-surface-2 border-border gap-sm mt-auto flex items-center rounded-lg border'>
           <div className='border-border text-primary bg-surface-2 group-hover:border-primary flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border text-sm font-bold transition-colors'>
-            AI
+            <img
+              src={user?.avatar}
+              alt={user?.fullName}
+              className='h-full w-full rounded-full object-cover'
+            />
           </div>
           <div className='flex-1 overflow-hidden'>
-            <p className='text-text truncate text-sm font-bold'>Amar Ibrahim</p>
-            <p className='text-text-muted truncate text-xs'>Instructor</p>
+            <p className='text-text truncate text-sm font-bold'>
+              {user?.fullName}
+            </p>
+            <p className='text-text-muted truncate text-xs'>
+              {role === "student"
+                ? "Student"
+                : role === "Instructor"
+                  ? "Instructor"
+                  : "Admin"}
+            </p>
           </div>
         </div>
       </aside>

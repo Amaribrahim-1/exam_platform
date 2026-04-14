@@ -111,7 +111,10 @@ export async function seedExams(count = 5) {
       duration: Math.floor(Math.random() * 60) + 30, // بين 30 و 90 دقيقة
       difficulty: difficulties[Math.floor(Math.random() * difficulties.length)],
       status: statuses[Math.floor(Math.random() * statuses.length)],
-      instructor_id: "d3608b52-2c2d-4b00-b898-2241f9329279", // الـ ID اللي إنت شغال بيه
+      instructor_id: "587e5fb5-e3f8-4ddc-9576-190fa29a425a", // الـ ID اللي إنت شغال بيه
+      instructor_name: "Dr. Amar",
+      questions_count: Math.floor(Math.random() * 20) + 10,
+      total_marks: Math.floor(Math.random() * 100) + 50,
     };
   });
 

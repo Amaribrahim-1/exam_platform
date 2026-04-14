@@ -7,10 +7,13 @@ import usePublishExam from "../hooks/usePublishExam";
 import Loader from "../../../../components/Loader";
 import Button from "../../../../components/Button";
 import QuestionPreviewCard from "./QuestionPreviewCard";
+import useUser from "@/features/auth/hooks/useUser";
 
 function ReviewStep({ step, onBack }) {
   const { examDetails, questions } = useExamData();
   const { publishExamDetails, isPending, isError } = usePublishExam();
+  const { user } = useUser();
+  console.log(user.fullName);
 
   const stats = [
     {
@@ -33,12 +36,16 @@ function ReviewStep({ step, onBack }) {
 
   function handlePublish() {
     const examDetailsToPublish = {
+      instructor_id: user.id,
+      instructor_name: user.fullName,
       title: examDetails.title,
       subject: examDetails.subject,
       start_date: examDetails.startDate,
       end_date: examDetails.endDate,
       duration: examDetails.duration,
       difficulty: examDetails.difficulty,
+      questions_count: questions.length,
+      total_marks: questions.reduce((acc, q) => acc + q.marks, 0),
       status: "active",
     };
 
