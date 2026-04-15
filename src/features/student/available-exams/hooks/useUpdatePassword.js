@@ -10,7 +10,8 @@ function useUpdatePassword() {
       onSuccess: () => {
         toast.success("Password updated successfully");
       },
-      onError: () => {
+      onError: (err) => {
+        console.log(err);
         toast.error("Failed to update password");
       },
     },

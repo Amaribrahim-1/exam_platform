@@ -6,7 +6,10 @@ export function mapAuthUser(user) {
   return {
     ...user,
     role: user.user_metadata?.role ?? "student",
-    fullName: user.user_metadata?.fullName,
+    fullName:
+      user.user_metadata?.fullName ??
+      user.user_metadata?.full_name ??
+      "No Name",
     avatar: user.user_metadata?.avatar ?? null,
   };
 }
@@ -43,7 +46,6 @@ export async function register(email, password, fullName, avatarFile) {
     user: mapAuthUser(credentials.user),
   };
 }
-
 export async function login(email, password) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -56,6 +58,17 @@ export async function login(email, password) {
     ...data,
     user: mapAuthUser(data.user),
   };
+}
+
+export async function handleGoogleLogin() {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: window.location.origin + "/home",
+    },
+  });
+
+  if (error) throw new Error(error.message);
 }
 
 export async function logout() {

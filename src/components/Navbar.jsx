@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 function Navbar({ onMenuClick }) {
   const { logout, isLoggingOut } = useLogout();
   const { user } = useUser();
+  const displayAvatar = user?.avatar || "/default_avatar.png";
 
   return (
     <header className='border-border bg-surface px-md md:px-xl py-sm gap-md md:gap-lg flex items-center border-b md:col-span-1'>
@@ -31,7 +32,7 @@ function Navbar({ onMenuClick }) {
           {/* Avatar Circle */}
           <div className='border-border text-primary bg-surface-2 group-hover:border-primary flex h-10 w-10 items-center justify-center rounded-full border text-sm font-bold transition-colors'>
             <img
-              src={user?.avatar}
+              src={displayAvatar}
               alt={user?.fullName}
               className='h-full w-full rounded-full object-cover'
             />
@@ -41,7 +42,7 @@ function Navbar({ onMenuClick }) {
         {/* Mobile Avatar */}
         <div className='border-border text-primary bg-surface-2 flex h-8 w-8 items-center justify-center rounded-full border text-xs font-bold md:hidden'>
           <img
-            src={user?.avatar}
+            src={displayAvatar}
             alt={user?.fullName}
             className='h-full w-full rounded-full object-cover'
           />

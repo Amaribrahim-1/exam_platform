@@ -18,14 +18,16 @@ import { toast } from "react-toastify";
 import useLogin from "../hooks/useLogin";
 import useUser from "../hooks/useUser";
 import { getRoleHomePath } from "../utils/getRoleHomePath";
+import useLoginWithGoogle from "../hooks/useLoginWithGoogle";
 
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
-  const [rememberMe, setRememberMe] = useState(false);
+  // const [rememberMe, setRememberMe] = useState(false);
   const { login, isLoggingIn } = useLogin();
+  const { loginWithGoogle, isLoggingInWithGoogle } = useLoginWithGoogle();
   const { user, isFetchingUser } = useUser();
   const navigate = useNavigate();
 
@@ -63,8 +65,14 @@ function LoginForm() {
     login({ email, password });
   };
 
-  // const { user, isFetchingUser } = useUser();
-  // console.log(user);
+  const handleGoogleLogin = () => {
+    try {
+      loginWithGoogle();
+      toast.success("Login successful!");
+    } catch (error) {
+      toast.error(error.message || "Credentials are not correct!");
+    }
+  };
 
   /* ---- ألوان المشروع ---- */
   const colors = {
@@ -334,12 +342,12 @@ function LoginForm() {
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-end",
                   alignItems: "center",
                   margin: "12px 0 20px",
                 }}
               >
-                <label
+                {/* <label
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -360,9 +368,9 @@ function LoginForm() {
                   <span style={{ fontSize: 12, color: colors.textMuted }}>
                     Remember me
                   </span>
-                </label>
-                <a
-                  href='/forgot-password'
+                </label> */}
+                <Link
+                  to='/email-verification'
                   style={{
                     fontSize: 12,
                     color: colors.primary,
@@ -370,7 +378,7 @@ function LoginForm() {
                   }}
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
 
               {/* Sign In Button */}
@@ -378,7 +386,7 @@ function LoginForm() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 type='submit'
-                disabled={isLoggingIn}
+                disabled={isLoggingIn || isLoggingInWithGoogle}
                 style={{
                   width: "100%",
                   height: 42,
@@ -398,7 +406,7 @@ function LoginForm() {
                 }}
               >
                 <AnimatePresence mode='wait'>
-                  {isLoggingIn ? (
+                  {isLoggingIn || isLoggingInWithGoogle ? (
                     <motion.div
                       key='loading'
                       initial={{ opacity: 0 }}
@@ -457,6 +465,7 @@ function LoginForm() {
 
               {/* Google Button */}
               <motion.button
+                onClick={handleGoogleLogin}
                 whileHover={{ scale: 1.02, borderColor: colors.primary }}
                 whileTap={{ scale: 0.97 }}
                 type='button'

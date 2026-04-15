@@ -36,7 +36,7 @@ function Profile({ extraFields = [], profileHook }) {
 
   const [avatar, setAvatar] = useState(null);
 
-  const displayAvatar = avatar || avatarUrl;
+  const displayAvatar = avatar || avatarUrl || "/default_avatar.png";
 
   const fileRef = useRef();
   function handleAvatar(e) {
@@ -91,7 +91,7 @@ function Profile({ extraFields = [], profileHook }) {
               />
             ) : (
               <span className='text-primary text-xl font-bold'>
-                {fullName.slice(0, 2).toUpperCase()}
+                {(fullName || email || "??").slice(0, 2).toUpperCase()}
               </span>
             )}
             <div className='absolute inset-0 flex items-center justify-center rounded-full bg-black/50 opacity-0 transition-opacity group-hover:opacity-100'>

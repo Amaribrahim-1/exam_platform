@@ -1,5 +1,6 @@
 import useLogout from "@/features/auth/hooks/useLogout";
 import { resetPassword } from "@/services/userApi";
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiLock, FiSave } from "react-icons/fi";
@@ -8,6 +9,15 @@ import { toast } from "react-toastify";
 function ResetPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { logout } = useLogout();
+
+  const [showPasswords, setShowPasswords] = useState({
+    new: false,
+    confirm: false,
+  });
+
+  function togglePassword(field) {
+    setShowPasswords((prev) => ({ ...prev, [field]: !prev[field] }));
+  }
 
   const {
     register,
@@ -52,7 +62,7 @@ function ResetPasswordPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
           {/* New Password */}
-          <div>
+          <div className='relative'>
             <label className={labelClass}>New Password</label>
             <div className='relative'>
               <FiLock
@@ -60,7 +70,7 @@ function ResetPasswordPage() {
                 className='text-text-muted absolute top-1/2 left-3 -translate-y-1/2'
               />
               <input
-                type='password'
+                type={showPasswords.new ? "text" : "password"}
                 placeholder='Min 6 characters'
                 {...register("newPassword", {
                   required: "Password is required",
@@ -68,6 +78,16 @@ function ResetPasswordPage() {
                 })}
                 className={inputClass}
               />
+              <span
+                onClick={() => togglePassword("new")}
+                className='text-text-muted absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer'
+              >
+                {showPasswords.new ? (
+                  <Eye style={{ width: 16, height: 16 }} />
+                ) : (
+                  <EyeOff style={{ width: 16, height: 16 }} />
+                )}
+              </span>
             </div>
             {errors.newPassword && (
               <p className='text-danger mt-1 ml-2 flex items-center gap-1 text-xs font-medium'>
@@ -77,7 +97,7 @@ function ResetPasswordPage() {
           </div>
 
           {/* Confirm Password */}
-          <div>
+          <div className='relative'>
             <label className={labelClass}>Confirm New Password</label>
             <div className='relative'>
               <FiLock
@@ -85,7 +105,7 @@ function ResetPasswordPage() {
                 className='text-text-muted absolute top-1/2 left-3 -translate-y-1/2'
               />
               <input
-                type='password'
+                type={showPasswords.confirm ? "text" : "password"}
                 placeholder='Repeat new password'
                 {...register("confirmPassword", {
                   required: "Please confirm your password",
@@ -95,6 +115,16 @@ function ResetPasswordPage() {
                 })}
                 className={inputClass}
               />
+              <span
+                onClick={() => togglePassword("confirm")}
+                className='text-text-muted absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer'
+              >
+                {showPasswords.confirm ? (
+                  <Eye style={{ width: 16, height: 16 }} />
+                ) : (
+                  <EyeOff style={{ width: 16, height: 16 }} />
+                )}
+              </span>
             </div>
             {errors.confirmPassword && (
               <p className='text-danger mt-1 ml-2 flex items-center gap-1 text-xs font-medium'>

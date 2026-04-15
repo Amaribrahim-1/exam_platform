@@ -32,12 +32,14 @@ import UserManagementPage from "./features/admin/user-management/UserManagementP
 
 // Student pages
 import LandingPage from "./components/LandingPage";
-import ResetPasswordPage from "./components/ResetPasswordPage";
+import ResetPasswordPage from "./features/auth/components/ResetPasswordPage";
 import AvailableExamsPage from "./features/student/available-exams/AvailableExamsPage";
 import StudentDashboardPage from "./features/student/dashboard/StudentDashboardPage";
 import ExamSessionPage from "./features/student/exam-session/ExamSessionPage";
 import StudentProfilePage from "./features/student/profile/StudentProfilePage";
 import StudentResultPage from "./features/student/results/StudentResultPage";
+import InstructorProfilePage from "./features/instructor/profile/InstructorProfilePage";
+import EmailVerificationPage from "./features/auth/components/EmailVerificationPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -56,13 +58,18 @@ const router = createBrowserRouter([
     path: "/register",
     element: <RegisterForm />,
   },
+  { path: "/email-verification", element: <EmailVerificationPage /> },
   {
     path: "/reset-password",
     element: <ResetPasswordPage />,
   },
   {
     path: "/",
-    element: <Navigate to='/login' replace />,
+    element: <Navigate to='/home' replace />,
+  },
+  {
+    path: "/home",
+    element: <LandingPage />,
   },
 
   // ✅ كل الراوتس دي محمية
@@ -89,6 +96,7 @@ const router = createBrowserRouter([
               { path: "exams-management", element: <ExamsManagementPage /> },
               { path: "students", element: <StudentsPage /> },
               { path: "results", element: <ExamResultsPage /> },
+              { path: "profile", element: <InstructorProfilePage /> },
             ],
           },
         ],
@@ -115,7 +123,6 @@ const router = createBrowserRouter([
       {
         element: <RoleRoute allowedRoles={["student"]} />,
         children: [
-          { path: "student/home", element: <LandingPage /> },
           {
             path: "/student",
             element: <StudentLayout />,

@@ -7,29 +7,12 @@ import supabase from "@/services/supabase";
 const roleHomeMap = {
   admin: "/admin/dashboard",
   instructor: "/instructor/dashboard",
-  student: "/student/home",
+  student: "/student/dashboard",
 };
 
 function RoleRoute({ allowedRoles }) {
   const { user, isFetchingUser } = useUser();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") {
-        navigate("/reset-password");
-      }
-    });
-  }, [navigate]);
-
-  useEffect(
-    function () {
-      if (!isFetchingUser && user && !allowedRoles.includes(user.role)) {
-        navigate(roleHomeMap[user.role]);
-      }
-    },
-    [user, isFetchingUser, navigate, allowedRoles],
-  );
 
   useEffect(
     function () {

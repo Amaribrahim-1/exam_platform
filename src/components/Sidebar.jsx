@@ -16,6 +16,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
   const pageTitle = location.pathname.includes("instructor");
   const { user } = useUser();
   const role = user?.role || "Student";
+  const displayAvatar = user?.avatar || "/default_avatar.png";
 
   return (
     <>
@@ -91,7 +92,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
         <div className='p-sm bg-surface-2 border-border gap-sm mt-auto flex items-center rounded-lg border'>
           <div className='border-border text-primary bg-surface-2 group-hover:border-primary flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border text-sm font-bold transition-colors'>
             <img
-              src={user?.avatar}
+              src={displayAvatar}
               alt={user?.fullName}
               className='h-full w-full rounded-full object-cover'
             />

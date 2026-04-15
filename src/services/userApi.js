@@ -49,6 +49,17 @@ export async function fetchStudentProfile(userId) {
 
   return data;
 }
+export async function fetchInstructorProfile(userId) {
+  const { data, error } = await supabase
+    .from("instructor_profiles")
+    .select("*")
+    .eq("id", userId)
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
 
 export async function updatePassword(oldPassword, newPassword) {
   const { error } = await supabase.auth.updateUser({

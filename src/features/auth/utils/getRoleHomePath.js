@@ -7,4 +7,3 @@ const roleHomeMap = {
 export function getRoleHomePath(role = "student") {
   return roleHomeMap[role] ?? roleHomeMap.student;
 }
-

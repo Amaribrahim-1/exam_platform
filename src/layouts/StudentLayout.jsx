@@ -3,16 +3,15 @@ import { Outlet } from "react-router-dom";
 
 import {
   BookOpen,
-  CirclePlus,
   ClipboardMinus,
   GraduationCap,
   UserRound,
 } from "lucide-react";
 
-import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
 import Main from "../components/Main";
+import Navbar from "../components/Navbar";
 import ScrollToTop from "../components/ScrollToTop";
+import Sidebar from "../components/Sidebar";
 
 const studentNavItems = [
   { to: "/student/dashboard", label: "Dashboard", icon: <GraduationCap /> },

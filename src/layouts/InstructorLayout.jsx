@@ -32,6 +32,11 @@ const instructorNavItems = [
     label: "Students",
     icon: <UserRound />,
   },
+  {
+    to: "/instructor/profile",
+    label: "Profile",
+    icon: <UserRound />,
+  },
 ];
 
 function InstructorLayout() {

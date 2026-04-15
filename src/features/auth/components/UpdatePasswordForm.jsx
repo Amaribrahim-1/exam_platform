@@ -2,10 +2,12 @@ import useUpdatePassword from "@/features/student/available-exams/hooks/useUpdat
 
 import useUser from "@/features/auth/hooks/useUser";
 import { forgotPassword } from "@/services/userApi";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiLock } from "react-icons/fi";
 import { toast } from "react-toastify";
-import Loader from "./Loader";
+import Loader from "../../../components/Loader";
 
 function UpdatePasswordForm() {
   const {
@@ -15,6 +17,16 @@ function UpdatePasswordForm() {
     getValues,
   } = useForm();
   const { user } = useUser();
+
+  const [showPasswords, setShowPasswords] = useState({
+    old: false,
+    new: false,
+    confirm: false,
+  });
+
+  function togglePassword(field) {
+    setShowPasswords((prev) => ({ ...prev, [field]: !prev[field] }));
+  }
 
   const { updatePassword, isUpdatingPassword } = useUpdatePassword();
 
@@ -64,13 +76,23 @@ function UpdatePasswordForm() {
               className='text-text-muted absolute top-1/2 left-3 -translate-y-1/2'
             />
             <input
-              type='password'
+              type={showPasswords.old ? "text" : "password"}
               placeholder='Enter current password'
               {...register("oldPassword", {
                 required: "Password is required",
               })}
               className={`${inputClass} pl-9`}
             />
+            <span
+              onClick={() => togglePassword("old")}
+              className='text-text-muted absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer'
+            >
+              {showPasswords.old ? (
+                <Eye style={{ width: 16, height: 16 }} />
+              ) : (
+                <EyeOff style={{ width: 16, height: 16 }} />
+              )}
+            </span>
           </div>
           {errors.oldPassword && (
             <p className='text-danger mt-1 ml-1 flex items-center gap-1 text-xs font-medium'>
@@ -86,8 +108,8 @@ function UpdatePasswordForm() {
               className='text-text-muted absolute top-1/2 left-3 -translate-y-1/2'
             />
             <input
-              type='password'
-              placeholder='Min 8 characters'
+              type={showPasswords.new ? "text" : "password"}
+              placeholder='Min 6 characters'
               {...register("newPassword", {
                 required: "Password is required",
                 minLength: {
@@ -97,6 +119,17 @@ function UpdatePasswordForm() {
               })}
               className={`${inputClass} pl-9`}
             />
+
+            <span
+              onClick={() => togglePassword("new")}
+              className='text-text-muted absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer'
+            >
+              {showPasswords.new ? (
+                <Eye style={{ width: 16, height: 16 }} />
+              ) : (
+                <EyeOff style={{ width: 16, height: 16 }} />
+              )}
+            </span>
           </div>
           {errors.newPassword && (
             <p className='text-danger mt-1 ml-1 flex items-center gap-1 text-xs font-medium'>
@@ -112,7 +145,7 @@ function UpdatePasswordForm() {
               className='text-text-muted absolute top-1/2 left-3 -translate-y-1/2'
             />
             <input
-              type='password'
+              type={showPasswords.confirm ? "text" : "password"}
               placeholder='Repeat new password'
               {...register("confirmPassword", {
                 required: "Password is required",
@@ -122,6 +155,16 @@ function UpdatePasswordForm() {
               })}
               className={`${inputClass} pl-9`}
             />
+            <span
+              onClick={() => togglePassword("confirm")}
+              className='text-text-muted absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer'
+            >
+              {showPasswords.confirm ? (
+                <Eye style={{ width: 16, height: 16 }} />
+              ) : (
+                <EyeOff style={{ width: 16, height: 16 }} />
+              )}
+            </span>
           </div>
           {errors.confirmPassword && (
             <p className='text-danger mt-1 ml-1 flex items-center gap-1 text-xs font-medium'>

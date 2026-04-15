@@ -62,9 +62,9 @@ function LandingPage() {
             scale: 0.985,
           }}
           className='group relative mt-6 flex w-fit cursor-pointer items-center gap-1.5 rounded-full bg-gray-950/10 px-4 py-2 text-gray-50 transition-colors hover:bg-gray-950/50'
-          onClick={() => navigate("/student/dashboard")}
+          onClick={() => navigate("/login")}
         >
-          Start Practicing
+          Get Started Free
           <FiArrowRight className='transition-transform group-hover:-rotate-45 group-active:-rotate-12' />
         </motion.button>
       </div>

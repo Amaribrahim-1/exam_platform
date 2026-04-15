@@ -1,9 +1,9 @@
 import Profile from "@/components/Profile";
 import UpdatePasswordForm from "@/features/auth/components/UpdatePasswordForm";
-import useStudentProfile from "@/hooks/useStudentProfile";
-import AcademicStats from "../available-exams/components/AcademicStats";
+import useInstructorProfile from "./hooks/useInstructorProfile";
+import AcademicStats from "@/features/student/available-exams/components/AcademicStats";
 
-function StudentProfilePage() {
+function InstructorProfilePage() {
   return (
     <div className='flex flex-col gap-6'>
       {/* Header */}
@@ -21,11 +21,6 @@ function StudentProfilePage() {
         <Profile
           extraFields={[
             {
-              name: "grade",
-              label: "Grade",
-              options: ["Grade 1", "Grade 2", "Grade 3", "Grade 4"],
-            },
-            {
               name: "department",
               label: "Department",
               options: [
@@ -35,7 +30,7 @@ function StudentProfilePage() {
               ],
             },
           ]}
-          profileHook={useStudentProfile}
+          profileHook={useInstructorProfile}
         />
 
         {/* Right Column */}
@@ -51,4 +46,4 @@ function StudentProfilePage() {
   );
 }
 
-export default StudentProfilePage;
+export default InstructorProfilePage;

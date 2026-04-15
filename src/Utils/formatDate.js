@@ -11,6 +11,14 @@ export const formatExamDate = (dateString) => {
   return format(date, "dd/MM, hh:mm a");
 };
 
+export const formatTime = (duration) => {
+  if (duration === 0) return "";
+
+  const hours = Math.floor(duration / 60);
+  const minutes = duration % 60;
+  return `${hours}h:${minutes}m:00`;
+};
+
 // مثال: "2026-04-08T22:46" هتظهر -> 08/04, 10:46 PM
 
 // const formatDateTime = (dateStr) => {
