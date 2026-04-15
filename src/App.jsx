@@ -40,6 +40,7 @@ import StudentProfilePage from "./features/student/profile/StudentProfilePage";
 import StudentResultPage from "./features/student/results/StudentResultPage";
 import InstructorProfilePage from "./features/instructor/profile/InstructorProfilePage";
 import EmailVerificationPage from "./features/auth/components/EmailVerificationPage";
+import Empty from "./components/Empty";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -84,6 +85,7 @@ const router = createBrowserRouter([
             path: "/instructor",
             element: <InstructorLayout />,
             children: [
+              { index: true, element: <Navigate to='dashboard' replace /> },
               { path: "dashboard", element: <DashboardPage /> },
               {
                 path: "exam-wizard",
@@ -110,6 +112,7 @@ const router = createBrowserRouter([
             path: "/admin",
             element: <AdminLayout />,
             children: [
+              { index: true, element: <Navigate to='dashboard' replace /> },
               { path: "dashboard", element: <AdminDashboardPage /> },
               { path: "users", element: <UserManagementPage /> },
               { path: "exams", element: <ExamOversightPage /> },
@@ -127,6 +130,7 @@ const router = createBrowserRouter([
             path: "/student",
             element: <StudentLayout />,
             children: [
+              { index: true, element: <Navigate to='dashboard' replace /> },
               { path: "dashboard", element: <StudentDashboardPage /> },
               { path: "exams", element: <AvailableExamsPage /> },
               { path: "exam-session", element: <ExamSessionPage /> },
@@ -141,9 +145,7 @@ const router = createBrowserRouter([
 
   {
     path: "*",
-    element: (
-      <div className='p-10 text-center text-2xl'>404 - Page Not Found</div>
-    ),
+    element: <Empty message='Page not found' />,
   },
 ]);
 

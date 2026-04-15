@@ -1,26 +1,15 @@
-import { useEffect } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 import useUser from "../features/auth/hooks/useUser";
-import { Outlet, useNavigate } from "react-router-dom";
 import Loader from "./Loader";
 
 function ProtectedRoute() {
   const { user, isFetchingUser } = useUser();
-  const navigate = useNavigate();
-
-  useEffect(
-    function () {
-      if (!isFetchingUser && !user) {
-        navigate("/login");
-      }
-    },
-    [user, navigate, isFetchingUser],
-  );
 
   if (isFetchingUser) return <Loader />;
 
-  if (user) return <Outlet />;
+  if (!user) return <Navigate to='/login' replace />;
 
-  return null;
+  return <Outlet />;
 }
 
 export default ProtectedRoute;
