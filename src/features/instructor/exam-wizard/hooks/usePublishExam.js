@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -8,6 +8,7 @@ import { useExamData } from "../hooks/useExamData";
 function usePublishExam() {
   const navigate = useNavigate();
   const { clearExamData } = useExamData();
+  const queryClient = useQueryClient();
 
   const {
     mutate: publishExamDetails,
@@ -19,7 +20,7 @@ function usePublishExam() {
     onSuccess: () => {
       toast.success("Exam published successfully!");
       navigate("/instructor/exams-management");
-
+      queryClient.invalidateQueries({ queryKey: ["exams"] });
       clearExamData();
     },
     onError: (error) => {

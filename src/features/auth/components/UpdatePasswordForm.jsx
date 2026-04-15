@@ -1,4 +1,4 @@
-import useUpdatePassword from "@/features/student/available-exams/hooks/useUpdatePassword";
+import useUpdatePassword from "@/features/auth/hooks/useUpdatePassword";
 
 import useUser from "@/features/auth/hooks/useUser";
 import { forgotPassword } from "@/services/userApi";

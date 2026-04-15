@@ -62,12 +62,25 @@ export async function fetchInstructorProfile(userId) {
 }
 
 export async function updatePassword(oldPassword, newPassword) {
-  const { error } = await supabase.auth.updateUser({
-    password: newPassword,
-    nonce: oldPassword, // الباسورد القديم
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("User not found");
+
+  const { error: signInError } = await supabase.auth.signInWithPassword({
+    email: user.email,
+    password: oldPassword,
   });
 
-  if (error) throw new Error(error.message);
+  if (signInError) {
+    throw new Error("old password is not correct!");
+  }
+
+  const { error: updateError } = await supabase.auth.updateUser({
+    password: newPassword,
+  });
+
+  if (updateError) throw new Error(updateError.message);
 }
 
 export async function resetPassword(newPassword) {

@@ -19,6 +19,7 @@ import useLogin from "../hooks/useLogin";
 import useUser from "../hooks/useUser";
 import { getRoleHomePath } from "../utils/getRoleHomePath";
 import useLoginWithGoogle from "../hooks/useLoginWithGoogle";
+import Loader from "@/components/Loader";
 
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -66,12 +67,7 @@ function LoginForm() {
   };
 
   const handleGoogleLogin = () => {
-    try {
-      loginWithGoogle();
-      toast.success("Login successful!");
-    } catch (error) {
-      toast.error(error.message || "Credentials are not correct!");
-    }
+    loginWithGoogle();
   };
 
   /* ---- ألوان المشروع ---- */
@@ -86,6 +82,8 @@ function LoginForm() {
     text: "#E8EAF6",
     textMuted: "#7B82A8",
   };
+
+  if (isLoggingInWithGoogle) return <Loader />;
 
   return (
     <div

@@ -1,15 +1,8 @@
-import {
-  BookOpen,
-  CirclePlus,
-  ClipboardMinus,
-  GraduationCap,
-  UserRound,
-  X,
-} from "lucide-react";
-import { NavLink, useLocation } from "react-router-dom";
-import SidebarLink from "./SidebarLink";
-import { seedExams } from "../services/examApi";
 import useUser from "@/features/auth/hooks/useUser";
+import { GraduationCap, X } from "lucide-react";
+import { NavLink, useLocation } from "react-router-dom";
+import { seedExams } from "../services/examApi";
+import SidebarLink from "./SidebarLink";
 
 function Sidebar({ isOpen, onClose, navItems }) {
   const location = useLocation();
@@ -54,7 +47,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
               <p className='text-primary-faint text-xs font-medium'>
                 {role === "student"
                   ? "Student"
-                  : role === "Instructor"
+                  : role === "instructor"
                     ? "Instructor"
                     : "Admin"}{" "}
                 Portal
@@ -90,7 +83,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
 
         {/* User Profile Card (Bottom) */}
         <div className='p-sm bg-surface-2 border-border gap-sm mt-auto flex items-center rounded-lg border'>
-          <div className='border-border text-primary bg-surface-2 group-hover:border-primary flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border text-sm font-bold transition-colors'>
+          <div className='border-border text-primary bg-surface-2 group-hover:border-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-sm font-bold transition-colors'>
             <img
               src={displayAvatar}
               alt={user?.fullName}
@@ -104,7 +97,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
             <p className='text-text-muted truncate text-xs'>
               {role === "student"
                 ? "Student"
-                : role === "Instructor"
+                : role === "instructor"
                   ? "Instructor"
                   : "Admin"}
             </p>

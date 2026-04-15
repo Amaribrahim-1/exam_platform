@@ -4,9 +4,10 @@ import { Outlet } from "react-router-dom";
 import {
   BookOpen,
   CirclePlus,
+  CircleUser,
   ClipboardMinus,
-  GraduationCap,
-  UserRound,
+  LayoutDashboardIcon,
+  UsersRound,
 } from "lucide-react";
 
 import Main from "../components/Main";
@@ -15,7 +16,11 @@ import ScrollToTop from "../components/ScrollToTop";
 import Sidebar from "../components/Sidebar";
 
 const instructorNavItems = [
-  { to: "/instructor/dashboard", label: "Dashboard", icon: <GraduationCap /> },
+  {
+    to: "/instructor/dashboard",
+    label: "Dashboard",
+    icon: <LayoutDashboardIcon />,
+  },
   { to: "/instructor/exam-wizard", label: "Create Exam", icon: <CirclePlus /> },
   {
     to: "/instructor/exams-management",
@@ -30,12 +35,12 @@ const instructorNavItems = [
   {
     to: "/instructor/students",
     label: "Students",
-    icon: <UserRound />,
+    icon: <UsersRound />,
   },
   {
     to: "/instructor/profile",
     label: "Profile",
-    icon: <UserRound />,
+    icon: <CircleUser />,
   },
 ];
 

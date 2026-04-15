@@ -1,3 +1,5 @@
+import Empty from "./Empty";
+
 function GenericTable({ columns, data }) {
   return (
     <div>

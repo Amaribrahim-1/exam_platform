@@ -14,8 +14,12 @@ function useLogin() {
     onSuccess: ({ user }) => {
       queryClient.setQueryData(["user"], user);
       // queryClient.invalidateQueries({ queryKey: ["user"] });
-      toast.success("Login successful!");
       navigate(getRoleHomePath(user?.role), { replace: true });
+      toast.success("Welcome back! Login successful.");
+    },
+
+    onError: (error) => {
+      toast.error(error.message || "Credentials are not correct!");
     },
   });
 

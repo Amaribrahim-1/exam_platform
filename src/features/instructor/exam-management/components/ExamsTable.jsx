@@ -9,13 +9,17 @@ import { formatExamDate } from "@/Utils/formatDate";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useDeleteExam from "../hooks/useDeleteExam";
-import useExams from "../hooks/useExams";
+import useExams from "../../../../hooks/useExams";
 import DeleteExamModal from "./DeleteExamModal";
 import { examColumns } from "./ExamColumns";
 import FilterExamsModal from "./FilterExamsModal";
+import useUser from "@/features/auth/hooks/useUser";
+import Empty from "@/components/Empty";
 
 function ExamsTable() {
-  const { exams, isFetching } = useExams();
+  const { user, isFetchingUser } = useUser();
+
+  const { exams, isFetching } = useExams(user?.id);
   const { deleteExam, isDeleting } = useDeleteExam();
   const [deletingId, setDeletingId] = useState(null);
   const navigate = useNavigate();
@@ -54,7 +58,23 @@ function ExamsTable() {
   const columns = examColumns(setDeletingId);
   const examToDelete = exams?.find((e) => e.id === deletingId);
 
-  if (isFetching || !exams) return <Loader />;
+  if (isFetching || !exams || isFetchingUser) return <Loader />;
+
+  if (!exams?.length)
+    return (
+      <div className='flex h-full items-center justify-center p-6'>
+        <Empty message='No exams found, create one now'>
+          <Button
+            onClick={() => navigate("/instructor/exam-wizard")}
+            variation='primary'
+            size='md'
+            className='shadow-glow mt-8 transition-transform hover:scale-105'
+          >
+            + New Exam
+          </Button>
+        </Empty>
+      </div>
+    );
 
   return (
     <div className='space-y-10'>

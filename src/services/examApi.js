@@ -24,8 +24,12 @@ export async function publishExam(examDetails, examQuestions) {
   return { examId, questions };
 }
 
-export async function fetchExams() {
-  const { data, error } = await supabase.from("exams").select("*");
+export async function fetchExams(instructorId = null) {
+  let query = supabase.from("exams").select("*");
+
+  if (instructorId) query = query.eq("instructor_id", instructorId);
+
+  const { data, error } = await query;
 
   if (error) throw new Error(error.message);
 
@@ -63,7 +67,7 @@ export async function deleteExam(examId) {
     .delete()
     .eq("exam_id", examId);
 
-  if (questionsError) throw new Error(error.message);
+  if (questionsError) throw new Error(questionsError.message);
 
   const { error } = await supabase.from("exams").delete().eq("id", examId);
 
@@ -85,6 +89,12 @@ export async function updateExamStatus(examId, newStatus) {
 
 // Fake Exams to test
 export async function seedExams(count = 5) {
+  const { data: user, error: usersError } = await supabase.auth.getUser();
+  const instructorId = user.user.id;
+
+  if (usersError) throw new Error(usersError.message);
+  if (!instructorId) return;
+
   const subjects = [
     "Data Structures",
     "Operating Systems",
@@ -93,7 +103,6 @@ export async function seedExams(count = 5) {
     "React JS",
   ];
   const difficulties = ["easy", "medium", "hard"];
-  const statuses = ["active", "draft", "completed"];
 
   const dummyExams = Array.from({ length: count }).map((_, i) => {
     // توليد تاريخ عشوائي يبدأ من دلوقتي ولمدة 10 أيام قدام
@@ -110,9 +119,9 @@ export async function seedExams(count = 5) {
       end_date: endDate.toISOString(),
       duration: Math.floor(Math.random() * 60) + 30, // بين 30 و 90 دقيقة
       difficulty: difficulties[Math.floor(Math.random() * difficulties.length)],
-      status: statuses[Math.floor(Math.random() * statuses.length)],
-      instructor_id: "587e5fb5-e3f8-4ddc-9576-190fa29a425a", // الـ ID اللي إنت شغال بيه
-      instructor_name: "Dr. Amar",
+      status: "active",
+      instructor_id: instructorId, // الـ ID اللي إنت شغال بيه
+      instructor_name: `Instructor ${i + 1}`,
       questions_count: Math.floor(Math.random() * 20) + 10,
       total_marks: Math.floor(Math.random() * 100) + 50,
     };

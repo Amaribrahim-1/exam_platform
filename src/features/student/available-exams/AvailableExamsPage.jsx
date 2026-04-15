@@ -1,10 +1,11 @@
-import useExams from "@/features/instructor/exam-management/hooks/useExams";
+import useExams from "@/hooks/useExams";
 import ExamCard from "./components/ExamCard";
 import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
 import FilterExamsModal from "@/features/instructor/exam-management/components/FilterExamsModal";
 import ExamActions from "@/components/ExamActions";
 import useExamFilters from "@/hooks/useExamFilters";
+import Empty from "@/components/Empty";
 
 function AvailableExamsPage() {
   const { exams, isFetching } = useExams();
@@ -38,6 +39,8 @@ function AvailableExamsPage() {
   };
 
   if (isFetching) return <Loader />;
+
+  if (sortedExams.length === 0) return <Empty message='No exams available' />;
 
   return (
     <div className='flex flex-col gap-6'>

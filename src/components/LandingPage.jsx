@@ -1,13 +1,13 @@
 import { Stars } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import React, { useEffect } from "react";
-import { FiArrowRight } from "react-icons/fi";
 import {
+  animate,
+  motion,
   useMotionTemplate,
   useMotionValue,
-  motion,
-  animate,
 } from "framer-motion";
+import { useEffect } from "react";
+import { FiArrowRight } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];

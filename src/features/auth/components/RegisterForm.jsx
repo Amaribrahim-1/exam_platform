@@ -21,6 +21,8 @@ import { Link, useNavigate } from "react-router-dom";
 import useRegister from "../hooks/useRegister";
 import useUser from "../hooks/useUser";
 import { getRoleHomePath } from "../utils/getRoleHomePath";
+import useLoginWithGoogle from "../hooks/useLoginWithGoogle";
+import { toast } from "react-toastify";
 
 function RegisterForm() {
   const [fullName, setFullName] = useState("");
@@ -36,6 +38,7 @@ function RegisterForm() {
   const { register, isRegistering } = useRegister();
   const { user, isFetchingUser } = useUser();
   const navigate = useNavigate();
+  const { loginWithGoogle, isLoggingInWithGoogle } = useLoginWithGoogle();
 
   useEffect(
     function () {
@@ -82,6 +85,10 @@ function RegisterForm() {
     if (passwordMismatch) return;
 
     register({ email, password, fullName, avatarFile });
+  };
+
+  const handleGoogleLogin = () => {
+    loginWithGoogle();
   };
 
   /* ── colors ── */
@@ -558,7 +565,9 @@ function RegisterForm() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 type='submit'
-                disabled={isRegistering || passwordMismatch}
+                disabled={
+                  isRegistering || passwordMismatch || isLoggingInWithGoogle
+                }
                 style={{
                   width: "100%",
                   height: 42,
@@ -644,6 +653,7 @@ function RegisterForm() {
 
               {/* Google Button */}
               <motion.button
+                onClick={handleGoogleLogin}
                 whileHover={{ scale: 1.02, borderColor: colors.primary }}
                 whileTap={{ scale: 0.97 }}
                 type='button'

@@ -1,6 +1,6 @@
 import Profile from "@/components/Profile";
 import UpdatePasswordForm from "@/features/auth/components/UpdatePasswordForm";
-import useStudentProfile from "@/hooks/useStudentProfile";
+import useStudentProfile from "@/features/student/profile/hooks/useStudentProfile";
 import AcademicStats from "../available-exams/components/AcademicStats";
 
 function StudentProfilePage() {

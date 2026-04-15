@@ -61,10 +61,11 @@ export async function login(email, password) {
 }
 
 export async function handleGoogleLogin() {
+  //  navigate(getRoleHomePath(user?.role), { replace: true });
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: window.location.origin + "/home",
+      redirectTo: window.location.origin + "/student",
     },
   });
 

@@ -55,7 +55,7 @@ function Profile({ extraFields = [], profileHook }) {
 
     updateUser({
       ...data,
-      fullName,
+      fullName: data.fullName,
       avatar: data.avatar,
       extraFields: extraFieldsData,
       userId: user.id,

@@ -3,9 +3,9 @@ import { Outlet } from "react-router-dom";
 
 import {
   BookOpen,
+  CircleUser,
   ClipboardMinus,
-  GraduationCap,
-  UserRound,
+  LayoutDashboardIcon,
 } from "lucide-react";
 
 import Main from "../components/Main";
@@ -14,7 +14,11 @@ import ScrollToTop from "../components/ScrollToTop";
 import Sidebar from "../components/Sidebar";
 
 const studentNavItems = [
-  { to: "/student/dashboard", label: "Dashboard", icon: <GraduationCap /> },
+  {
+    to: "/student/dashboard",
+    label: "Dashboard",
+    icon: <LayoutDashboardIcon />,
+  },
   { to: "/student/exams", label: "Available Exams", icon: <BookOpen /> },
   {
     to: "/student/results",
@@ -24,7 +28,7 @@ const studentNavItems = [
   {
     to: "/student/profile",
     label: "Profile",
-    icon: <UserRound />,
+    icon: <CircleUser />,
   },
 ];
 

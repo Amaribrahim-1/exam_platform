@@ -1,12 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { updateExamStatus } from "../../../../services/examApi";
 
 function useUpdateStatus() {
+  const queryClient = useQueryClient();
   const { mutate: updateStatus, isPending: isUpdating } = useMutation({
     mutationFn: ({ examId, status }) => updateExamStatus(examId, status),
     onSuccess: () => {
       toast.success("Exam status updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["exams"] });
     },
     onError: () => {
       toast.error("Failed to update exam status");
