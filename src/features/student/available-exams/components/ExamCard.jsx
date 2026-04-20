@@ -1,3 +1,4 @@
+import Empty from "@/components/Empty";
 import { formatExamDate } from "@/Utils/formatDate";
 import { motion } from "framer-motion";
 import {
@@ -9,6 +10,7 @@ import {
   FiHelpCircle,
   FiUser,
 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const difficultyConfig = {
   easy: { color: "bg-accent/20 text-accent", label: "Easy" },
@@ -30,6 +32,8 @@ const cardVariants = {
 };
 
 function ExamCard({ exam, index }) {
+  const navigate = useNavigate();
+
   const difficulty =
     difficultyConfig[exam.difficulty] || difficultyConfig.medium;
 
@@ -76,15 +80,6 @@ function ExamCard({ exam, index }) {
         </motion.span>
       </div>
 
-      {/* Title & Teacher */}
-      {/* <div className='flex flex-col gap-1'>
-        <h3 className='text-text group-hover:text-primary text-base leading-snug font-semibold transition-colors duration-200'>
-          {exam.title}
-        </h3>
-        <p className='text-text-muted text-sm'>{exam.instructor_name}</p>
-        <p className='text-text-faint text-xs'>{exam.subject}</p>
-      </div> */}
-      {/* Title */}
       <h3 className='text-text group-hover:text-primary text-base leading-snug font-semibold transition-colors duration-200'>
         {exam.title}
       </h3>
@@ -143,6 +138,7 @@ function ExamCard({ exam, index }) {
 
       {/* Button */}
       <motion.button
+        onClick={() => navigate(`/student/exam-session/${exam.id}`)}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.97 }}
         className='bg-primary/10 hover:bg-primary text-primary border-primary/30 hover:border-primary mt-auto flex w-full cursor-pointer items-center justify-center gap-2 rounded-[8px] border py-2.5 text-sm font-medium transition-all duration-200 hover:text-white'

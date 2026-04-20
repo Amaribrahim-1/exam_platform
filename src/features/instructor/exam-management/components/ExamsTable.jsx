@@ -120,11 +120,15 @@ function ExamsTable() {
         </Modal>
       )}
 
-      <GenericTable
-        key={searchParams.toString()}
-        columns={columns}
-        data={sortedExams}
-      />
+      {sortedExams?.length ? (
+        <GenericTable
+          key={searchParams.toString()}
+          columns={columns}
+          data={sortedExams}
+        />
+      ) : (
+        <Empty message='No exams found' />
+      )}
 
       <Modal
         isOpen={deletingId !== null}

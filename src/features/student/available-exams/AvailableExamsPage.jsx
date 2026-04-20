@@ -40,7 +40,7 @@ function AvailableExamsPage() {
 
   if (isFetching) return <Loader />;
 
-  if (sortedExams.length === 0) return <Empty message='No exams available' />;
+  if (sortedExams.length === 0) return <Empty title='No Available Exams' />;
 
   return (
     <div className='flex flex-col gap-6'>
@@ -80,11 +80,15 @@ function AvailableExamsPage() {
         </Modal>
       )}
 
-      <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-        {sortedExams?.map((exam, index) => (
-          <ExamCard key={exam.id} exam={exam} index={index} />
-        ))}
-      </div>
+      {sortedExams.length === 0 ? (
+        <Empty title='No Available Exams' />
+      ) : (
+        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+          {sortedExams.map((exam, index) => (
+            <ExamCard key={exam.id} exam={exam} index={index} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
