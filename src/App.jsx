@@ -142,6 +142,14 @@ const router = createBrowserRouter([
                   </ExamSessionProvider>
                 ),
               },
+              {
+                path: "exam-result/:examId",
+                element: (
+                  <ExamSessionProvider>
+                    <StudentResultPage />
+                  </ExamSessionProvider>
+                ),
+              },
               { path: "results", element: <StudentResultPage /> },
               { path: "profile", element: <StudentProfilePage /> },
             ],

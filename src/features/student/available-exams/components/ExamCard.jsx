@@ -1,3 +1,4 @@
+import useUser from "@/features/auth/hooks/useUser";
 import { formatExamDate } from "@/Utils/formatDate";
 import { motion } from "framer-motion";
 import {
@@ -10,14 +11,17 @@ import {
   FiUser,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { checkAlreadySubmitted } from "../../exam-session/services/examSessionApi";
-import useUser from "@/features/auth/hooks/useUser";
-import { toast } from "react-toastify";
+import useCheckSubmitted from "../hooks/useCheckSubmitted";
 
 const difficultyConfig = {
   easy: { color: "bg-accent/20 text-accent", label: "Easy" },
   medium: { color: "bg-warning/20 text-warning", label: "Medium" },
   hard: { color: "bg-danger/20 text-danger", label: "Hard" },
+};
+const statusConfig = {
+  active: { color: "bg-accent/20 text-accent", label: "Active" },
+  upcoming: { color: "bg-warning/20 text-warning", label: "Upcoming" },
+  submitted: { color: "bg-danger/20 text-danger", label: "Submitted" },
 };
 
 const cardVariants = {
@@ -33,25 +37,41 @@ const cardVariants = {
   }),
 };
 
+function getExamStatus(exam, isSubmitted = false) {
+  const now = new Date();
+  const start = new Date(exam.start_date);
+  const end = new Date(exam.end_date);
+
+  if (isSubmitted) return "submitted";
+  if (now < start) return "upcoming";
+  if (now >= start && now <= end) return "active";
+  return "missed";
+}
+
 function ExamCard({ exam, index }) {
   const navigate = useNavigate();
   const { user } = useUser();
 
+  const { alreadySubmitted } = useCheckSubmitted({
+    examId: exam.id,
+    userId: user.id,
+  });
+
+  const status = getExamStatus(exam, alreadySubmitted);
+
   const difficulty =
     difficultyConfig[exam.difficulty] || difficultyConfig.medium;
 
-  const handleStart = async () => {
-    const alreadySubmitted = await checkAlreadySubmitted(exam.id, user.id);
-
+  const handleClick = () => {
     if (alreadySubmitted) {
       // navigate to exam result
-      toast.error("You have already submitted this exam");
+      navigate(`/student/exam-result/${exam.id}`);
       return;
     }
     navigate(`/student/exam-session/${exam.id}`);
   };
 
-  if (exam.status !== "active") {
+  if (exam.status !== "active" || status === "missed") {
     return null;
   }
 
@@ -84,14 +104,24 @@ function ExamCard({ exam, index }) {
         >
           {<FiBook />}
         </motion.div>
-        <motion.span
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: index * 0.07 + 0.2 }}
-          className={`rounded-full px-2.5 py-1 text-xs font-semibold ${difficulty.color}`}
-        >
-          {difficulty.label}
-        </motion.span>
+        <div className='flex gap-2'>
+          <motion.span
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: index * 0.07 + 0.2 }}
+            className={`rounded-full px-2.5 py-1 text-xs font-semibold ${difficulty.color}`}
+          >
+            {difficulty.label}
+          </motion.span>
+          <motion.span
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: index * 0.07 + 0.2 }}
+            className={`rounded-full px-2.5 py-1 text-xs font-semibold ${statusConfig[status].color}`}
+          >
+            {statusConfig[status].label}
+          </motion.span>
+        </div>
       </div>
 
       <h3 className='text-text group-hover:text-primary text-base leading-snug font-semibold transition-colors duration-200'>
@@ -152,12 +182,12 @@ function ExamCard({ exam, index }) {
 
       {/* Button */}
       <motion.button
-        onClick={handleStart}
+        onClick={handleClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.97 }}
         className='bg-primary/10 hover:bg-primary text-primary border-primary/30 hover:border-primary mt-auto flex w-full cursor-pointer items-center justify-center gap-2 rounded-[8px] border py-2.5 text-sm font-medium transition-all duration-200 hover:text-white'
       >
-        Start Exam
+        {alreadySubmitted ? "View Result" : "Start Exam"}
         <FiArrowRight
           size={14}
           className='transition-transform duration-200 group-hover:translate-x-1'

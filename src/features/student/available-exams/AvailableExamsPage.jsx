@@ -48,10 +48,10 @@ function AvailableExamsPage() {
         <h1 className='text-text font-display text-2xl font-semibold'>
           Available Exams
         </h1>
-        <p className='text-text-muted mt-1 text-sm'>
+        {/* <p className='text-text-muted mt-1 text-sm'>
           {exams.filter((e) => e.status === "active").length} exams available
           for you
-        </p>
+        </p> */}
       </div>
 
       <ExamActions
@@ -80,11 +80,11 @@ function AvailableExamsPage() {
         </Modal>
       )}
 
-      {sortedExams.length === 0 ? (
+      {sortedExams?.length === 0 ? (
         <Empty message='No Available Exams' />
       ) : (
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-          {sortedExams.map((exam, index) => (
+          {sortedExams?.map((exam, index) => (
             <ExamCard key={exam.id} exam={exam} index={index} />
           ))}
         </div>

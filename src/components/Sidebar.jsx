@@ -34,10 +34,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
           <X size={24} />
         </button>
         {/* Logo Section */}
-        <NavLink
-          to='/instructor/dashboard'
-          className='mb-xl px-sm pt-2 md:pt-0'
-        >
+        <NavLink className='mb-xl px-sm pt-2 md:pt-0'>
           <div className='font-display text-primary gap-sm flex items-center'>
             <GraduationCap size={50} />
             <div className='flex flex-col items-start'>
