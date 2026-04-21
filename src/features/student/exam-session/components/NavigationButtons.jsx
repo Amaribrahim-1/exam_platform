@@ -1,6 +1,9 @@
 import Button from "@/components/Button";
 import { FlagIcon } from "lucide-react";
 import { useExam } from "../hooks/useExam";
+import useSubmit from "../hooks/useSubmit";
+import Loader from "@/components/Loader";
+import useUser from "@/features/auth/hooks/useUser";
 
 function NavigationButtons() {
   const {
@@ -10,11 +13,16 @@ function NavigationButtons() {
     totalQuestions,
     flagged,
     handleFlag,
+
+    handleSubmit,
   } = useExam();
 
   const question = examSession?.questions.at(currentQ);
-
   const isFlagged = flagged[question.id];
+
+  const { isSubmitting } = useSubmit();
+
+  if (isSubmitting) return <Loader />;
 
   return (
     <div className='border-border pt-md mt-7 flex items-center justify-between border-t'>
@@ -28,14 +36,14 @@ function NavigationButtons() {
       </Button>
       <button
         onClick={() => handleFlag(question.id)}
-        className={`gap-sm px-md py-xs hover:border-warning hover:text-warning flex cursor-pointer items-center rounded-md border bg-transparent text-[13px] font-medium transition-colors`}
+        className={`gap-sm px-md py-sm bg-surface-2 hover:bg-warning/10 hover:border-warning hover:text-warning text-text text-md flex cursor-pointer items-center rounded-md font-medium transition-colors`}
       >
         <FlagIcon size={17} />
         {isFlagged ? "Unflag" : "Flag for Review"}
       </button>
       {currentQ === totalQuestions - 1 ? (
         <Button
-          onClick={() => console.log("Exam Submited ")}
+          onClick={() => handleSubmit("manual")}
           variation='primary'
           size='md'
         >

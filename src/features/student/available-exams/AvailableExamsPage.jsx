@@ -81,7 +81,7 @@ function AvailableExamsPage() {
       )}
 
       {sortedExams.length === 0 ? (
-        <Empty title='No Available Exams' />
+        <Empty message='No Available Exams' />
       ) : (
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
           {sortedExams.map((exam, index) => (
