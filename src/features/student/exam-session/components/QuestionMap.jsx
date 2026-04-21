@@ -12,8 +12,8 @@ function QuestionMap() {
   };
 
   const dotVariant = (questionId) => {
-    if (typeof userAnswers[questionId] === "number") return "answered";
     if (flagged[questionId]) return "flagged";
+    if (typeof userAnswers[questionId] === "number") return "answered";
     return "unvisited";
   };
 
@@ -23,7 +23,7 @@ function QuestionMap() {
         Question Map
       </p>
 
-      <div className='mb-md grid grid-cols-5 gap-1.75'>
+      <div className='mb-md flex flex-wrap gap-1.75'>
         {examSession.questions.map((question, i) => (
           <button
             onClick={() => {
@@ -31,7 +31,7 @@ function QuestionMap() {
             }}
             type='button'
             key={i}
-            className={`flex aspect-square cursor-pointer items-center justify-center rounded-sm border font-mono text-[12px] font-bold transition-transform hover:scale-110 ${currentQ === i && "border-primary text-primary"} ${
+            className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border font-mono text-[12px] font-bold transition-transform hover:scale-110 ${currentQ === i && "border-primary text-primary"} ${
               dotClasses[dotVariant(question.id) || "unvisited"]
             }`}
           >

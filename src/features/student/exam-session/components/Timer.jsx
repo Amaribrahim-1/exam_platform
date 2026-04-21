@@ -2,7 +2,6 @@ import { useExam } from "../hooks/useExam";
 
 function Timer() {
   const { timerSec } = useExam();
-  console.log(timerSec);
   const mm = String(Math.floor(timerSec / 60)).padStart(2, "0");
   const ss = String(timerSec % 60).padStart(2, "0");
 

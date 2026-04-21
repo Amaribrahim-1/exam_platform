@@ -1,4 +1,3 @@
-import Empty from "@/components/Empty";
 import { formatExamDate } from "@/Utils/formatDate";
 import { motion } from "framer-motion";
 import {
@@ -11,6 +10,9 @@ import {
   FiUser,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { checkAlreadySubmitted } from "../../exam-session/services/examSessionApi";
+import useUser from "@/features/auth/hooks/useUser";
+import { toast } from "react-toastify";
 
 const difficultyConfig = {
   easy: { color: "bg-accent/20 text-accent", label: "Easy" },
@@ -33,9 +35,21 @@ const cardVariants = {
 
 function ExamCard({ exam, index }) {
   const navigate = useNavigate();
+  const { user } = useUser();
 
   const difficulty =
     difficultyConfig[exam.difficulty] || difficultyConfig.medium;
+
+  const handleStart = async () => {
+    const alreadySubmitted = await checkAlreadySubmitted(exam.id, user.id);
+
+    if (alreadySubmitted) {
+      // navigate to exam result
+      toast.error("You have already submitted this exam");
+      return;
+    }
+    navigate(`/student/exam-session/${exam.id}`);
+  };
 
   if (exam.status !== "active") {
     return null;
@@ -138,7 +152,7 @@ function ExamCard({ exam, index }) {
 
       {/* Button */}
       <motion.button
-        onClick={() => navigate(`/student/exam-session/${exam.id}`)}
+        onClick={handleStart}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.97 }}
         className='bg-primary/10 hover:bg-primary text-primary border-primary/30 hover:border-primary mt-auto flex w-full cursor-pointer items-center justify-center gap-2 rounded-[8px] border py-2.5 text-sm font-medium transition-all duration-200 hover:text-white'

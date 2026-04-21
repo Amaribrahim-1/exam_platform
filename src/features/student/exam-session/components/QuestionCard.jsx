@@ -21,14 +21,14 @@ function QuestionCard() {
       {/* Question Header */}
 
       <div className='flex items-center justify-between'>
-        <p className='mb-md text-primary font-mono text-[11px] font-bold tracking-[0.08em] uppercase'>
+        <p className='mb-md text-primary font-mono text-[12px] font-bold tracking-[0.08em] uppercase'>
           Question {currentQ + 1} of {totalQuestions}
         </p>
         {isFlagged && (
           <span
-            className={`gap-sm px-md py-xs border-warning text-warning flex items-center rounded-md border bg-transparent text-[13px] font-medium transition-colors`}
+            className={`gap-sm mb-md px-md py-xs border-warning text-warning flex items-center rounded-md border bg-transparent text-[13px] font-medium transition-colors`}
           >
-            <FlagIcon size={17} /> Flagged
+            <FlagIcon size={15} /> Flagged
           </span>
         )}
       </div>
