@@ -1,6 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useExamSession from "../hooks/useExamSession";
+import { toast } from "react-toastify";
+import useUser from "@/features/auth/hooks/useUser";
+import useSubmit from "../hooks/useSubmit";
 
 const ExamSessionContext = createContext();
 
@@ -21,53 +24,15 @@ function ExamSessionProvider({ children }) {
     () => JSON.parse(localStorage.getItem("flagged")) || {},
   );
 
+  const { user } = useUser();
+  const { submitExam } = useSubmit();
+
   const totalQuestions = examSession?.questions.length || 0;
 
   const [timerSec, setTimerSec] = useState(() => {
     const savedTime = localStorage.getItem("timer");
-    return savedTime ? Number(savedTime) : examSession?.duration * 60 || 0;
+    return savedTime ? Number(savedTime) : null;
   });
-
-  useEffect(() => {
-    if (!localStorage.getItem(`timer`) && examSession?.duration) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setTimerSec(examSession.duration * 60);
-    }
-  }, [examSession, examId]);
-
-  useEffect(() => {
-    if (timerSec > 0) {
-      localStorage.setItem("timer", timerSec.toString());
-    }
-  }, [timerSec]);
-
-  useEffect(() => {
-    if (timerSec <= 0) {
-      // handleAutoSubmit();
-      return;
-    }
-    const id = setInterval(() => setTimerSec((s) => s - 1), 1000);
-    return () => clearInterval(id);
-  }, [timerSec]);
-
-  /*
-   // بنقرأ الداتا الكبيرة مرة واحدة
-  const savedData = JSON.parse(localStorage.getItem(`exam_data_${examId}`)) || {};
-
-  const [userAnswers, setUserAnswers] = useState(savedData.userAnswers || {});
-  const [currentQ, setCurrentQ] = useState(savedData.currentQ || 0);
-  const [flagged, setFlagged] = useState(savedData.flagged || {});
-
-  useEffect(() => {
-  const examData = {
-    userAnswers,
-    currentQ,
-    flagged
-  };
-  
-  localStorage.setItem(`exam_data_${examId}`, JSON.stringify(examData));
-  }, [userAnswers, currentQ, flagged, examId]);
-  */
 
   const handleSelect = (questionId, answerIndex) => {
     setUserAnswers((prev) => ({
@@ -79,9 +44,26 @@ function ExamSessionProvider({ children }) {
   const handleFlag = (questionId) => {
     setFlagged((prev) => ({
       ...prev,
-      [questionId]: !prev[questionId], // بيقلب الحالة (true -> false والعكس)
+      [questionId]: !prev[questionId],
     }));
   };
+
+  const handleSubmit = useCallback(
+    (reason) => {
+      submitExam({
+        examId: examSession.id,
+        userId: user.id,
+        answers: userAnswers,
+        reason,
+      });
+
+      localStorage.removeItem("userAnswers");
+      localStorage.removeItem("currentQ");
+      localStorage.removeItem("flagged");
+      localStorage.removeItem("timer");
+    },
+    [submitExam, userAnswers, user, examSession],
+  );
 
   useEffect(() => {
     localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
@@ -94,6 +76,29 @@ function ExamSessionProvider({ children }) {
   useEffect(() => {
     localStorage.setItem("flagged", JSON.stringify(flagged));
   }, [flagged]);
+
+  useEffect(() => {
+    if (!localStorage.getItem("timer") && examSession?.duration) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setTimerSec(examSession.duration * 60);
+    }
+  }, [examSession, examId]);
+  useEffect(() => {
+    if (timerSec > 0) {
+      localStorage.setItem("timer", timerSec.toString());
+    }
+  }, [timerSec]);
+
+  useEffect(() => {
+    if (timerSec === null) return;
+    if (timerSec <= 0) {
+      toast.error("Time's up!");
+      handleSubmit("time_up");
+      return;
+    }
+    const id = setInterval(() => setTimerSec((s) => s - 1), 1000);
+    return () => clearInterval(id);
+  }, [timerSec, handleSubmit]);
 
   return (
     <ExamSessionContext.Provider
@@ -109,6 +114,7 @@ function ExamSessionProvider({ children }) {
         handleFlag,
         timerSec,
         setTimerSec,
+        handleSubmit,
       }}
     >
       {children}
