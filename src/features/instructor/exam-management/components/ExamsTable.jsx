@@ -5,7 +5,7 @@ import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
 // import useExamFilters from "@/hooks/useExamFilters";
 import useExamFilters from "@/hooks/useExamFilters";
-import { formatExamDate } from "@/Utils/formatDate";
+import { formatDate } from "@/Utils/formatDate";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useDeleteExam from "../hooks/useDeleteExam";
@@ -26,8 +26,8 @@ function ExamsTable() {
 
   const examData = exams?.map((exam) => ({
     ...exam,
-    startDate: formatExamDate(exam.start_date),
-    endDate: formatExamDate(exam.end_date),
+    startDate: formatDate(exam.start_date),
+    endDate: formatDate(exam.end_date),
     duration: `${exam.duration} min`,
   }));
 
