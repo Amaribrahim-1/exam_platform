@@ -1,6 +1,6 @@
 import Loader from "@/components/Loader";
 import { useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import ExamHeader from "./components/ExamHeader";
 import NavigationButtons from "./components/NavigationButtons";
@@ -27,6 +27,10 @@ function ExamSessionPage() {
 
   const { handleSubmit, isFetchingExamSession } = useExam();
 
+  const location = useLocation();
+
+  const isExamSession = examId && !location.pathname.includes("/result");
+
   const handleViolation = useCallback((type, count) => {
     const message = VIOLATION_MESSAGES[type] ?? "Violation detected";
     toast.warning(`${message} (Warning ${count} of 3)`);
@@ -39,7 +43,7 @@ function ExamSessionPage() {
   }, [handleSubmit]);
 
   useAntiCheat({
-    examId,
+    examId: isExamSession ? examId : null,
     onViolation: handleViolation,
     maxViolations: 3,
     onAutoSubmit: handleAutoSubmit,

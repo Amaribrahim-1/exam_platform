@@ -1,11 +1,10 @@
 import Button from "@/components/Button";
+import Loader from "@/components/Loader";
+import Modal from "@/components/Modal";
 import { FlagIcon } from "lucide-react";
+import { useState } from "react";
 import { useExam } from "../hooks/useExam";
 import useSubmit from "../hooks/useSubmit";
-import Loader from "@/components/Loader";
-import useUser from "@/features/auth/hooks/useUser";
-import { useState } from "react";
-import Modal from "@/components/Modal";
 import ConfirmSubmitModal from "./ConfirmSubmitModal";
 
 function NavigationButtons() {

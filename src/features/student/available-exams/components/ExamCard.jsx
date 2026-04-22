@@ -12,6 +12,7 @@ import {
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import useCheckSubmitted from "../hooks/useCheckSubmitted";
+import Loader from "@/components/Loader";
 
 const difficultyConfig = {
   easy: { color: "bg-accent/20 text-accent", label: "Easy" },
@@ -57,7 +58,10 @@ function ExamCard({ exam, index }) {
     userId: user.id,
   });
 
-  const status = getExamStatus(exam, alreadySubmitted);
+  // const status = getExamStatus(exam, alreadySubmitted);
+  const status = getExamStatus(exam, alreadySubmitted) || "submitted";
+
+  console.log(alreadySubmitted);
 
   const difficulty =
     difficultyConfig[exam.difficulty] || difficultyConfig.medium;

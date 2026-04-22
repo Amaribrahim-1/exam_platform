@@ -12,6 +12,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
   const displayAvatar = user?.avatar || "/default_avatar.png";
 
   const { examId } = useParams();
+  const isExamSession = examId && !location.pathname.includes("exam-result");
 
   return (
     <>
@@ -60,7 +61,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
             Menu
           </p>
 
-          {!examId &&
+          {!isExamSession &&
             navItems.map((item) => (
               <SidebarLink
                 key={item.to}

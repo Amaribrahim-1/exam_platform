@@ -32,15 +32,18 @@ export function useAntiCheat({
   const lastWidthRef = useRef(window.innerWidth);
   const devtoolsOpenRef = useRef(false);
   const active = Boolean(examId);
+  const autoSubmittedRef = useRef(false);
 
   // ── Central violation reporter ──────────────────────────────────────────────
   const report = useCallback(
     (type) => {
       if (!active) return;
+      if (autoSubmittedRef.current) return;
       violationCountRef.current += 1;
       const count = violationCountRef.current;
       onViolation?.(type, count);
       if (count >= maxViolations) {
+        autoSubmittedRef.current = true;
         onAutoSubmit?.();
       }
     },
@@ -167,6 +170,13 @@ export function useAntiCheat({
         return;
       }
 
+      // Inside handleKeyDown, add:
+      if (e.altKey && (e.key === "ArrowLeft" || e.key === "ArrowRight")) {
+        e.preventDefault();
+        report("navigation_back_forward");
+        return;
+      }
+
       // Alt+Tab — can't fully block, but we catch it via blur
       // Win key — can't block at browser level
     };
@@ -188,6 +198,18 @@ export function useAntiCheat({
       e.preventDefault();
       report("copy_attempt");
     };
+
+    // ── 9. Prevent Back / Forward navigation ────────────────────────────────────
+    // Push a dummy state so there's always a "current" entry to return to
+    window.history.pushState(null, "", window.location.href);
+
+    const handlePopState = () => {
+      // Every time back/forward is pressed, push state again to neutralize it
+      window.history.pushState(null, "", window.location.href);
+      report("navigation_back_forward");
+    };
+
+    window.addEventListener("popstate", handlePopState);
 
     // ── Register all listeners ───────────────────────────────────────────────
     document.addEventListener("visibilitychange", handleVisibilityChange);
@@ -214,6 +236,8 @@ export function useAntiCheat({
       clearTimeout(timingTimer);
       devtoolsOpenRef.current = false;
       violationCountRef.current = 0;
+      autoSubmittedRef.current = false;
+      window.removeEventListener("popstate", handlePopState);
     };
   }, [active, report]);
 
