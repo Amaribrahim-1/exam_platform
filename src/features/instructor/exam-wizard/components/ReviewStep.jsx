@@ -1,5 +1,5 @@
 import { BookOpen } from "lucide-react";
-import { formatExamDate } from "../../../../Utils/formatDate";
+import { formatDate } from "../../../../Utils/formatDate";
 import { useExamData } from "../hooks/useExamData";
 
 import usePublishExam from "../hooks/usePublishExam";
@@ -18,11 +18,11 @@ function ReviewStep({ step, onBack }) {
   const stats = [
     {
       label: "Start Time",
-      value: formatExamDate(examDetails?.startDate),
+      value: formatDate(examDetails?.startDate),
     },
     {
       label: "End Time",
-      value: formatExamDate(examDetails?.endDate),
+      value: formatDate(examDetails?.endDate),
     },
     {
       label: "Duration",
