@@ -235,8 +235,8 @@ export function useAntiCheat({
       document.removeEventListener("copy", handleCopy);
       clearTimeout(timingTimer);
       devtoolsOpenRef.current = false;
-      violationCountRef.current = 0;
-      autoSubmittedRef.current = false;
+      // violationCountRef.current = 0;
+      // autoSubmittedRef.current = false;
       window.removeEventListener("popstate", handlePopState);
     };
   }, [active, report]);
