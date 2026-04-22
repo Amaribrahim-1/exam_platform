@@ -42,6 +42,7 @@ import InstructorProfilePage from "./features/instructor/profile/InstructorProfi
 import EmailVerificationPage from "./features/auth/components/EmailVerificationPage";
 import Empty from "./components/Empty";
 import ExamSessionProvider from "./features/student/exam-session/context/ExamSessionContext";
+import ExamHistoryPage from "./features/student/exam-history/ExamHistoryPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -146,7 +147,7 @@ const router = createBrowserRouter([
                 path: "exam-result/:examId",
                 element: <StudentResultPage />,
               },
-              { path: "results", element: <StudentResultPage /> },
+              { path: "exam-history", element: <ExamHistoryPage /> },
               { path: "profile", element: <StudentProfilePage /> },
             ],
           },

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import useUpdateStatus from "../hooks/useUpdateStatus";
-import { STATUS_LABELS, STATUS_STYLES } from "../constants";
+import { STATUS_LABELS, STATUS_STYLES } from "../../../../Utils/constants";
 
 function StatusBadge({ value, examId }) {
   const [isOpen, setIsOpen] = useState(false);

@@ -5,6 +5,7 @@ import {
   BookOpen,
   CircleUser,
   ClipboardMinus,
+  History,
   LayoutDashboardIcon,
 } from "lucide-react";
 
@@ -21,9 +22,9 @@ const studentNavItems = [
   },
   { to: "/student/exams", label: "Available Exams", icon: <BookOpen /> },
   {
-    to: "/student/results",
-    label: "Results & Reports",
-    icon: <ClipboardMinus />,
+    to: "/student/exam-history",
+    label: "Exam History",
+    icon: <History />,
   },
   {
     to: "/student/profile",

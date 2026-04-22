@@ -1,6 +1,9 @@
 import StatusBadge from "../components/StatusBadge";
 import { Trash2 } from "lucide-react";
-import { DIFFICULTY_LABELS, DIFFICULTY_STYLES } from "../constants";
+import {
+  DIFFICULTY_LABELS,
+  DIFFICULTY_STYLES,
+} from "../../../../Utils/constants";
 
 export const examColumns = (setDeletingId) => [
   { key: "title", label: "Exam title" },
