@@ -28,6 +28,12 @@ export async function fetchExams(instructorId = null) {
   let query = supabase.from("exams").select("*");
 
   if (instructorId) query = query.eq("instructor_id", instructorId);
+  else {
+    const now = new Date().toISOString();
+    query = query
+      .eq("status", "active") // ← بس الـ active
+      .gte("end_date", now);
+  }
 
   const { data, error } = await query;
 
