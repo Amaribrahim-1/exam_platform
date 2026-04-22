@@ -8,14 +8,12 @@ function useSubmit() {
   const queryClient = useQueryClient();
 
   const { mutate: submitExam, isPending: isSubmitting } = useMutation({
-    mutationFn: ({ examId, userId, answers, reason }) =>
-      submitExamApi(examId, userId, answers, reason),
-    onSuccess: (data) => {
+    mutationFn: ({ examId, userId, answers, timeTaken, reason }) =>
+      submitExamApi(examId, userId, answers, timeTaken, reason), // ← استقبلهم من mutate
+    onSuccess: (_, { examId }) => {
       toast.success("Exam submitted successfully");
       queryClient.invalidateQueries({ queryKey: ["checkSubmitted"] });
-      // to result/id
-      console.log(data);
-      navigate("/student/dashboard");
+      navigate(`/student/exam-result/${examId}`);
     },
     onError: () => {
       toast.error("Failed to submit exam");
@@ -24,5 +22,4 @@ function useSubmit() {
 
   return { submitExam, isSubmitting };
 }
-
 export default useSubmit;

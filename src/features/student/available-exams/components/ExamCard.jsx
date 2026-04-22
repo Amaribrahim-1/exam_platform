@@ -1,5 +1,5 @@
 import useUser from "@/features/auth/hooks/useUser";
-import { formatExamDate } from "@/Utils/formatDate";
+import { formatDate } from "@/Utils/formatDate";
 import { motion } from "framer-motion";
 import {
   FiArrowRight,
@@ -58,10 +58,7 @@ function ExamCard({ exam, index }) {
     userId: user.id,
   });
 
-  // const status = getExamStatus(exam, alreadySubmitted);
-  const status = getExamStatus(exam, alreadySubmitted) || "submitted";
-
-  console.log(alreadySubmitted);
+  const status = getExamStatus(exam, alreadySubmitted);
 
   const difficulty =
     difficultyConfig[exam.difficulty] || difficultyConfig.medium;
@@ -153,7 +150,7 @@ function ExamCard({ exam, index }) {
             Starts
           </span>
           <span className='text-text font-medium'>
-            {formatExamDate(exam.start_date)}
+            {formatDate(exam.start_date)}
           </span>
         </div>
         <div className='bg-border h-px w-full' />
@@ -163,7 +160,7 @@ function ExamCard({ exam, index }) {
             Ends
           </span>
           <span className='text-text font-medium'>
-            {formatExamDate(exam.end_date)}
+            {formatDate(exam.end_date)}
           </span>
         </div>
       </div>

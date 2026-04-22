@@ -12,11 +12,17 @@ export async function fetchExamSession(examId) {
   return data;
 }
 
-export async function submitExam(examId, userId, answers, reason = "manual") {
+export async function submitExam(
+  examId,
+  userId,
+  answers,
+  timeTaken,
+  reason = "manual",
+) {
   // 1. جيب الإجابات الصح من الـ DB
   const { data: questions, error: questionsError } = await supabase
     .from("questions")
-    .select("id, correct_answer_index, marks")
+    .select("id, question, options, correct_answer_index, marks")
     .eq("exam_id", examId);
 
   if (questionsError) throw new Error(questionsError.message);
@@ -32,8 +38,12 @@ export async function submitExam(examId, userId, answers, reason = "manual") {
 
     return {
       question_id: q.id,
-      user_answer: userAnswer,
+      question_text: q.question, // ✓ دلوقتي موجودة
+      options: q.options, // ✓ دلوقتي موجودة
+      chosen_option_index: userAnswer,
+      correct_option_index: q.correct_answer_index,
       is_correct: isCorrect,
+      marks: q.marks,
       marks_earned: isCorrect ? q.marks : 0,
     };
   });
@@ -47,8 +57,10 @@ export async function submitExam(examId, userId, answers, reason = "manual") {
         user_id: userId,
         answers: results,
         total_score: totalScore,
+        full_mark: fullMark,
         reason, // "manual" | "time_up" | "cheat"
         is_passed: totalScore >= Math.round(fullMark / 2),
+        time_taken: timeTaken,
         submitted_at: new Date().toISOString(),
       },
     ])
