@@ -1,12 +1,14 @@
 import useLogout from "@/features/auth/hooks/useLogout";
 import useUser from "@/features/auth/hooks/useUser";
 import { LogOutIcon, Menu } from "lucide-react";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function Navbar({ onMenuClick }) {
   const { logout, isLoggingOut } = useLogout();
   const { user } = useUser();
   const displayAvatar = user?.avatar || "/default_avatar.png";
+  const { examId } = useParams();
 
   return (
     <header className='border-border bg-surface px-md md:px-xl py-sm gap-md md:gap-lg flex items-center border-b md:col-span-1'>
@@ -50,7 +52,7 @@ function Navbar({ onMenuClick }) {
 
         {user && (
           <button
-            disabled={isLoggingOut}
+            disabled={isLoggingOut || examId}
             onClick={() => {
               logout();
               toast.success("Logout successful!");

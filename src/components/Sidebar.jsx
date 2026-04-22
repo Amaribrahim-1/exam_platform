@@ -1,6 +1,6 @@
 import useUser from "@/features/auth/hooks/useUser";
 import { GraduationCap, X } from "lucide-react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import { seedExams } from "../services/examApi";
 import SidebarLink from "./SidebarLink";
 
@@ -10,6 +10,8 @@ function Sidebar({ isOpen, onClose, navItems }) {
   const { user } = useUser();
   const role = user?.role || "Student";
   const displayAvatar = user?.avatar || "/default_avatar.png";
+
+  const { examId } = useParams();
 
   return (
     <>
@@ -58,15 +60,16 @@ function Sidebar({ isOpen, onClose, navItems }) {
             Menu
           </p>
 
-          {navItems.map((item) => (
-            <SidebarLink
-              key={item.to}
-              to={item.to}
-              icon={item.icon}
-              label={item.label}
-              onClick={onClose}
-            />
-          ))}
+          {!examId &&
+            navItems.map((item) => (
+              <SidebarLink
+                key={item.to}
+                to={item.to}
+                icon={item.icon}
+                label={item.label}
+                onClick={onClose}
+              />
+            ))}
         </nav>
 
         {pageTitle && (

@@ -160,6 +160,7 @@ function RegisterForm() {
         position: "relative",
         overflow: "hidden",
         fontFamily: '"DM Sans", ui-sans-serif, system-ui',
+        padding: "0 1rem",
       }}
     >
       {/* توهجات الخلفية */}
