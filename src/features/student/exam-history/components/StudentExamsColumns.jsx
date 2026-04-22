@@ -19,7 +19,7 @@ export function studentExamsColumns() {
     { key: "score", label: "Score" },
     { key: "submittedAt", label: "Submitted At" },
     {
-      key: "isPassed",
+      key: "status",
       label: "Status",
       render: (value) => (
         <span

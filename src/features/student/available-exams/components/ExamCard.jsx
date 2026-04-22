@@ -12,7 +12,6 @@ import {
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import useCheckSubmitted from "../hooks/useCheckSubmitted";
-import Loader from "@/components/Loader";
 
 const difficultyConfig = {
   easy: { color: "bg-accent/20 text-accent", label: "Easy" },

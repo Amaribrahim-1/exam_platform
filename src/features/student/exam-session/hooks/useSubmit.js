@@ -15,8 +15,9 @@ function useSubmit() {
       queryClient.invalidateQueries({ queryKey: ["checkSubmitted"] });
       navigate(`/student/exam-result/${examId}`);
     },
-    onError: () => {
+    onError: (error) => {
       toast.error("Failed to submit exam");
+      console.log(error);
     },
   });
 

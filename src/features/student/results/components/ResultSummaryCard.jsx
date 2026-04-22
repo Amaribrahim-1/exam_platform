@@ -25,7 +25,7 @@ function getReasonConfig(reason) {
 }
 
 function ResultSummaryCard({ examResults }) {
-  const { total_score, full_mark, is_passed, time_taken, answers, reason } =
+  const { total_score, full_mark, status, time_taken, answers, reason } =
     examResults;
 
   const correct = answers.filter((a) => a.is_correct).length;
@@ -49,12 +49,12 @@ function ResultSummaryCard({ examResults }) {
         <div className='flex items-center gap-3'>
           <span
             className={`rounded-full border px-3 py-1 text-xs font-semibold ${
-              is_passed
+              status === "Passed"
                 ? "bg-accent/15 text-accent border-accent/30"
                 : "bg-danger/15 text-danger border-danger/30"
             }`}
           >
-            {is_passed ? "✓ Passed" : "✗ Failed"}
+            {status === "Passed" ? "✓ Passed" : "✗ Failed"}
           </span>
           <span className='bg-primary/10 text-primary border-primary/25 rounded-full border px-3 py-1 text-xs font-semibold'>
             {total_score} / {full_mark} marks

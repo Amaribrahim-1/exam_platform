@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-function useExamFilters(exams, extraFilters = []) {
+function useExamFilters(exams, extraFilters = [], enableDurationSort = true) {
   const [search, setSearch] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,14 +31,15 @@ function useExamFilters(exams, extraFilters = []) {
 
   const [type, dir] = sortBy.split("-");
   const sortedExams = filteredExams?.sort((a, b) => {
-    if (type === "duration") {
+    if (type === "duration" && enableDurationSort) {
       const aVal = parseInt(a.duration);
       const bVal = parseInt(b.duration);
       return dir === "asc" ? aVal - bVal : bVal - aVal;
     }
+
     return dir === "asc"
-      ? a[type].localeCompare(b[type])
-      : b[type].localeCompare(a[type]);
+      ? (a[type] ?? "").localeCompare(b[type] ?? "")
+      : (b[type] ?? "").localeCompare(a[type] ?? "");
   });
 
   return {

@@ -20,7 +20,10 @@ function AvailableExamsPage() {
     sortedExams,
   } = useExamFilters(exams, [{ key: "instructor_name" }]);
 
-  const subjects = ["All", ...new Set(exams?.map((e) => e.subject))];
+  const subjects = [
+    "All",
+    ...new Set(exams?.map((e) => e.status === "active" && e.subject)),
+  ];
   const instructor_names = [
     "All",
     ...new Set(exams?.map((e) => e.instructor_name)),
