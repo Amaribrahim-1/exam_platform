@@ -24,9 +24,8 @@ const VIOLATION_MESSAGES = {
 
 function ExamSessionPage() {
   const { examId } = useParams();
-  const { isFetchingExamSession } = useExam();
 
-  const { handleSubmit } = useExam();
+  const { handleSubmit, isFetchingExamSession } = useExam();
 
   const handleViolation = useCallback((type, count) => {
     const message = VIOLATION_MESSAGES[type] ?? "Violation detected";
