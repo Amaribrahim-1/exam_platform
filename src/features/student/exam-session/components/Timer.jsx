@@ -1,9 +1,11 @@
+import { formatTime } from "@/Utils/formatTime";
 import { useExam } from "../hooks/useExam";
 
 function Timer() {
   const { timerSec } = useExam();
-  const mm = String(Math.floor(timerSec / 60)).padStart(2, "0");
-  const ss = String(timerSec % 60).padStart(2, "0");
+  // const mm = String(Math.floor(timerSec / 60)).padStart(2, "0");
+  // const ss = String(timerSec % 60).padStart(2, "0");
+  const time = formatTime(timerSec);
 
   const timerColor =
     timerSec <= 60
@@ -20,7 +22,7 @@ function Timer() {
       <p
         className={`font-mono text-[38px] leading-none font-medium tracking-[0.04em] ${timerColor}`}
       >
-        {mm}:{ss}
+        {time}
       </p>
       <p className='mt-xs text-text-muted text-[11px]'>minutes : seconds</p>
     </div>

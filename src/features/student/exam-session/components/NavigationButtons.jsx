@@ -60,7 +60,7 @@ function NavigationButtons() {
               prev === totalQuestions - 1 ? prev : prev + 1,
             )
           }
-          disabled={currentQ === 1}
+          disabled={currentQ === totalQuestions - 1}
           variation='primary' // danger
           size='md'
         >
