@@ -1,23 +1,24 @@
 import useUser from "@/features/auth/hooks/useUser";
 
+import Button from "@/components/Button";
+import Empty from "@/components/Empty";
+import ExamActions from "@/components/ExamActions";
 import GenericTable from "@/components/GenericTable";
 import Loader from "@/components/Loader";
-import { formatDate } from "@/Utils/formatDate";
-import { studentExamsColumns } from "./components/StudentExamsColumns";
-import useStudentExamsHistory from "./hooks/useStudentExamsHistory";
-import useExamFilters from "@/hooks/useExamFilters";
-import ExamActions from "@/components/ExamActions";
 import Modal from "@/components/Modal";
 import FilterExamsModal from "@/features/instructor/exam-management/components/FilterExamsModal";
-import Empty from "@/components/Empty";
+import useExamFilters from "@/hooks/useExamFilters";
+import { formatDate } from "@/Utils/formatDate";
 import { useNavigate } from "react-router-dom";
-import Button from "@/components/Button";
+import { studentExamsColumns } from "./components/StudentExamsColumns";
+import useStudentExamsHistory from "./hooks/useStudentExamsHistory";
 
 function StudentExamsHistoryPage() {
   const { user } = useUser();
   const { studentExams, isFetchingStudentExams } = useStudentExamsHistory({
     userId: user.id,
   });
+
   const navigate = useNavigate();
 
   const examColumns = studentExamsColumns();
@@ -43,7 +44,7 @@ function StudentExamsHistoryPage() {
     sortedExams,
   } = useExamFilters(
     examData,
-    [{ key: "status" }, { key: "subject" }, { key: "instructor_name" }],
+    [{ key: "status" }, { key: "subject" }, { key: "instructors" }],
     false,
   );
 

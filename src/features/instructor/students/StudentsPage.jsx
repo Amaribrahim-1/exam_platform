@@ -41,6 +41,7 @@ function StudentsPage() {
     { key: "email", label: "Email" },
     { key: "grade", label: "Grade" },
     { key: "department", label: "Department" },
+    { key: "exams_count", label: "Exams Taken" },
   ];
 
   if (isFetchingStudents) return <Loader />;

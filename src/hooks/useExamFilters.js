@@ -13,7 +13,7 @@ function useExamFilters(
   const sortBy = searchParams.get("sortBy") || "start_date-asc";
 
   const searchedExams = exams?.filter((exam) =>
-    exam[searchKey]?.toLowerCase().includes(search.toLowerCase()),
+    exam[searchKey].toLowerCase().includes(search.toLowerCase()),
   );
 
   const filteredExams = searchedExams?.filter((exam) => {
