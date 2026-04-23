@@ -12,7 +12,7 @@ import {
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import useCheckSubmitted from "../hooks/useCheckSubmitted";
-import { Briefcase, Building2, GraduationCap, LayoutGrid } from "lucide-react";
+import { GraduationCap, LayoutGrid } from "lucide-react";
 
 const difficultyConfig = {
   easy: { color: "bg-accent/20 text-accent", label: "Easy" },

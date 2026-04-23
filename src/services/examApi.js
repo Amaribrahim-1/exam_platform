@@ -41,9 +41,10 @@ export async function fetchExams() {
     .select("*")
     .eq("status", "active")
     .eq("grade", profile?.grade)
-    .or(`department.eq.${profile?.department},department.eq.General`);
+    .or(
+      `department.eq.${profile?.department.toLowerCase()},department.eq.General`,
+    );
 
-  console.log(exams);
   if (error) throw new Error(error.message);
 
   return exams;

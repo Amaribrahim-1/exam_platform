@@ -24,19 +24,18 @@ function BasicInfoStep({ onNext }) {
       : {},
   });
 
-  // Add department(optional) and grade(mandatory)
   // Add edit exam
 
   const { handleExamDetails } = useExamData();
 
   function onSubmit(data) {
     console.log(data);
-    // handleExamDetails({
-    //   ...data,
-    //   status: "draft",
-    //   instructorId: "d3608b52-2c2d-4b00-b898-2241f9329279",
-    // });
-    // onNext();
+    handleExamDetails({
+      ...data,
+      status: "draft",
+      instructorId: "d3608b52-2c2d-4b00-b898-2241f9329279",
+    });
+    onNext();
   }
 
   const inputClass = (fieldError) => `

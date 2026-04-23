@@ -15,8 +15,6 @@ function TrueFalseForm() {
   const questionToEdit =
     questions?.find((q) => q.id === editingQuestionId) || null;
 
-  console.log(questionToEdit);
-
   const {
     register,
     handleSubmit,

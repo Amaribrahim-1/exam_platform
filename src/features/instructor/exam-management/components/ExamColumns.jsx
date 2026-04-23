@@ -22,6 +22,8 @@ export const examColumns = (setDeletingId) => [
     ),
   },
   { key: "duration", label: "Duration" },
+  { key: "grade", label: "Grade" },
+  { key: "department", label: "Department" },
   {
     key: "status",
     label: "Status",
