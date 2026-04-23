@@ -27,6 +27,8 @@ function ExamsTable() {
 
   const { deleteExam, isDeleting } = useDeleteExam();
   const [deletingId, setDeletingId] = useState(null);
+  const [editingExamId, setEditingExamId] = useState(null);
+  const [editingExamData, setEditingExamData] = useState(null);
   const { updateStatus } = useUpdateStatus();
   const navigate = useNavigate();
 
@@ -61,13 +63,28 @@ function ExamsTable() {
     status: ["All", "Active", "Draft", "Closed"],
   };
 
-  const columns = examColumns(setDeletingId);
+  const columns = examColumns(
+    setDeletingId,
+    navigate,
+    setEditingExamId,
+    setEditingExamData,
+  );
   const examToDelete = instructorExams?.find((e) => e.id === deletingId);
+
+  useEffect(() => {
+    if (editingExamId) {
+      localStorage.setItem("editing-exam-id", editingExamId);
+      localStorage.setItem(
+        "editing-exam-details",
+        JSON.stringify(editingExamData),
+      );
+    }
+  }, [editingExamId, editingExamData]);
 
   useEffect(() => {
     // update status if end date is passed
     instructorExams?.forEach((e) => {
-      console.log(e.end_date < new Date());
+      e.end_date < new Date();
       if (e.status === "active" && new Date(e.end_date) < new Date()) {
         updateStatus(
           { examId: e.id, status: "closed" },

@@ -3,7 +3,7 @@ import supabase from "./supabase";
 export async function publishExam(examDetails, examQuestions) {
   const { data: examsInfo, error: detailsError } = await supabase
     .from("exams")
-    .insert([examDetails])
+    .upsert([examDetails])
     .select();
 
   if (detailsError) throw new Error(detailsError.message);
@@ -68,18 +68,18 @@ export async function fetchExam(examId) {
     .eq("id", examId)
     .single();
 
-  console.log(data);
+  data;
 
   if (error) throw new Error(error.message);
 
   return data;
 }
 
-export async function fetchExamQuestions(examId) {
+export async function fetchExamQuestions(editingExamId) {
   const { data, error } = await supabase
     .from("questions")
     .select("*")
-    .eq("exam_id", examId);
+    .eq("exam_id", editingExamId);
 
   if (error) throw new Error(error.message);
 

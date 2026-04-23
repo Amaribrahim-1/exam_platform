@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import Button from "../../../../components/Button";
 import FormRow from "../../../../components/FormRow";
 import { useExamData } from "../hooks/useExamData";
+import { formatDateForInput } from "@/Utils/formatDate";
 
 const GRADES = ["Grade 1", "Grade 2", "Grade 3", "Grade 4"];
 const DEPARTMENTS = [
@@ -13,23 +14,49 @@ const DEPARTMENTS = [
 const DIFFICULTIES = ["Easy", "Medium", "Hard"];
 
 function BasicInfoStep({ onNext }) {
+  const editingExamData =
+    JSON.parse(localStorage.getItem("editing-exam-details")) || null;
+
+  const editingExamDetails = editingExamData && {
+    title: editingExamData?.title,
+    subject: editingExamData?.subject,
+    duration: parseInt(editingExamData?.duration),
+    difficulty: editingExamData?.difficulty,
+    startDate: formatDateForInput(editingExamData?.start_date),
+    endDate: formatDateForInput(editingExamData?.end_date),
+    grade: editingExamData?.grade,
+    department: editingExamData?.department,
+  };
+
+  const examDetailsSaved =
+    JSON.parse(localStorage.getItem("exam-details")) || null;
+
+  const defaultValues = examDetailsSaved || editingExamDetails || {};
+
   const {
     register,
     formState: { errors },
     handleSubmit,
     reset,
   } = useForm({
-    values: localStorage.getItem("exam-details")
-      ? JSON.parse(localStorage.getItem("exam-details"))
-      : {},
+    values: defaultValues,
   });
-
-  // Add edit exam
+  // const {
+  //   register,
+  //   formState: { errors },
+  //   handleSubmit,
+  //   reset,
+  // } = useForm({
+  //   values: localStorage.getItem("exam-details")
+  //     ? JSON.parse(localStorage.getItem("exam-details"))
+  //     : editingExamData
+  //       ? editingExamDataED
+  //       : {},
+  // });
 
   const { handleExamDetails } = useExamData();
 
   function onSubmit(data) {
-    console.log(data);
     handleExamDetails({
       ...data,
       status: "draft",
@@ -177,6 +204,7 @@ function BasicInfoStep({ onNext }) {
                 endDate: "",
               });
               localStorage.removeItem("exam-details");
+              localStorage.removeItem("editing-exam-details");
             }}
           >
             Clear Data

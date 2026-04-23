@@ -11,7 +11,7 @@ export default function InstructorResultPage() {
     userId: user.id,
   });
 
-  console.log(examResults);
+  examResults;
 
   return (
     <ResultPage

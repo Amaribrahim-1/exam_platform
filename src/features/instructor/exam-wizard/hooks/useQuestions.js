@@ -2,10 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchExamQuestions } from "../../../../services/examApi";
 
 //
-function useQuestions() {
+function useQuestions(editingExamId) {
   const { data: questions, isPending: isFetchingQuestions } = useQuery({
-    queryKey: ["questions"],
-    queryFn: fetchExamQuestions("3e5563f5-760f-4eb2-b3e3-01c904e89385"),
+    queryKey: ["questions", editingExamId],
+    queryFn: () => fetchExamQuestions(editingExamId),
+    enabled: Boolean(editingExamId),
   });
 
   return { questions, isFetchingQuestions };
