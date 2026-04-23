@@ -7,6 +7,7 @@ function ExamActions({
   setSearchParams,
   onFilterOpen,
   isSortEnabled = true,
+  searchKey = "Title",
 }) {
   return (
     <div
@@ -17,7 +18,7 @@ function ExamActions({
         value={search}
         type='search'
         className={`bg-surface-2 p-md text-text text-md ${isSortEnabled ? "w-6/12" : "w-10/12 flex-1"} rounded-md font-medium sm:w-9/12`}
-        placeholder='Search By Title'
+        placeholder={`Search By ${searchKey}`}
       />
 
       {isSortEnabled && (

@@ -49,7 +49,7 @@ export async function submitExam(
   });
 
   // 3. احفظ النتيجة في الـ DB
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("exam_submissions")
     .insert([
       {
