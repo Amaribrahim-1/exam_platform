@@ -7,7 +7,6 @@ function useUpdateStatus() {
   const { mutate: updateStatus, isPending: isUpdating } = useMutation({
     mutationFn: ({ examId, status }) => updateExamStatus(examId, status),
     onSuccess: () => {
-      toast.success("Exam status updated successfully");
       queryClient.invalidateQueries({ queryKey: ["exams"] });
     },
     onError: () => {

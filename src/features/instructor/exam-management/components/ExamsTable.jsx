@@ -6,7 +6,7 @@ import Modal from "@/components/Modal";
 // import useExamFilters from "@/hooks/useExamFilters";
 import useExamFilters from "@/hooks/useExamFilters";
 import { formatDate } from "@/Utils/formatDate";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useDeleteExam from "../hooks/useDeleteExam";
 import useExams from "../../../../hooks/useExams";
@@ -15,6 +15,8 @@ import { examColumns } from "./ExamColumns";
 import FilterExamsModal from "./FilterExamsModal";
 import useUser from "@/features/auth/hooks/useUser";
 import Empty from "@/components/Empty";
+import useUpdateStatus from "../hooks/useUpdateStatus";
+import { toast } from "react-toastify";
 
 function ExamsTable() {
   const { user, isFetchingUser } = useUser();
@@ -22,6 +24,7 @@ function ExamsTable() {
   const { exams, isFetching } = useExams(user?.id);
   const { deleteExam, isDeleting } = useDeleteExam();
   const [deletingId, setDeletingId] = useState(null);
+  const { updateStatus } = useUpdateStatus();
   const navigate = useNavigate();
 
   const examData = exams?.map((exam) => ({
@@ -57,6 +60,23 @@ function ExamsTable() {
 
   const columns = examColumns(setDeletingId);
   const examToDelete = exams?.find((e) => e.id === deletingId);
+
+  useEffect(() => {
+    // update status if end date is passed
+    exams?.forEach((e) => {
+      console.log(e.end_date < new Date());
+      if (e.status === "active" && new Date(e.end_date) < new Date()) {
+        updateStatus(
+          { examId: e.id, status: "closed" },
+          {
+            onSuccess: () => {
+              toast.success("Expired exams have been updated");
+            },
+          },
+        );
+      }
+    });
+  }, [exams, updateStatus]);
 
   if (isFetching || !exams || isFetchingUser) return <Loader />;
 

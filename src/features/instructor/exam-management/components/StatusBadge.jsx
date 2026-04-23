@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import useUpdateStatus from "../hooks/useUpdateStatus";
 import { STATUS_LABELS, STATUS_STYLES } from "../../../../Utils/constants";
+import { toast } from "react-toastify";
 
 function StatusBadge({ value, examId }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +25,14 @@ function StatusBadge({ value, examId }) {
     setSelected(key);
     setIsOpen(false);
 
-    updateStatus({ examId, status: key });
+    updateStatus(
+      { examId, status: key },
+      {
+        onSuccess: () => {
+          toast.success("Exam status updated successfully");
+        },
+      },
+    );
   }
 
   return (
