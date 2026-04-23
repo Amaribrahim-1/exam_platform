@@ -1,10 +1,5 @@
-// import { useEffect } from "react";
-// import { Outlet, useNavigate } from "react-router-dom";
-// import useUser from "../features/auth/hooks/useUser";
-// import Loader from "./Loader";
-
-import useUser from "@/features/auth/hooks/useUser";
-import { Navigate, Outlet } from "react-router-dom";
+// import useUser from "@/features/auth/hooks/useUser";
+// import { Navigate, Outlet } from "react-router-dom";
 
 // const roleHomeMap = {
 //   admin: "/admin/dashboard",
@@ -14,25 +9,25 @@ import { Navigate, Outlet } from "react-router-dom";
 
 // function RoleRoute({ allowedRoles }) {
 //   const { user, isFetchingUser } = useUser();
-//   const navigate = useNavigate();
-
-//   useEffect(
-//     function () {
-//       if (!isFetchingUser && user && !allowedRoles.includes(user.role)) {
-//         navigate(roleHomeMap[user.role]);
-//       }
-//     },
-//     [user, isFetchingUser, navigate, allowedRoles],
-//   );
 
 //   if (isFetchingUser) return <Loader />;
 
-//   if (user && allowedRoles.includes(user.role)) return <Outlet />;
+//   // لو اليوزر داخل بس بيحاول يدخل صفحة مش بتاعته (مثلاً طالب داخل صفحة مدرس)
+//   if (user && !allowedRoles.includes(user.role)) {
+//     // وديه للداشبورد المناسبة لدوره فوراً
+//     return <Navigate to={roleHomeMap[user.role]} replace />;
+//   }
 
-//   return null;
+//   // لو اليوزر معاه الصلاحية، اعرض الصفحة
+//   return user && allowedRoles.includes(user.role) ? <Outlet /> : null;
 // }
 
 // export default RoleRoute;
+
+import useUser from "@/features/auth/hooks/useUser";
+import useStudentProfile from "@/features/student/profile/hooks/useStudentProfile";
+import { Navigate, Outlet } from "react-router-dom";
+import Loader from "@/components/Loader";
 
 const roleHomeMap = {
   admin: "/admin/dashboard",
@@ -42,16 +37,25 @@ const roleHomeMap = {
 
 function RoleRoute({ allowedRoles }) {
   const { user, isFetchingUser } = useUser();
+  const { profile, isFetchingProfile } = useStudentProfile(
+    user?.role === "student" ? user?.id : null,
+  );
 
-  if (isFetchingUser) return <Loader />;
+  if (isFetchingUser || (user?.role === "student" && isFetchingProfile))
+    return <Loader />;
 
-  // لو اليوزر داخل بس بيحاول يدخل صفحة مش بتاعته (مثلاً طالب داخل صفحة مدرس)
   if (user && !allowedRoles.includes(user.role)) {
-    // وديه للداشبورد المناسبة لدوره فوراً
     return <Navigate to={roleHomeMap[user.role]} replace />;
   }
 
-  // لو اليوزر معاه الصلاحية، اعرض الصفحة
+  if (
+    user?.role === "student" &&
+    profile &&
+    (!profile.grade || !profile.department)
+  ) {
+    return <Navigate to='/complete-profile' replace />;
+  }
+
   return user && allowedRoles.includes(user.role) ? <Outlet /> : null;
 }
 

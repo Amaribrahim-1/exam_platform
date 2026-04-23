@@ -12,7 +12,7 @@ import useInstructorHistory from "./hooks/useInstructorExamsHistory";
 
 function InstructorExamHistoryPage() {
   const { user } = useUser();
-  const { examResults, isFetchingResults } = useInstructorHistory(user.id);
+  const { examResults, isFetchingResults } = useInstructorHistory(user?.id);
 
   const columns = instructorHistoryColumns();
 

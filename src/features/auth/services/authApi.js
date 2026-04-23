@@ -41,6 +41,11 @@ export async function register(email, password, fullName, avatarFile) {
   if (registerError)
     throw new Error(registerError.message || "registration failed!");
 
+  // لو الإيميل موجود، Supabase بيرجع user بـ identities فاضية
+  if (credentials.user?.identities?.length === 0) {
+    throw new Error("Email already registered!");
+  }
+
   return {
     ...credentials,
     user: mapAuthUser(credentials.user),

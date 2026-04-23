@@ -44,6 +44,7 @@ import ExamSessionProvider from "./features/student/exam-session/context/ExamSes
 import ExamSessionPage from "./features/student/exam-session/ExamSessionPage";
 import StudentProfilePage from "./features/student/profile/StudentProfilePage";
 import StudentResultPage from "./features/student/results/StudentResultPage";
+import CompleteProfilePage from "./features/student/profile/CompleteProfilePage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -80,6 +81,8 @@ const router = createBrowserRouter([
   {
     element: <ProtectedRoute />,
     children: [
+      { path: "/complete-profile", element: <CompleteProfilePage /> },
+
       // Instructor
       {
         element: <RoleRoute allowedRoles={["instructor"]} />,

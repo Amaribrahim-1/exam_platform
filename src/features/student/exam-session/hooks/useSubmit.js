@@ -13,6 +13,7 @@ function useSubmit() {
     onSuccess: (_, { examId }) => {
       toast.success("Exam submitted successfully");
       queryClient.invalidateQueries({ queryKey: ["checkSubmitted"] });
+      queryClient.invalidateQueries({ queryKey: ["exams-history"] });
       navigate(`/student/exam-result/${examId}`);
     },
     onError: (error) => {
