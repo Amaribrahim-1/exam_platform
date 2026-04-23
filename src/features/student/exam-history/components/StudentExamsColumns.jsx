@@ -24,8 +24,10 @@ export function studentExamsColumns() {
       render: (value) => (
         <span
           className={`${
-            value === "Passed" ? "text-accent" : "text-danger"
-          } bg-accent/10 rounded-full px-2.5 py-1 font-medium uppercase transition-all`}
+            value === "Passed"
+              ? "text-accent bg-accent/10"
+              : "text-danger bg-danger/10"
+          } rounded-full px-2.5 py-1 font-medium uppercase transition-all`}
         >
           {value}
         </span>

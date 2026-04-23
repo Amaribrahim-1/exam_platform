@@ -4,7 +4,7 @@ function GenericTable({ columns, data }) {
   return (
     <div>
       {/* ===== Desktop: Table ===== */}
-      <div className='border-border bg-surface hidden rounded-md border px-6 py-3 sm:block'>
+      <div className='border-border bg-surface hidden rounded-md border px-4 py-3 lg:block'>
         <table className='w-full border-collapse'>
           {/* Header */}
           <thead className='bg-surface'>
@@ -12,7 +12,7 @@ function GenericTable({ columns, data }) {
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className='border-border text-primary border-b px-4 py-3 text-left text-[15px] font-bold tracking-wider uppercase'
+                  className='border-border text-primary border-b px-4 py-3 text-left text-[14px] font-bold tracking-wider uppercase'
                 >
                   {col.label}
                 </th>
@@ -39,7 +39,7 @@ function GenericTable({ columns, data }) {
       </div>
 
       {/* ===== Mobile: Cards ===== */}
-      <div className='flex flex-col gap-3 sm:hidden'>
+      <div className='flex flex-col gap-3 lg:hidden'>
         {data.map((row, rowIndex) => (
           <div
             key={rowIndex}

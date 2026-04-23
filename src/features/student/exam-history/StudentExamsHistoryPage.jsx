@@ -4,7 +4,7 @@ import GenericTable from "@/components/GenericTable";
 import Loader from "@/components/Loader";
 import { formatDate } from "@/Utils/formatDate";
 import { studentExamsColumns } from "./components/StudentExamsColumns";
-import useExamHistory from "./hooks/useExamHistory";
+import useStudentExamsHistory from "./hooks/useStudentExamsHistory";
 import useExamFilters from "@/hooks/useExamFilters";
 import ExamActions from "@/components/ExamActions";
 import Modal from "@/components/Modal";
@@ -13,9 +13,9 @@ import Empty from "@/components/Empty";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 
-function ExamHistoryPage() {
+function StudentExamsHistoryPage() {
   const { user } = useUser();
-  const { studentExams, isFetchingStudentExams } = useExamHistory({
+  const { studentExams, isFetchingStudentExams } = useStudentExamsHistory({
     userId: user.id,
   });
   const navigate = useNavigate();
@@ -130,4 +130,4 @@ function ExamHistoryPage() {
   );
 }
 
-export default ExamHistoryPage;
+export default StudentExamsHistoryPage;

@@ -18,7 +18,6 @@ import RoleRoute from "./components/RoleRoute";
 import DashboardPage from "./features/instructor/dashboard/DashboardPage";
 import ExamsManagementPage from "./features/instructor/exam-management/ExamManagementPage";
 import CreateExamPage from "./features/instructor/exam-wizard/CreateExamPage";
-import ExamResultsPage from "./features/instructor/results/ExamResultsPage";
 import StudentsPage from "./features/instructor/students/StudentsPage";
 
 import LoginForm from "./features/auth/components/LoginForm";
@@ -31,18 +30,20 @@ import ReportsPage from "./features/admin/reports/ReportsPage";
 import UserManagementPage from "./features/admin/user-management/UserManagementPage";
 
 // Student pages
+import Empty from "./components/Empty";
 import LandingPage from "./components/LandingPage";
+import EmailVerificationPage from "./features/auth/components/EmailVerificationPage";
 import ResetPasswordPage from "./features/auth/components/ResetPasswordPage";
+import InstructorExamHistoryPage from "./features/instructor/exam-history/InstructorExamHistoryPage";
+import InstructorProfilePage from "./features/instructor/profile/InstructorProfilePage";
+import InstructorResultPage from "./features/instructor/results/InstructorResultPage";
 import AvailableExamsPage from "./features/student/available-exams/AvailableExamsPage";
 import StudentDashboardPage from "./features/student/dashboard/StudentDashboardPage";
+import StudentExamsHistoryPage from "./features/student/exam-history/StudentExamsHistoryPage";
+import ExamSessionProvider from "./features/student/exam-session/context/ExamSessionContext";
 import ExamSessionPage from "./features/student/exam-session/ExamSessionPage";
 import StudentProfilePage from "./features/student/profile/StudentProfilePage";
 import StudentResultPage from "./features/student/results/StudentResultPage";
-import InstructorProfilePage from "./features/instructor/profile/InstructorProfilePage";
-import EmailVerificationPage from "./features/auth/components/EmailVerificationPage";
-import Empty from "./components/Empty";
-import ExamSessionProvider from "./features/student/exam-session/context/ExamSessionContext";
-import ExamHistoryPage from "./features/student/exam-history/ExamHistoryPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -99,7 +100,11 @@ const router = createBrowserRouter([
               },
               { path: "exams-management", element: <ExamsManagementPage /> },
               { path: "students", element: <StudentsPage /> },
-              { path: "results", element: <ExamResultsPage /> },
+              { path: "exams-history", element: <InstructorExamHistoryPage /> },
+              {
+                path: "exam-results/:submissionId",
+                element: <InstructorResultPage />,
+              },
               { path: "profile", element: <InstructorProfilePage /> },
             ],
           },
@@ -147,7 +152,7 @@ const router = createBrowserRouter([
                 path: "exam-result/:examId",
                 element: <StudentResultPage />,
               },
-              { path: "exam-history", element: <ExamHistoryPage /> },
+              { path: "exams-history", element: <StudentExamsHistoryPage /> },
               { path: "profile", element: <StudentProfilePage /> },
             ],
           },

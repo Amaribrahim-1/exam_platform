@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-function useExamFilters(exams, extraFilters = [], enableDurationSort = true) {
+function useExamFilters(
+  exams,
+  extraFilters = [],
+  enableDurationSort = true,
+  searchKey = "title",
+) {
   const [search, setSearch] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const sortBy = searchParams.get("sortBy") || "start_date-asc";
 
   const searchedExams = exams?.filter((exam) =>
-    exam.title.toLowerCase().includes(search.toLowerCase()),
+    exam[searchKey]?.toLowerCase().includes(search.toLowerCase()),
   );
 
   const filteredExams = searchedExams?.filter((exam) => {

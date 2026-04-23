@@ -1,14 +1,14 @@
-import { fetchExamResults } from "@/services/resultsApi";
+import { fetchExamsHistory } from "../services/studentExamsHistoryApi";
 import { useQuery } from "@tanstack/react-query";
 
-function useExamHistory({ userId }) {
+function useStudentExamsHistory({ userId }) {
   const { data: studentExams, isPending: isFetchingStudentExams } = useQuery({
     queryKey: ["exams-history"],
-    queryFn: () => fetchExamResults(userId),
+    queryFn: () => fetchExamsHistory(userId),
     enabled: Boolean(userId),
   });
 
   return { studentExams, isFetchingStudentExams };
 }
 
-export default useExamHistory;
+export default useStudentExamsHistory;

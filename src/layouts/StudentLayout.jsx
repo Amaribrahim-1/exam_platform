@@ -22,7 +22,7 @@ const studentNavItems = [
   },
   { to: "/student/exams", label: "Available Exams", icon: <BookOpen /> },
   {
-    to: "/student/exam-history",
+    to: "/student/exams-history",
     label: "Exam History",
     icon: <History />,
   },
