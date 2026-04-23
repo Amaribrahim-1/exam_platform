@@ -6,6 +6,7 @@ import {
   CirclePlus,
   CircleUser,
   ClipboardMinus,
+  History,
   LayoutDashboardIcon,
   UsersRound,
 } from "lucide-react";
@@ -28,9 +29,9 @@ const instructorNavItems = [
     icon: <BookOpen />,
   },
   {
-    to: "/instructor/results",
-    label: "Results & Reports",
-    icon: <ClipboardMinus />,
+    to: "/instructor/exams-history",
+    label: "History",
+    icon: <History />,
   },
   {
     to: "/instructor/students",

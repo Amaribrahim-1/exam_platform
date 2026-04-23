@@ -2,7 +2,6 @@ import { X } from "lucide-react";
 import { useState } from "react";
 
 const FilterExamsModal = ({
-  subjects,
   searchParams,
   setSearchParams,
   setIsFilterOpen,
