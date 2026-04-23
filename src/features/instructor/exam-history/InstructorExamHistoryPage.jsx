@@ -89,7 +89,7 @@ function InstructorExamHistoryPage() {
     );
 
   return (
-    <div className='gap-md flex flex-col'>
+    <div className='gap-lg flex flex-col'>
       <ExamActions
         search={search}
         setSearch={setSearch}

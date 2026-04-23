@@ -12,6 +12,7 @@ import {
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import useCheckSubmitted from "../hooks/useCheckSubmitted";
+import { Briefcase, Building2, GraduationCap, LayoutGrid } from "lucide-react";
 
 const difficultyConfig = {
   easy: { color: "bg-accent/20 text-accent", label: "Easy" },
@@ -138,6 +139,19 @@ function ExamCard({ exam, index }) {
         <span className='text-text-muted flex items-center gap-1.5 text-xs'>
           <FiUser size={11} />
           {exam.instructor_name}
+        </span>
+      </div>
+
+      {/* Grade & Department */}
+      <div className='flex items-center gap-3'>
+        <span className='text-text-muted flex items-center gap-1.5 text-xs'>
+          <GraduationCap size={11} />
+          {exam.grade}
+        </span>
+        <span className='text-border'>•</span>
+        <span className='text-text-muted flex items-center gap-1.5 text-xs'>
+          <LayoutGrid size={11} />
+          {exam.department}
         </span>
       </div>
 

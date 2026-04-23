@@ -24,18 +24,36 @@ export async function publishExam(examDetails, examQuestions) {
   return { examId, questions };
 }
 
-export async function fetchExams(instructorId = null) {
-  let query = supabase.from("exams").select("*");
+export async function fetchExams() {
+  const { data: user } = await supabase.auth.getUser();
+  const userId = user.user.id;
 
-  if (instructorId) query = query.eq("instructor_id", instructorId);
-  else {
-    const now = new Date().toISOString();
-    query = query
-      .eq("status", "active") // ← بس الـ active
-      .gte("end_date", now);
-  }
+  const { data: profile, error: profileError } = await supabase
+    .from("student_profiles")
+    .select("grade, department")
+    .eq("id", userId)
+    .single();
 
-  const { data, error } = await query;
+  if (profileError) throw new Error(profileError.message);
+
+  const { data: exams, error } = await supabase
+    .from("exams")
+    .select("*")
+    .eq("status", "active")
+    .eq("grade", profile?.grade)
+    .or(`department.eq.${profile?.department},department.eq.General`);
+
+  console.log(exams);
+  if (error) throw new Error(error.message);
+
+  return exams;
+}
+
+export async function fetchExamsPerInstructor(instructorId) {
+  const { data, error } = await supabase
+    .from("exams")
+    .select("*")
+    .eq("instructor_id", instructorId);
 
   if (error) throw new Error(error.message);
 

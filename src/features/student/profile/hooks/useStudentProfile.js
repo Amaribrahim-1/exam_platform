@@ -6,6 +6,7 @@ function useStudentProfile(userId) {
     queryKey: ["studentProfile", userId],
     queryFn: () => fetchStudentProfile(userId),
     enabled: !!userId,
+    retry: 1,
   });
 
   return { profile, isFetchingProfile };

@@ -4,30 +4,33 @@ import GenericTable from "@/components/GenericTable";
 import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
 // import useExamFilters from "@/hooks/useExamFilters";
+import Empty from "@/components/Empty";
+import useUser from "@/features/auth/hooks/useUser";
 import useExamFilters from "@/hooks/useExamFilters";
 import { formatDate } from "@/Utils/formatDate";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import useDeleteExam from "../hooks/useDeleteExam";
-import useExams from "../../../../hooks/useExams";
+import useUpdateStatus from "../hooks/useUpdateStatus";
 import DeleteExamModal from "./DeleteExamModal";
 import { examColumns } from "./ExamColumns";
 import FilterExamsModal from "./FilterExamsModal";
-import useUser from "@/features/auth/hooks/useUser";
-import Empty from "@/components/Empty";
-import useUpdateStatus from "../hooks/useUpdateStatus";
-import { toast } from "react-toastify";
+import useInstructorExams from "../hooks/useInstructorExams";
 
 function ExamsTable() {
   const { user, isFetchingUser } = useUser();
 
-  const { exams, isFetching } = useExams(user?.id);
+  const { instructorExams, isFetchingInstructorExams } = useInstructorExams(
+    user?.id,
+  );
+
   const { deleteExam, isDeleting } = useDeleteExam();
   const [deletingId, setDeletingId] = useState(null);
   const { updateStatus } = useUpdateStatus();
   const navigate = useNavigate();
 
-  const examData = exams?.map((exam) => ({
+  const examData = instructorExams?.map((exam) => ({
     ...exam,
     startDate: formatDate(exam.start_date),
     endDate: formatDate(exam.end_date),
@@ -59,11 +62,11 @@ function ExamsTable() {
   };
 
   const columns = examColumns(setDeletingId);
-  const examToDelete = exams?.find((e) => e.id === deletingId);
+  const examToDelete = instructorExams?.find((e) => e.id === deletingId);
 
   useEffect(() => {
     // update status if end date is passed
-    exams?.forEach((e) => {
+    instructorExams?.forEach((e) => {
       console.log(e.end_date < new Date());
       if (e.status === "active" && new Date(e.end_date) < new Date()) {
         updateStatus(
@@ -76,11 +79,12 @@ function ExamsTable() {
         );
       }
     });
-  }, [exams, updateStatus]);
+  }, [instructorExams, updateStatus]);
 
-  if (isFetching || !exams || isFetchingUser) return <Loader />;
+  if (isFetchingInstructorExams || !instructorExams || isFetchingUser)
+    return <Loader />;
 
-  if (!exams?.length)
+  if (!instructorExams?.length)
     return (
       <div className='flex h-full items-center justify-center p-6'>
         <Empty message='No exams found, create one now'>

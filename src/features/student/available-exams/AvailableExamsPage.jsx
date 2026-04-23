@@ -43,7 +43,7 @@ function AvailableExamsPage() {
 
   if (isFetching) return <Loader />;
 
-  if (sortedExams.length === 0) return <Empty title='No Available Exams' />;
+  if (exams?.length === 0) return <Empty message='No Available Exams' />;
 
   return (
     <div className='flex flex-col gap-6'>

@@ -47,6 +47,8 @@ function ReviewStep({ step, onBack }) {
       questions_count: questions.length,
       total_marks: questions.reduce((acc, q) => acc + q.marks, 0),
       status: "active",
+      grade: examDetails.grade,
+      department: examDetails.department,
     };
 
     const questionsToPublish = questions.map((q) => ({

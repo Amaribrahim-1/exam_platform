@@ -12,6 +12,7 @@ function useUpdateUser() {
       toast.success("User updated successfully");
       queryClient.invalidateQueries({ queryKey: ["user"] });
       queryClient.invalidateQueries({ queryKey: ["studentProfile"] });
+      queryClient.invalidateQueries({ queryKey: ["studentExams"] });
     },
     onError: () => {
       toast.error("Failed to update user");

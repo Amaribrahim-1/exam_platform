@@ -7,7 +7,6 @@ import Loader from "./Loader";
 
 function Profile({ extraFields = [], profileHook }) {
   const { user, isFetchingUser } = useUser();
-
   const { profile, isFetchingProfile } = profileHook(user?.id);
 
   const fullName = user?.fullName;

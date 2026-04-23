@@ -3,6 +3,15 @@ import Button from "../../../../components/Button";
 import FormRow from "../../../../components/FormRow";
 import { useExamData } from "../hooks/useExamData";
 
+const GRADES = ["Grade 1", "Grade 2", "Grade 3", "Grade 4"];
+const DEPARTMENTS = [
+  "General",
+  "computer science",
+  "information systems",
+  "information technology",
+];
+const DIFFICULTIES = ["Easy", "Medium", "Hard"];
+
 function BasicInfoStep({ onNext }) {
   const {
     register,
@@ -15,15 +24,19 @@ function BasicInfoStep({ onNext }) {
       : {},
   });
 
+  // Add department(optional) and grade(mandatory)
+  // Add edit exam
+
   const { handleExamDetails } = useExamData();
 
   function onSubmit(data) {
-    handleExamDetails({
-      ...data,
-      status: "draft",
-      instructorId: "d3608b52-2c2d-4b00-b898-2241f9329279",
-    });
-    onNext();
+    console.log(data);
+    // handleExamDetails({
+    //   ...data,
+    //   status: "draft",
+    //   instructorId: "d3608b52-2c2d-4b00-b898-2241f9329279",
+    // });
+    // onNext();
   }
 
   const inputClass = (fieldError) => `
@@ -49,7 +62,7 @@ function BasicInfoStep({ onNext }) {
           <FormRow label='Subject' error={errors.subject?.message} required>
             <input
               {...register("subject", { required: "Subject is required" })}
-              placeholder='Enter subject name'
+              placeholder='e.g. Data Structures'
               className={inputClass(errors.subject)}
             />
           </FormRow>
@@ -64,6 +77,7 @@ function BasicInfoStep({ onNext }) {
           >
             <input
               type='number'
+              placeholder='e.g. 60'
               min='1'
               {...register("duration", { required: "Required", min: 1 })}
               className={inputClass(errors.duration)}
@@ -78,11 +92,13 @@ function BasicInfoStep({ onNext }) {
             <select
               {...register("difficulty", { required: "Select difficulty" })}
               className={inputClass(errors.difficulty)}
+              placeholder='easy'
             >
-              <option value=''>Select level</option>
-              <option value='easy'>Easy</option>
-              <option value='medium'>Medium</option>
-              <option value='hard'>Hard</option>
+              {DIFFICULTIES.map((d) => (
+                <option key={d} value={d.toLowerCase()}>
+                  {d}
+                </option>
+              ))}
             </select>
           </FormRow>
         </div>
@@ -102,7 +118,6 @@ function BasicInfoStep({ onNext }) {
               className={inputClass(errors.startDate)}
             />
           </FormRow>
-
           <FormRow
             label='End Date & Time'
             error={errors.endDate?.message}
@@ -113,6 +128,38 @@ function BasicInfoStep({ onNext }) {
               {...register("endDate", { required: "Date & time is required" })}
               className={inputClass(errors.endDate)}
             />
+          </FormRow>
+
+          <FormRow label='Grade' error={errors.grade?.message} required>
+            <select
+              {...register("grade", { required: "Select Grade" })}
+              className={inputClass(errors.grade)}
+              placeholder='Grade 1'
+            >
+              {GRADES.map((g) => (
+                <option key={g} value={g}>
+                  {g}
+                </option>
+              ))}
+            </select>
+          </FormRow>
+
+          <FormRow
+            label='Department'
+            error={errors.department?.message}
+            required
+          >
+            <select
+              {...register("department", { required: "Select Department" })}
+              className={inputClass(errors.department)}
+              placeholder='General'
+            >
+              {DEPARTMENTS.map((d) => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
           </FormRow>
         </div>
 

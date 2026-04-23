@@ -29,6 +29,7 @@ function StudentProfilePage() {
               name: "department",
               label: "Department",
               options: [
+                "General",
                 "Computer Science",
                 "Information Systems",
                 "Information Technology",
