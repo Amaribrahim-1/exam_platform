@@ -1,5 +1,11 @@
+import StatsCards from "@/components/StatsCards";
+
 function StudentDashboardPage() {
-  return <div>StudentDashboardPage</div>;
+  return (
+    <div>
+      <StatsCards />
+    </div>
+  );
 }
 
 export default StudentDashboardPage;

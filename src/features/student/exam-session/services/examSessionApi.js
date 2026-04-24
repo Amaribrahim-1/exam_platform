@@ -60,7 +60,12 @@ export async function submitExam(
         full_mark: fullMark,
         reason, // "manual" | "time_up" | "cheat"
         // is_passed: totalScore >= Math.round(fullMark / 2),
-        status: totalScore >= Math.round(fullMark / 2) ? "Passed" : "Failed",
+        status:
+          reason === "cheat"
+            ? "Failed"
+            : totalScore >= Math.round(fullMark / 2)
+              ? "Passed"
+              : "Failed",
         time_taken: timeTaken,
         submitted_at: new Date().toISOString(),
       },
