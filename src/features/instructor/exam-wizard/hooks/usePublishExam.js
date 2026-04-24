@@ -20,7 +20,8 @@ function usePublishExam() {
     onSuccess: () => {
       toast.success("Exam published successfully!");
       navigate("/instructor/exams-management");
-      queryClient.invalidateQueries({ queryKey: ["exams"] });
+      queryClient.invalidateQueries({ queryKey: ["instructorExams"] });
+      queryClient.invalidateQueries({ queryKey: ["studentExams"] });
       clearExamData();
     },
     onError: (error) => {

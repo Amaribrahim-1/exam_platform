@@ -40,7 +40,7 @@ function QuestionCard() {
 
       {/* Marks Badge */}
       <span className='mb-md border-warning/20 bg-warning/10 px-sm py-xs text-warning inline-block rounded-full border font-mono text-[11px]'>
-        {question?.marks}
+        {question?.marks} pts
       </span>
 
       {/* Options List */}

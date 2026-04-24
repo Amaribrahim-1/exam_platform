@@ -6,10 +6,10 @@ function useExams() {
     queryKey: ["studentExams"],
     queryFn: fetchExams,
 
-    retry: 1,
-    refetchIntervalInBackground: false,
-    refetchInterval: 10000,
-    refetchOnWindowFocus: true,
+    retry: 2,
+    // refetchIntervalInBackground: false,
+    // refetchInterval: 10000,
+    // refetchOnWindowFocus: true,
   });
 
   return { exams, isFetching };
