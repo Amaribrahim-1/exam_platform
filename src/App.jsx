@@ -15,7 +15,7 @@ import StudentLayout from "./layouts/StudentLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RoleRoute from "./components/RoleRoute";
 
-import DashboardPage from "./features/instructor/dashboard/DashboardPage";
+import DashboardPage from "./features/instructor/dashboard/InstructorDashboardPage";
 import ExamsManagementPage from "./features/instructor/exam-management/ExamManagementPage";
 import CreateExamPage from "./features/instructor/exam-wizard/CreateExamPage";
 import StudentsPage from "./features/instructor/students/StudentsPage";

@@ -13,6 +13,10 @@ export async function getStudentDashboardStats(userId) {
 
   const totalExams = data.length;
 
+  if (totalExams === 0) {
+    return { totalExams: 0, averageScore: 0, highestScore: 0, passRate: 0 };
+  }
+
   const highestScore = Math.round(
     Math.max(...data.map((s) => (s.total_score / s.full_mark) * 100)),
   );

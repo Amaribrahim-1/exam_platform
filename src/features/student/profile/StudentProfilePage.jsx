@@ -45,7 +45,7 @@ function StudentProfilePage() {
           <UpdatePasswordForm />
 
           {/* Academic Stats */}
-          <AcademicStats />
+          {/* <AcademicStats /> */}
         </div>
       </div>
     </div>

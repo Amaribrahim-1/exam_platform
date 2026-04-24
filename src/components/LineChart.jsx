@@ -13,7 +13,10 @@ const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
     <div className='bg-surface-2 border-border rounded-xl border px-4 py-3 shadow-lg'>
-      <p className='text-text-muted mb-1 text-xs'>{label}</p>
+      <p className='text-text-muted mb-1 text-xs'>
+        {" "}
+        {payload[0].payload.title ?? payload[0].payload.date}
+      </p>
       <p className='font-display text-primary text-xl font-semibold'>
         {payload[0].value}%
       </p>
@@ -51,7 +54,14 @@ const CustomDot = (props) => {
   );
 };
 
-function LineChart({ data = [], isLoading }) {
+function LineChart({
+  data = [],
+  isLoading,
+  xKey = "date",
+  yKey = "score",
+  title = " Performance Over Time",
+  subtitle = "Score trend across recent exams",
+}) {
   if (isLoading) return <Loader />;
   return (
     <div className='bg-surface border-border relative h-full overflow-hidden rounded-2xl border p-5 sm:p-6'>
@@ -60,11 +70,9 @@ function LineChart({ data = [], isLoading }) {
 
       <div className='relative'>
         <h3 className='font-display text-text text-sm font-semibold sm:text-base'>
-          Performance Over Time
+          {title}
         </h3>
-        <p className='text-text-muted mt-0.5 mb-5 text-xs'>
-          Score trend across recent exams
-        </p>
+        <p className='text-text-muted mt-0.5 mb-5 text-xs'>{subtitle}</p>
 
         <ResponsiveContainer width='100%' height={240}>
           <AreaChart
@@ -86,7 +94,7 @@ function LineChart({ data = [], isLoading }) {
             />
 
             <XAxis
-              dataKey='date'
+              dataKey={xKey}
               tick={{
                 fill: "#7B82A8",
                 fontSize: 11,
@@ -94,12 +102,16 @@ function LineChart({ data = [], isLoading }) {
               }}
               axisLine={false}
               tickLine={false}
-              padding={{ left: 20, right: 20 }}
+              padding={{ left: 30, right: 30 }}
               interval='preserveStartEnd'
+              tickFormatter={(v) =>
+                v.length > 10 ? `${v.slice(0, 10)}...` : v
+              }
             />
 
             <YAxis
               domain={[0, 100]}
+              ticks={[0, 20, 40, 60, 80, 100]}
               tick={{
                 fill: "#7B82A8",
                 fontSize: 11,
@@ -108,7 +120,7 @@ function LineChart({ data = [], isLoading }) {
               axisLine={false}
               tickLine={false}
               tickFormatter={(v) => `${v}%`}
-              width={38}
+              width={45}
             />
 
             <Tooltip
@@ -122,7 +134,7 @@ function LineChart({ data = [], isLoading }) {
 
             <Area
               type='monotone'
-              dataKey='score'
+              dataKey={yKey}
               stroke='#6C8EF5'
               strokeWidth={2}
               fill='url(#lineAreaGrad)'

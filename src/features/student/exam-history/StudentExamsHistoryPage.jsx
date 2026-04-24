@@ -28,7 +28,7 @@ function StudentExamsHistoryPage() {
     title: exam.exams.title,
     subject: exam.exams.subject,
     instructorName: exam.exams.instructor_name,
-    difficulty: exam.exams.difficulty,
+    difficulty: exam.exams.difficulty.toLowerCase(),
     score: `${Math.round((exam.total_score / exam.full_mark) * 100)} %`,
     timeTaken: formatTime(exam.time_taken),
     submittedAt: formatDate(exam.submitted_at),

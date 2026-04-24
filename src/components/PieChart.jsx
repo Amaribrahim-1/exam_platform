@@ -7,12 +7,6 @@ import {
 } from "recharts";
 import Loader from "./Loader";
 
-const DATA_CONFIG = [
-  { key: "correct", name: "Correct", hex: "#5ECFB1" },
-  { key: "wrong", name: "Wrong", hex: "#E05C6A" },
-  { key: "skipped", name: "Skipped", hex: "#7B82A8" },
-];
-
 const CustomTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null;
   return (
@@ -54,7 +48,13 @@ const renderCustomLabel = ({
   );
 };
 
-function PieChart({ data, isLoading }) {
+function PieChart({
+  DATA_CONFIG,
+  data,
+  isLoading,
+  title = "Answers Breakdown",
+  subtitle = "Distribution by outcome",
+}) {
   if (isLoading) return <Loader />;
   const chartData = DATA_CONFIG.map((config) => ({
     ...config,
@@ -69,11 +69,9 @@ function PieChart({ data, isLoading }) {
 
       <div className='relative'>
         <h3 className='font-display text-text text-sm font-semibold sm:text-base'>
-          Answers Breakdown
+          {title}
         </h3>
-        <p className='text-text-muted mt-0.5 mb-5 text-xs'>
-          Distribution by outcome
-        </p>
+        <p className='text-text-muted mt-0.5 mb-5 text-xs'>{subtitle}</p>
 
         {/* Pie + legend stacked on mobile, side-by-side on sm+ */}
         <div className='flex flex-col items-center gap-5 sm:flex-row sm:items-center'>
@@ -85,12 +83,12 @@ function PieChart({ data, isLoading }) {
                   data={chartData}
                   cx='50%'
                   cy='50%'
-                  innerRadius={51}
-                  outerRadius={75}
+                  innerRadius={52}
+                  outerRadius={76}
                   dataKey='value'
                   strokeWidth={0}
                   labelLine={false}
-                  label={renderCustomLabel}
+                  // label={renderCustomLabel}
                   isAnimationActive
                   animationBegin={400}
                   animationDuration={900}

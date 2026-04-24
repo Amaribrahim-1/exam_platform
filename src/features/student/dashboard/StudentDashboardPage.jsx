@@ -2,6 +2,7 @@ import LineChart from "@/components/LineChart";
 import PieChart from "@/components/PieChart";
 import StatsCards from "@/components/StatsCards";
 import RecentExamsTable from "./components/RecentExamsTable";
+import { ANSWERS_DATA_CONFIG, STUDENT_STATS_CONFIG } from "./constants";
 import useStudentAnswerStats from "./hooks/useStudentAnswerStats";
 import useStudentPerformance from "./hooks/useStudentPerformance";
 import useStudentStats from "./hooks/useStudentStats";
@@ -38,7 +39,11 @@ function StudentDashboardPage() {
         </div>
       </div>
 
-      <StatsCards stats={studentStats} isLoading={isStudentStatsFetching} />
+      <StatsCards
+        STATS_CONFIG={STUDENT_STATS_CONFIG}
+        stats={studentStats}
+        isLoading={isStudentStatsFetching}
+      />
 
       <div className='grid grid-cols-1 gap-6 lg:grid-cols-3'>
         <div className='lg:col-span-2'>
@@ -49,6 +54,7 @@ function StudentDashboardPage() {
         </div>
         <div className='lg:col-span-1'>
           <PieChart
+            DATA_CONFIG={ANSWERS_DATA_CONFIG}
             data={studentAnswerStats}
             isLoading={isStudentAnswerStatsFetching}
           />

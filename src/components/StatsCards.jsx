@@ -1,54 +1,6 @@
-import { TrendingUp, BookOpen, Trophy, CheckCircle } from "lucide-react";
 import Loader from "./Loader";
 
-const STATS_CONFIG = [
-  {
-    key: "totalExams",
-    label: "Total Exams",
-    icon: BookOpen,
-    color: "text-primary",
-    bg: "bg-primary/10",
-    border: "border-primary/60",
-    glow: "hover:shadow-[0_8px_32px_rgba(108,142,245,0.15)]",
-    accent: "before:bg-primary",
-    format: (v) => v,
-  },
-  {
-    key: "averageScore",
-    label: "Average Score",
-    icon: TrendingUp,
-    color: "text-[#60C8F5]",
-    bg: "bg-[#60C8F5]/10",
-    border: "border-[#60C8F5]/60",
-    glow: "hover:shadow-[0_8px_32px_rgba(96,200,245,0.15)]",
-    accent: "before:bg-[#60C8F5]",
-    format: (v) => `${v}%`,
-  },
-  {
-    key: "highestScore",
-    label: "Highest Score",
-    icon: Trophy,
-    color: "text-warning",
-    bg: "bg-warning/10",
-    border: "border-warning/60",
-    glow: "hover:shadow-[0_8px_32px_rgba(245,166,35,0.15)]",
-    accent: "before:bg-warning",
-    format: (v) => `${v}%`,
-  },
-  {
-    key: "passRate",
-    label: "Pass Rate",
-    icon: CheckCircle,
-    color: "text-accent",
-    bg: "bg-accent/10",
-    border: "border-accent/60",
-    glow: "hover:shadow-[0_8px_32px_rgba(94,207,177,0.15)]",
-    accent: "before:bg-accent",
-    format: (v) => `${v}%`,
-  },
-];
-
-function StatsCards({ stats, isLoading }) {
+function StatsCards({ STATS_CONFIG, stats, isLoading }) {
   if (isLoading) return <Loader />;
   return (
     <div className='grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4'>
@@ -93,11 +45,6 @@ function StatsCards({ stats, isLoading }) {
           >
             {config.format(stats?.[config.key] ?? 0)}
           </div>
-
-          {/* Trend */}
-          <p className={`mt-2 text-[11px] ${config.trendColor}`}>
-            {config.trend}
-          </p>
         </div>
       ))}
     </div>

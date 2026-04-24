@@ -30,7 +30,7 @@ const instructorNavItems = [
   },
   {
     to: "/instructor/exams-history",
-    label: "History",
+    label: "Exams History",
     icon: <History />,
   },
   {

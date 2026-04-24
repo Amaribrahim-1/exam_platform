@@ -8,6 +8,7 @@ function useStudentStats() {
     queryKey: ["studentStats", user?.id],
     queryFn: () => getStudentDashboardStats(user?.id),
     enabled: Boolean(user?.id),
+    retry: 2,
   });
 
   return { studentStats, isStudentStatsFetching };

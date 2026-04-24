@@ -3,7 +3,7 @@ import supabase from "./supabase";
 export async function publishExam(examDetails, examQuestions) {
   const { data: examsInfo, error: detailsError } = await supabase
     .from("exams")
-    .upsert([examDetails])
+    .insert([examDetails])
     .select();
 
   if (detailsError) throw new Error(detailsError.message);
