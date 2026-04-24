@@ -33,3 +33,48 @@ export async function getStudentDashboardStats(userId) {
     passRate,
   };
 }
+
+export async function getStudentPerformanceOverTime(userId) {
+  const { data, error } = await supabase
+    .from("exam_submissions")
+    .select("total_score, full_mark, submitted_at")
+    .eq("user_id", userId)
+    .not("total_score", "is", null)
+    .not("full_mark", "is", null)
+    .gt("full_mark", 0)
+    .order("submitted_at", { ascending: true });
+
+  if (error) throw new Error(error.message);
+
+  return data.map((s) => ({
+    date: new Date(s.submitted_at).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    }),
+    score: Math.round((s.total_score / s.full_mark) * 100),
+  }));
+}
+
+export async function getStudentAnswerStats(userId) {
+  const { data, error } = await supabase
+    .from("exam_submissions")
+    .select("answers")
+    .eq("user_id", userId)
+    .not("answers", "is", null);
+
+  if (error) throw new Error(error.message);
+
+  let correct = 0;
+  let wrong = 0;
+  let skipped = 0;
+
+  data.forEach((submission) => {
+    submission.answers.forEach((answer) => {
+      if (answer.chosen_option_index === null) skipped++;
+      else if (answer.is_correct) correct++;
+      else wrong++;
+    });
+  });
+
+  return { correct, wrong, skipped };
+}
