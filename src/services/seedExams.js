@@ -1,0 +1,226 @@
+import { publishExam } from "./examApi";
+
+const mockExams = [
+  {
+    examDetails: {
+      instructor_id: "d8dbca27-68a5-4e71-84c8-7f61f51b2c37",
+      instructor_name: "Dr. Ahmed",
+      title: "Mathematics Final Exam",
+      subject: "Mathematics",
+      start_date: new Date("2026-04-25T09:00:00").toISOString(),
+      end_date: new Date("2026-04-25T11:00:00").toISOString(),
+      duration: 120,
+      difficulty: "hard",
+      questions_count: 10,
+      total_marks: 30,
+      status: "active",
+      grade: "Grade 3",
+      department: "General",
+    },
+    examQuestions: [
+      {
+        question: "What is 2 + 2?",
+        options: ["3", "4", "5", "6"],
+        correct_answer_index: 1,
+        type: "mcq",
+        marks: 3,
+      },
+      {
+        question: "What is 10 / 2?",
+        options: ["3", "4", "5", "6"],
+        correct_answer_index: 2,
+        type: "mcq",
+        marks: 3,
+      },
+      {
+        question: "Is 7 a prime number?",
+        options: ["True", "False"],
+        correct_answer_index: 0,
+        type: "true_false",
+        marks: 3,
+      },
+    ],
+  },
+  {
+    examDetails: {
+      instructor_id: "d8dbca27-68a5-4e71-84c8-7f61f51b2c37",
+      instructor_name: "Dr. Sara",
+      title: "Physics Mid-term",
+      subject: "Physics",
+      start_date: new Date("2026-04-26T10:00:00").toISOString(),
+      end_date: new Date("2026-04-26T11:30:00").toISOString(),
+      duration: 90,
+      difficulty: "medium",
+      questions_count: 10,
+      total_marks: 30,
+      status: "active",
+      grade: "Grade 3",
+      department: "General",
+    },
+    examQuestions: [
+      {
+        question: "What is Newton's first law?",
+        options: ["Inertia", "Gravity", "Motion", "Force"],
+        correct_answer_index: 0,
+        type: "mcq",
+        marks: 3,
+      },
+      {
+        question: "Is light a wave?",
+        options: ["True", "False"],
+        correct_answer_index: 0,
+        type: "true_false",
+        marks: 3,
+      },
+      {
+        question: "What is the speed of light?",
+        options: ["300km/s", "3000km/s", "300,000km/s", "30km/s"],
+        correct_answer_index: 2,
+        type: "mcq",
+        marks: 3,
+      },
+    ],
+  },
+  {
+    examDetails: {
+      instructor_id: "d8dbca27-68a5-4e71-84c8-7f61f51b2c37",
+      instructor_name: "Dr. Mohamed",
+      title: "Data Structures Quiz",
+      subject: "Computer Science",
+      start_date: new Date("2026-04-27T09:00:00").toISOString(),
+      end_date: new Date("2026-04-27T10:00:00").toISOString(),
+      duration: 60,
+      difficulty: "medium",
+      questions_count: 10,
+      total_marks: 30,
+      status: "active",
+      grade: "Grade 3",
+      department: "General",
+    },
+    examQuestions: [
+      {
+        question: "What is a stack?",
+        options: ["FIFO", "LIFO", "Random", "None"],
+        correct_answer_index: 1,
+        type: "mcq",
+        marks: 3,
+      },
+      {
+        question: "Is an array a data structure?",
+        options: ["True", "False"],
+        correct_answer_index: 0,
+        type: "true_false",
+        marks: 3,
+      },
+      {
+        question: "What is Big O of binary search?",
+        options: ["O(n)", "O(log n)", "O(n²)", "O(1)"],
+        correct_answer_index: 1,
+        type: "mcq",
+        marks: 3,
+      },
+    ],
+  },
+  {
+    examDetails: {
+      instructor_id: "d8dbca27-68a5-4e71-84c8-7f61f51b2c37",
+      instructor_name: "Dr. Nour",
+      title: "Database Systems Exam",
+      subject: "Databases",
+      start_date: new Date("2026-04-28T11:00:00").toISOString(),
+      end_date: new Date("2026-04-28T13:00:00").toISOString(),
+      duration: 120,
+      difficulty: "hard",
+      questions_count: 10,
+      total_marks: 30,
+      status: "active",
+      grade: "Grade 3",
+      department: "information systems",
+    },
+    examQuestions: [
+      {
+        question: "What does SQL stand for?",
+        options: [
+          "Structured Query Language",
+          "Simple Query Language",
+          "Standard Query Logic",
+          "None",
+        ],
+        correct_answer_index: 0,
+        type: "mcq",
+        marks: 3,
+      },
+      {
+        question: "Is a primary key unique?",
+        options: ["True", "False"],
+        correct_answer_index: 0,
+        type: "true_false",
+        marks: 3,
+      },
+      {
+        question: "What is a foreign key?",
+        options: [
+          "A key from another table",
+          "A duplicate key",
+          "An index",
+          "None",
+        ],
+        correct_answer_index: 0,
+        type: "mcq",
+        marks: 3,
+      },
+    ],
+  },
+  {
+    examDetails: {
+      instructor_id: "d8dbca27-68a5-4e71-84c8-7f61f51b2c37",
+      instructor_name: "Dr. Khaled",
+      title: "Networking Fundamentals",
+      subject: "Networking",
+      start_date: new Date("2026-04-29T09:00:00").toISOString(),
+      end_date: new Date("2026-04-29T10:30:00").toISOString(),
+      duration: 90,
+      difficulty: "easy",
+      questions_count: 10,
+      total_marks: 30,
+      status: "active",
+      grade: "Grade 3",
+      department: "General",
+    },
+    examQuestions: [
+      {
+        question: "What does IP stand for?",
+        options: [
+          "Internet Protocol",
+          "Internal Process",
+          "Input Port",
+          "None",
+        ],
+        correct_answer_index: 0,
+        type: "mcq",
+        marks: 3,
+      },
+      {
+        question: "Is HTTP a protocol?",
+        options: ["True", "False"],
+        correct_answer_index: 0,
+        type: "true_false",
+        marks: 3,
+      },
+      {
+        question: "What is a subnet mask?",
+        options: ["A network divider", "A firewall", "A router", "An IP"],
+        correct_answer_index: 0,
+        type: "mcq",
+        marks: 3,
+      },
+    ],
+  },
+];
+
+export async function seedExams() {
+  for (const exam of mockExams) {
+    await publishExam(exam.examDetails, exam.examQuestions);
+  }
+  console.log("5 exams seeded successfully");
+}

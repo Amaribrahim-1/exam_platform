@@ -62,19 +62,24 @@ function RecentExamsTable() {
   const recentExamsColumns = [
     { key: "title", label: "Exam Title" },
     { key: "instructor", label: "Instructor" },
+    { key: "score", label: "Score" },
     {
-      key: "difficulty",
-      label: "Difficulty",
+      key: "reason",
+      label: "Reason",
       render: (value) => (
         <span
-          className={`${DIFFICULTY_STYLES[value]} rounded-full px-4 py-1 font-medium uppercase transition-all`}
+          className={`${
+            value === "manual"
+              ? "text-primary bg-primary/10"
+              : value === "cheat"
+                ? "text-danger bg-danger/10"
+                : "text-warning bg-warning/10"
+          } rounded-full px-2.5 py-1 font-medium uppercase transition-all`}
         >
-          {DIFFICULTY_LABELS[value]}
+          {value ?? "—"}
         </span>
       ),
     },
-    { key: "score", label: "Score" },
-    { key: "timeTaken", label: "Time" },
     {
       key: "status",
       label: "Status",
@@ -90,6 +95,7 @@ function RecentExamsTable() {
         </span>
       ),
     },
+    { key: "timeTaken", label: "Time" },
     { key: "submittedAt", label: "Submitted At" },
     {
       key: "actions",
@@ -108,7 +114,7 @@ function RecentExamsTable() {
   const recentExamsData = recentExams?.map((exam) => ({
     title: exam.exams.title,
     instructor: exam.exams.instructor_name,
-    difficulty: exam.exams.difficulty,
+    reason: exam.reason,
     submittedAt: formatDate(exam.submitted_at),
     timeTaken: formatTime(exam.time_taken),
     status: exam.status,

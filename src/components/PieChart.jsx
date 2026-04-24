@@ -42,10 +42,10 @@ const renderCustomLabel = ({
     <text
       x={x}
       y={y}
-      fill='rgba(232,234,246,0.85)'
+      fill='rgb(255, 255, 255)'
       textAnchor='middle'
       dominantBaseline='central'
-      fontSize={11}
+      fontSize={12}
       fontFamily='JetBrains Mono'
       fontWeight={500}
     >
@@ -85,8 +85,8 @@ function PieChart({ data, isLoading }) {
                   data={chartData}
                   cx='50%'
                   cy='50%'
-                  innerRadius={52}
-                  outerRadius={72}
+                  innerRadius={51}
+                  outerRadius={75}
                   dataKey='value'
                   strokeWidth={0}
                   labelLine={false}

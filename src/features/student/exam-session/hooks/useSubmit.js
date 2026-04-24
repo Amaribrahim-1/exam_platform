@@ -14,6 +14,11 @@ function useSubmit() {
       toast.success("Exam submitted successfully");
       queryClient.invalidateQueries({ queryKey: ["checkSubmitted"] });
       queryClient.invalidateQueries({ queryKey: ["exams-history"] });
+
+      queryClient.invalidateQueries({ queryKey: ["studentStats"] });
+      queryClient.invalidateQueries({ queryKey: ["studentPerformance"] });
+      queryClient.invalidateQueries({ queryKey: ["studentAnswerStats"] });
+      queryClient.invalidateQueries({ queryKey: ["recentExams"] });
       navigate(`/student/exam-result/${examId}`);
     },
     onError: (error) => {

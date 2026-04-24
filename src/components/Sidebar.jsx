@@ -1,7 +1,7 @@
 import useUser from "@/features/auth/hooks/useUser";
 import { GraduationCap, X } from "lucide-react";
 import { NavLink, useLocation, useParams } from "react-router-dom";
-import { seedExams } from "../services/examApi";
+import { seedExams } from "../services/seedExams";
 import SidebarLink from "./SidebarLink";
 
 function Sidebar({ isOpen, onClose, navItems }) {
@@ -76,9 +76,9 @@ function Sidebar({ isOpen, onClose, navItems }) {
         {pageTitle && (
           <button
             className='p-xs hover:text-primary bg-surface-2 border-border px-md py-md mb-lg text-text text-md cursor-pointer rounded-lg border font-bold transition-colors'
-            onClick={() => seedExams(10)}
+            onClick={() => seedExams()}
           >
-            Generate 10 Fake Exams
+            Generate 5 Fake Exams
           </button>
         )}
 

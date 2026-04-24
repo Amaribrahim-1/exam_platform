@@ -37,6 +37,7 @@ function ExamsTable() {
     startDate: formatDate(exam.start_date),
     endDate: formatDate(exam.end_date),
     duration: `${exam.duration} min`,
+    difficulty: exam.difficulty?.toLowerCase(),
   }));
 
   const {
