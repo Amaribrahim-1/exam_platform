@@ -17,7 +17,6 @@ export function studentExamsColumns() {
       ),
     },
     { key: "score", label: "Score" },
-    { key: "submittedAt", label: "Submitted At" },
     {
       key: "status",
       label: "Status",
@@ -33,6 +32,8 @@ export function studentExamsColumns() {
         </span>
       ),
     },
+    { key: "timeTaken", label: "Time" },
+    { key: "submittedAt", label: "Submitted At" },
     {
       key: "actions",
       label: "Actions",

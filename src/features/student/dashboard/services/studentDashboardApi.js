@@ -83,7 +83,7 @@ export async function recentExams(userId) {
   const { data: recentExams, error } = await supabase
     .from("exam_submissions")
     .select(
-      "status, total_score, full_mark, submitted_at, exams(id, title, instructor_name)",
+      "status, total_score, full_mark, submitted_at, time_taken, exams(id, title, instructor_name, difficulty)",
     )
     .order("submitted_at", { ascending: false })
     .limit(5)

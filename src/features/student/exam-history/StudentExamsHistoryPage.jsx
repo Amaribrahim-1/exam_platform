@@ -12,6 +12,7 @@ import { formatDate } from "@/Utils/formatDate";
 import { useNavigate } from "react-router-dom";
 import { studentExamsColumns } from "./components/StudentExamsColumns";
 import useStudentExamsHistory from "./hooks/useStudentExamsHistory";
+import { formatTime } from "@/Utils/formatTime";
 
 function StudentExamsHistoryPage() {
   const { user } = useUser();
@@ -29,6 +30,7 @@ function StudentExamsHistoryPage() {
     instructorName: exam.exams.instructor_name,
     difficulty: exam.exams.difficulty,
     score: `${Math.round((exam.total_score / exam.full_mark) * 100)} %`,
+    timeTaken: formatTime(exam.time_taken),
     submittedAt: formatDate(exam.submitted_at),
     status: exam.status,
     id: exam.exams.id,

@@ -49,6 +49,8 @@ import useRecentExams from "../hooks/useRecentExams";
 import Loader from "@/components/Loader";
 import GenericTable from "@/components/GenericTable";
 import { Link } from "react-router-dom";
+import { DIFFICULTY_LABELS, DIFFICULTY_STYLES } from "@/Utils/constants";
+import { formatTime } from "@/Utils/formatTime";
 
 function RecentExamsTable() {
   const { recentExams, isRecentExamsFetching } = useRecentExams();
@@ -60,7 +62,19 @@ function RecentExamsTable() {
   const recentExamsColumns = [
     { key: "title", label: "Exam Title" },
     { key: "instructor", label: "Instructor" },
+    {
+      key: "difficulty",
+      label: "Difficulty",
+      render: (value) => (
+        <span
+          className={`${DIFFICULTY_STYLES[value]} rounded-full px-4 py-1 font-medium uppercase transition-all`}
+        >
+          {DIFFICULTY_LABELS[value]}
+        </span>
+      ),
+    },
     { key: "score", label: "Score" },
+    { key: "timeTaken", label: "Time" },
     {
       key: "status",
       label: "Status",
@@ -94,7 +108,9 @@ function RecentExamsTable() {
   const recentExamsData = recentExams?.map((exam) => ({
     title: exam.exams.title,
     instructor: exam.exams.instructor_name,
+    difficulty: exam.exams.difficulty,
     submittedAt: formatDate(exam.submitted_at),
+    timeTaken: formatTime(exam.time_taken),
     status: exam.status,
     score: `${Math.round((exam.total_score / exam.full_mark) * 100)}%`,
     id: exam.exams.id,
