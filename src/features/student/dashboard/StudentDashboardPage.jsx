@@ -1,10 +1,10 @@
 import LineChart from "@/components/LineChart";
 import PieChart from "@/components/PieChart";
 import StatsCards from "@/components/StatsCards";
-import useStudentStats from "./hooks/useStudentStats";
-import useStudentPerformance from "./hooks/useStudentPerformance";
+import RecentExamsTable from "./components/RecentExamsTable";
 import useStudentAnswerStats from "./hooks/useStudentAnswerStats";
-import Loader from "@/components/Loader";
+import useStudentPerformance from "./hooks/useStudentPerformance";
+import useStudentStats from "./hooks/useStudentStats";
 
 function StudentDashboardPage() {
   const { studentStats, isStudentStatsFetching } = useStudentStats();
@@ -18,14 +18,6 @@ function StudentDashboardPage() {
     day: "numeric",
     year: "numeric",
   });
-
-  if (
-    isStudentStatsFetching ||
-    isStudentPerformanceFetching ||
-    isStudentAnswerStatsFetching
-  ) {
-    return <Loader />;
-  }
 
   return (
     <div className='flex flex-col gap-6 p-4 sm:p-6'>
@@ -46,15 +38,25 @@ function StudentDashboardPage() {
         </div>
       </div>
 
-      <StatsCards stats={studentStats} />
+      <StatsCards stats={studentStats} isLoading={isStudentStatsFetching} />
 
       <div className='grid grid-cols-1 gap-6 lg:grid-cols-3'>
         <div className='lg:col-span-2'>
-          <LineChart data={studentPerformance} />
+          <LineChart
+            data={studentPerformance}
+            isLoading={isStudentPerformanceFetching}
+          />
         </div>
         <div className='lg:col-span-1'>
-          <PieChart data={studentAnswerStats} />
+          <PieChart
+            data={studentAnswerStats}
+            isLoading={isStudentAnswerStatsFetching}
+          />
         </div>
+      </div>
+
+      <div>
+        <RecentExamsTable />
       </div>
     </div>
   );

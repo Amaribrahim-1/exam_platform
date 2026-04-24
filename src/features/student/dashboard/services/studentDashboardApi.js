@@ -78,3 +78,18 @@ export async function getStudentAnswerStats(userId) {
 
   return { correct, wrong, skipped };
 }
+
+export async function recentExams(userId) {
+  const { data: recentExams, error } = await supabase
+    .from("exam_submissions")
+    .select(
+      "status, total_score, full_mark, submitted_at, exams(id, title, instructor_name)",
+    )
+    .order("submitted_at", { ascending: false })
+    .limit(5)
+    .eq("user_id", userId);
+
+  if (error) throw new Error(error.message);
+
+  return recentExams;
+}

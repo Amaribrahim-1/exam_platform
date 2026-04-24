@@ -1,4 +1,5 @@
 import { TrendingUp, BookOpen, Trophy, CheckCircle } from "lucide-react";
+import Loader from "./Loader";
 
 const STATS_CONFIG = [
   {
@@ -47,7 +48,8 @@ const STATS_CONFIG = [
   },
 ];
 
-function StatsCards({ stats }) {
+function StatsCards({ stats, isLoading }) {
+  if (isLoading) return <Loader />;
   return (
     <div className='grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4'>
       {STATS_CONFIG.map((config, i) => (

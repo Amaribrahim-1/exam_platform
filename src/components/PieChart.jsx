@@ -5,6 +5,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import Loader from "./Loader";
 
 const DATA_CONFIG = [
   { key: "correct", name: "Correct", hex: "#5ECFB1" },
@@ -53,7 +54,8 @@ const renderCustomLabel = ({
   );
 };
 
-function PieChart({ data }) {
+function PieChart({ data, isLoading }) {
+  if (isLoading) return <Loader />;
   const chartData = DATA_CONFIG.map((config) => ({
     ...config,
     value: data?.[config.key] ?? 0,

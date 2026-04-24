@@ -7,6 +7,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import Loader from "./Loader";
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
@@ -50,7 +51,8 @@ const CustomDot = (props) => {
   );
 };
 
-function LineChart({ data = [] }) {
+function LineChart({ data = [], isLoading }) {
+  if (isLoading) return <Loader />;
   return (
     <div className='bg-surface border-border relative h-full overflow-hidden rounded-2xl border p-5 sm:p-6'>
       {/* BG glow */}
