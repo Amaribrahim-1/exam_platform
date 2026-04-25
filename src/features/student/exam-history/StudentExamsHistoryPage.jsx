@@ -17,7 +17,7 @@ import { formatTime } from "@/Utils/formatTime";
 function StudentExamsHistoryPage() {
   const { user } = useUser();
   const { studentExams, isFetchingStudentExams } = useStudentExamsHistory({
-    userId: user.id,
+    userId: user?.id,
   });
 
   const navigate = useNavigate();
@@ -73,6 +73,8 @@ function StudentExamsHistoryPage() {
     status: ["All", "Passed", "Failed"],
   };
 
+  const examsCount = studentExams?.length;
+
   if (isFetchingStudentExams || !studentExams) return <Loader />;
 
   if (!studentExams?.length)
@@ -92,7 +94,16 @@ function StudentExamsHistoryPage() {
     );
 
   return (
-    <div className='gap-md flex flex-col'>
+    <div className='flex flex-col gap-6'>
+      <div>
+        <h1 className='font-display text-text text-2xl font-semibold'>
+          Exam History
+        </h1>
+        <p className='text-text-muted mt-1 text-sm'>
+          {examsCount} {examsCount === 1 ? "summission" : "summissions"} found
+        </p>
+      </div>
+
       <ExamActions
         search={search}
         setSearch={setSearch}

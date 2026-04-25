@@ -13,8 +13,8 @@ function useDeleteExam() {
       queryClient.invalidateQueries({ queryKey: ["exams"] });
     },
 
-    onError: () => {
-      toast.error("Failed to delete exam");
+    onError: (error) => {
+      toast.error(error.message || "Failed to delete exam");
     },
   });
 

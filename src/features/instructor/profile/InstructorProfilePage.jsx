@@ -39,7 +39,7 @@ function InstructorProfilePage() {
           <UpdatePasswordForm />
 
           {/* Academic Stats */}
-          <AcademicStats />
+          {/* <AcademicStats /> */}
         </div>
       </div>
     </div>

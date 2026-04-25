@@ -1,14 +1,32 @@
-import { formatDate } from "@/Utils/formatDate";
-import useRecentExams from "../hooks/useRecentExams";
-import Loader from "@/components/Loader";
 import GenericTable from "@/components/GenericTable";
-import { Link } from "react-router-dom";
-import { formatTime } from "@/Utils/formatTime";
+import Loader from "@/components/Loader";
+import { formatDate } from "@/Utils/formatDate";
+import { Link, useNavigate } from "react-router-dom";
+import useRecentExams from "../hooks/useRecentExams";
+import Button from "@/components/Button";
+import Empty from "@/components/Empty";
 
 function RecentExamsTable() {
   const { recentExams, isRecentExamsFetching } = useRecentExams();
+  const navigate = useNavigate();
 
   if (isRecentExamsFetching) return <Loader />;
+
+  if (recentExams?.length === 0 || !recentExams)
+    return (
+      <div className='bg-surface border-border relative overflow-hidden rounded-2xl border'>
+        <Empty message='No recent exams available, Create one now'>
+          <Button
+            onClick={() => navigate("/instructor/exam-wizard")}
+            variation='primary'
+            size='md'
+            className='shadow-glow mt-8 transition-transform hover:scale-105'
+          >
+            Create Exam
+          </Button>
+        </Empty>
+      </div>
+    );
 
   const recentExamsColumns = [
     { key: "title", label: "Exam Title" },

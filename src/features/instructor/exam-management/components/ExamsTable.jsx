@@ -64,6 +64,8 @@ function ExamsTable() {
     status: ["All", "Active", "Draft", "Closed"],
   };
 
+  const examsCount = sortedExams?.length;
+
   const columns = examColumns(
     setDeletingId,
     navigate,
@@ -123,8 +125,12 @@ function ExamsTable() {
       <div className='flex items-center justify-between'>
         <div className='space-y-1'>
           <h1 className='text-2xl font-bold'>Exam Management</h1>
-          <p className='text-text-muted'>
+          {/* <p className='text-text-muted'>
             Manage, edit, and track all your exams.
+          </p> */}
+          <p className='text-text-muted mt-1 text-sm'>
+            {examsCount} {examsCount === 1 ? "exam" : "exams"} found, let's
+            manage them
           </p>
         </div>
         <Button

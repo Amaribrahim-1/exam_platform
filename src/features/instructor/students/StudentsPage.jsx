@@ -36,20 +36,36 @@ function StudentsPage() {
     return matchSearch && matchGrade && matchDepartment;
   });
 
+  const studentsCount = filteredStudents?.length;
+
   const columns = [
     { key: "full_name", label: "Name" },
     { key: "email", label: "Email" },
     { key: "grade", label: "Grade" },
     { key: "department", label: "Department" },
-    { key: "exams_count", label: "Exams Taken" },
+    { key: "exams_count", label: "Exams" },
+    { key: "average_score", label: "Avg Score", render: (v) => `${v}%` },
+    { key: "highest_score", label: "Highest", render: (v) => `${v}%` },
+    { key: "pass_rate", label: "Pass Rate", render: (v) => `${v}%` },
   ];
 
   if (isFetchingStudents) return <Loader />;
 
-  if (students.length === 0) return <Empty message='No Students Found' />;
+  if (!students?.length) return <Empty message='No Students Found' />;
 
   return (
-    <div className='bg-bg flex min-h-screen flex-col gap-7'>
+    <div className='bg-bg flex min-h-screen flex-col gap-6'>
+      <div>
+        <h1 className='font-display text-text text-2xl font-semibold'>
+          Students List
+        </h1>
+        {/* <p className='text-text-muted mt-1 text-sm'>
+          Browse and filter your students
+        </p> */}
+        <p className='text-text-muted mt-1 text-sm'>
+          {studentsCount} {studentsCount === 1 ? "student" : "students"} found
+        </p>
+      </div>
       <div className={`flex items-center gap-2 sm:gap-4`}>
         <input
           onChange={(e) => setSearch(e.target.value)}

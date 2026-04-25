@@ -7,15 +7,9 @@ import PieChart from "@/components/PieChart";
 import RecentExamsTable from "./components/RecentExamsTable";
 
 function InstructorDashboardPage() {
-  // Total Exams Created
-  // Total Submissions
-  // Average Score
-  // Total Users
   const { instructorStats, isInstructorStatsFetching } = useInstructorStats();
   const { instructorExamsPerformance, isInstructorExamsPerformanceFetching } =
     useInstructorExamsPerformance();
-
-  console.log(instructorStats);
 
   const date = new Date().toLocaleDateString("en-US", {
     month: "short",

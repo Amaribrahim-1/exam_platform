@@ -11,8 +11,9 @@ function QuestionCard() {
     totalQuestions,
     flagged,
   } = useExam();
-  const question = examSession?.questions.at(currentQ);
-  const isFlagged = flagged[question.id];
+  // const question = examSession?.questions.at(currentQ);
+  const question = examSession?.questions.find((q, i) => i === currentQ);
+  const isFlagged = flagged[question?.id] || false;
 
   const LETTERS = ["A", "B", "C", "D"];
 

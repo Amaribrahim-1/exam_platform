@@ -140,6 +140,7 @@ function BasicInfoStep({ onNext }) {
               type='datetime-local'
               {...register("startDate", {
                 required: "Date & time is required",
+                setValueAs: (v) => (v ? new Date(v).toISOString() : v),
               })}
               className={inputClass(errors.startDate)}
             />
@@ -151,7 +152,10 @@ function BasicInfoStep({ onNext }) {
           >
             <input
               type='datetime-local'
-              {...register("endDate", { required: "Date & time is required" })}
+              {...register("endDate", {
+                required: "Date & time is required",
+                setValueAs: (v) => (v ? new Date(v).toISOString() : v),
+              })}
               className={inputClass(errors.endDate)}
             />
           </FormRow>

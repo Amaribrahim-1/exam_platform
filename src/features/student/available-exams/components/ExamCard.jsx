@@ -54,8 +54,8 @@ function ExamCard({ exam, index }) {
   const { user } = useUser();
 
   const { alreadySubmitted } = useCheckSubmitted({
-    examId: exam.id,
-    userId: user.id,
+    examId: exam?.id,
+    userId: user?.id,
   });
 
   const status = getExamStatus(exam, alreadySubmitted);
@@ -196,10 +196,11 @@ function ExamCard({ exam, index }) {
 
       {/* Button */}
       <motion.button
+        disabled={status === "upcoming"}
         onClick={handleClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.97 }}
-        className='bg-primary/10 hover:bg-primary text-primary border-primary/30 hover:border-primary mt-auto flex w-full cursor-pointer items-center justify-center gap-2 rounded-[8px] border py-2.5 text-sm font-medium transition-all duration-200 hover:text-white'
+        className={`bg-primary/10 hover:bg-primary text-primary border-primary/30 hover:border-primary ${status === "upcoming" ? "cursor-not-allowed opacity-50" : "cursor-pointer"} mt-auto flex w-full items-center justify-center gap-2 rounded-[8px] border py-2.5 text-sm font-medium transition-all duration-200 hover:text-white`}
       >
         {alreadySubmitted ? "View Result" : "Start Exam"}
         <FiArrowRight

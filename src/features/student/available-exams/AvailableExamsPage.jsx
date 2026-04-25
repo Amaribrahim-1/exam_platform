@@ -6,9 +6,13 @@ import FilterExamsModal from "@/features/instructor/exam-management/components/F
 import ExamActions from "@/components/ExamActions";
 import useExamFilters from "@/hooks/useExamFilters";
 import Empty from "@/components/Empty";
+import useUser from "@/features/auth/hooks/useUser";
+import useStudentProfile from "../profile/hooks/useStudentProfile";
 
 function AvailableExamsPage() {
   const { exams, isFetching } = useExams();
+  const { user } = useUser();
+  const { profile, isFetchingProfile } = useStudentProfile(user?.id);
 
   const {
     search,
@@ -41,6 +45,15 @@ function AvailableExamsPage() {
     instructor_name: instructor_names,
   };
 
+  console.log(sortedExams);
+
+  const examsCount = sortedExams?.filter(
+    (e) =>
+      e.status === "active" &&
+      (e.department === profile?.department || e.department === "General") &&
+      e.grade === profile?.grade,
+  ).length;
+
   if (isFetching) return <Loader />;
 
   if (exams?.length === 0) return <Empty message='No Available Exams' />;
@@ -51,10 +64,9 @@ function AvailableExamsPage() {
         <h1 className='text-text font-display text-2xl font-semibold'>
           Available Exams
         </h1>
-        {/* <p className='text-text-muted mt-1 text-sm'>
-          {exams.filter((e) => e.status === "active").length} exams available
-          for you
-        </p> */}
+        <p className='text-text-muted mt-1 text-sm'>
+          {examsCount} {examsCount === 1 ? "exam" : "exams"} available for you
+        </p>
       </div>
 
       <ExamActions
@@ -87,9 +99,12 @@ function AvailableExamsPage() {
         <Empty message='No Available Exams' />
       ) : (
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-          {sortedExams?.map((exam, index) => (
-            <ExamCard key={exam.id} exam={exam} index={index} />
-          ))}
+          {sortedExams?.map(
+            (exam, index) =>
+              (exam.status === "active" || exam.status === "upcoming") && (
+                <ExamCard key={exam.id} exam={exam} index={index} />
+              ),
+          )}
         </div>
       )}
     </div>

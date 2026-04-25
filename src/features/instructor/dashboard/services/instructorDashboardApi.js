@@ -73,6 +73,7 @@ export async function getInstructorExamsPerformance(userId) {
     .gt("full_mark", 0);
 
   if (submissionsError) throw new Error(submissionsError.message);
+  if (submissions.length === 0) return [];
 
   return exams.map((exam) => {
     const examSubmissions = submissions.filter((s) => s.exam_id === exam.id);
@@ -97,30 +98,6 @@ export async function getInstructorExamsPerformance(userId) {
     };
   });
 }
-
-// export async function recentExams(userId) {
-//   const { data: exams, error: examsError } = await supabase
-//     .from("exams")
-//     .select("id")
-//     .eq("instructor_id", userId);
-
-//   if (examsError) throw new Error(examsError.message);
-
-//   const examIds = exams.map((e) => e.id);
-
-//   const { data: submissions, error: submissionsError } = await supabase
-//     .from("exam_submissions")
-//     .select(
-//       "status, total_score, full_mark, submitted_at, time_taken, reason, exams(id, title, instructor_name)",
-//     )
-//     .in("exam_id", examIds)
-//     .order("submitted_at", { ascending: false })
-//     .limit(5);
-
-//   if (submissionsError) throw new Error(submissionsError.message);
-
-//   return submissions;
-// }
 
 export async function recentExams(userId) {
   const { data, error } = await supabase

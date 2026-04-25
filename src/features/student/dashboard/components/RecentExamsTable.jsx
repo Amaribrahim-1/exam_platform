@@ -2,16 +2,34 @@ import { formatDate } from "@/Utils/formatDate";
 import useRecentExams from "../hooks/useRecentExams";
 import Loader from "@/components/Loader";
 import GenericTable from "@/components/GenericTable";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DIFFICULTY_LABELS, DIFFICULTY_STYLES } from "@/Utils/constants";
 import { formatTime } from "@/Utils/formatTime";
+import Empty from "@/components/Empty";
+import Button from "@/components/Button";
 
 function RecentExamsTable() {
   const { recentExams, isRecentExamsFetching } = useRecentExams();
-
+  const navigate = useNavigate();
   if (isRecentExamsFetching) {
     return <Loader />;
   }
+
+  if (recentExams?.length === 0)
+    return (
+      <div className='bg-surface border-border relative overflow-hidden rounded-2xl border'>
+        <Empty message='No recent exams available, Take one now'>
+          <Button
+            onClick={() => navigate("/student/exams")}
+            variation='primary'
+            size='md'
+            className='shadow-glow mt-8 transition-transform hover:scale-105'
+          >
+            Take Exam
+          </Button>
+        </Empty>
+      </div>
+    );
 
   const recentExamsColumns = [
     { key: "title", label: "Exam Title" },

@@ -19,7 +19,7 @@ function InstructorExamHistoryPage() {
   const examData = examResults?.map((exam) => ({
     title: exam.title,
     subject: exam.subject,
-    difficulty: exam.difficulty,
+    difficulty: exam.difficulty.toLowerCase(),
     studentName: exam.student_name,
     department: exam.department,
     grade: exam.grade,
@@ -79,6 +79,8 @@ function InstructorExamHistoryPage() {
     ],
   };
 
+  const examsCount = examResults?.length;
+
   if (isFetchingResults || !examResults) return <Loader />;
 
   if (!examResults?.length)
@@ -90,6 +92,14 @@ function InstructorExamHistoryPage() {
 
   return (
     <div className='gap-lg flex flex-col'>
+      <div>
+        <h1 className='font-display text-text text-2xl font-semibold'>
+          Exam History
+        </h1>
+        <p className='text-text-muted mt-1 text-sm'>
+          {examsCount} {examsCount === 1 ? "summission" : "summissions"} found
+        </p>
+      </div>
       <ExamActions
         search={search}
         setSearch={setSearch}

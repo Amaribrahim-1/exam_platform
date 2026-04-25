@@ -12,6 +12,14 @@ function Navbar({ onMenuClick }) {
   const location = useLocation();
   const isExamSession = examId && !location.pathname.includes("exam-result");
 
+  // const greetings = {
+  //   student: "Welcome back, Good luck on your exams today!",
+  //   instructor: "Welcome back, Ready to manage your exams today?",
+  //   admin: "Welcome back!",
+  // };
+
+  // const greeting = "Welcome back!";
+
   return (
     <header className='border-border bg-surface px-md md:px-xl py-sm gap-md md:gap-lg flex items-center border-b md:col-span-1'>
       {/* Mobile Menu Button */}
@@ -29,7 +37,7 @@ function Navbar({ onMenuClick }) {
           {/* Name and Role */}
           <div className='flex flex-col text-right'>
             <span className='text-text text-base leading-none font-bold'>
-              Amar Ibrahim
+              {user?.fullName}
             </span>
           </div>
 

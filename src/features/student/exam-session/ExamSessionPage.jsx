@@ -42,12 +42,13 @@ function ExamSessionPage() {
     handleSubmit("cheat");
   }, [handleSubmit]);
 
-  useAntiCheat({
-    examId: isExamSession ? examId : null,
-    onViolation: handleViolation,
-    maxViolations: 3,
-    onAutoSubmit: handleAutoSubmit,
-  });
+  // Upcoming handle
+  // useAntiCheat({
+  //   examId: isExamSession ? examId : null,
+  //   onViolation: handleViolation,
+  //   maxViolations: 3,
+  //   onAutoSubmit: handleAutoSubmit,
+  // });
 
   if (isFetchingExamSession) return <Loader />;
 

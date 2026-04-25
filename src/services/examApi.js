@@ -87,6 +87,18 @@ export async function fetchExamQuestions(editingExamId) {
 }
 
 export async function deleteExam(examId) {
+  const { count, error: checkError } = await supabase
+    .from("exam_submissions")
+    .select("*", { count: "exact", head: true })
+    .eq("exam_id", examId);
+
+  if (checkError) throw new Error(checkError.message);
+
+  if (count > 0)
+    throw new Error(
+      "This exam has submissions. Change its status to Draft or Ended instead.",
+    );
+
   const { error: questionsError } = await supabase
     .from("questions")
     .delete()
@@ -106,56 +118,6 @@ export async function updateExamStatus(examId, newStatus) {
     .eq("id", examId)
     .select()
     .single();
-
-  if (error) throw new Error(error.message);
-
-  return data;
-}
-
-// Fake Exams to test
-export async function seedExams(count = 5) {
-  const { data: user, error: usersError } = await supabase.auth.getUser();
-  const instructorId = user.user.id;
-
-  if (usersError) throw new Error(usersError.message);
-  if (!instructorId) return;
-
-  const subjects = [
-    "Data Structures",
-    "Operating Systems",
-    "Algorithms",
-    "Database",
-    "React JS",
-  ];
-  const difficulties = ["easy", "medium", "hard"];
-
-  const dummyExams = Array.from({ length: count }).map((_, i) => {
-    // توليد تاريخ عشوائي يبدأ من دلوقتي ولمدة 10 أيام قدام
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() + Math.floor(Math.random() * 10));
-
-    const endDate = new Date(startDate);
-    endDate.setHours(endDate.getHours() + 2); // الامتحان مدته ساعتين دايماً في التست
-
-    return {
-      title: `${subjects[Math.floor(Math.random() * subjects.length)]} Quiz #${i + 1}`,
-      subject: subjects[Math.floor(Math.random() * subjects.length)],
-      start_date: startDate.toISOString(),
-      end_date: endDate.toISOString(),
-      duration: Math.floor(Math.random() * 60) + 30, // بين 30 و 90 دقيقة
-      difficulty: difficulties[Math.floor(Math.random() * difficulties.length)],
-      status: "active",
-      instructor_id: instructorId, // الـ ID اللي إنت شغال بيه
-      instructor_name: `Instructor ${i + 1}`,
-      questions_count: Math.floor(Math.random() * 20) + 10,
-      total_marks: Math.floor(Math.random() * 100) + 50,
-    };
-  });
-
-  const { data, error } = await supabase
-    .from("exams")
-    .insert(dummyExams)
-    .select();
 
   if (error) throw new Error(error.message);
 
