@@ -4,6 +4,7 @@ import { INSTRUCTOR_PIE_CONFIG, INSTRUCTOR_STATS_CONFIG } from "./constantns";
 import useInstructorExamsPerformance from "./hooks/useInstructorExamsPerformance";
 import LineChart from "@/components/LineChart";
 import PieChart from "@/components/PieChart";
+import RecentExamsTable from "./components/RecentExamsTable";
 
 function InstructorDashboardPage() {
   // Total Exams Created
@@ -69,9 +70,10 @@ function InstructorDashboardPage() {
         </div>
       </div>
 
-      {/* <div>
+      <div>
+        {/* // Delete Nav, add logout to sidebar, add Avg Score Passed to instructor students  */}
         <RecentExamsTable />
-      </div> */}
+      </div>
     </div>
   );
 }

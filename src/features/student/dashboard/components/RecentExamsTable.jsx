@@ -1,49 +1,3 @@
-// import { formatDate } from "@/Utils/formatDate";
-// import useRecentExams from "../hooks/useRecentExams";
-// import Loader from "@/components/Loader";
-// import GenericTable from "@/components/GenericTable";
-
-// function RecentExamsTable() {
-//   const { recentExams, isRecentExamsFetching } = useRecentExams();
-
-//   if (isRecentExamsFetching) {
-//     return <Loader />;
-//   }
-
-//   const recentExamsColumns = [
-//     { key: "title", label: "Exam title" },
-//     { key: "instructor", label: "Instructor" },
-//     { key: "score", label: "Score" },
-//     {
-//       key: "status",
-//       label: "Status",
-//       render: (value) => (
-//         <span
-//           className={`${
-//             value === "Passed"
-//               ? "text-accent bg-accent/10"
-//               : "text-danger bg-danger/10"
-//           } rounded-full px-2.5 py-1 font-medium uppercase transition-all`}
-//         >
-//           {value}
-//         </span>
-//       ),
-//     },
-//     { key: "submittedAt", label: "Submitted At" },
-//   ];
-
-//   const recentExamsData = recentExams?.map((exam) => ({
-//     title: exam.exams.title,
-//     instructor: exam.exams.instructor_name,
-//     submittedAt: formatDate(exam.submitted_at),
-//     status: exam.status,
-//     score: `${Math.round((exam.total_score / exam.full_mark) * 100)} %`,
-//   }));
-
-//   return <GenericTable columns={recentExamsColumns} data={recentExamsData} />;
-// }
-
-// export default RecentExamsTable;
 import { formatDate } from "@/Utils/formatDate";
 import useRecentExams from "../hooks/useRecentExams";
 import Loader from "@/components/Loader";
@@ -114,11 +68,11 @@ function RecentExamsTable() {
   const recentExamsData = recentExams?.map((exam) => ({
     title: exam.exams.title,
     instructor: exam.exams.instructor_name,
+    score: `${Math.round((exam.total_score / exam.full_mark) * 100)}%`,
+    status: exam.status,
     reason: exam.reason,
     submittedAt: formatDate(exam.submitted_at),
     timeTaken: formatTime(exam.time_taken),
-    status: exam.status,
-    score: `${Math.round((exam.total_score / exam.full_mark) * 100)}%`,
     id: exam.exams.id,
   }));
 

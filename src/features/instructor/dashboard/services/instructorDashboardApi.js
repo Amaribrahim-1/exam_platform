@@ -97,3 +97,41 @@ export async function getInstructorExamsPerformance(userId) {
     };
   });
 }
+
+// export async function recentExams(userId) {
+//   const { data: exams, error: examsError } = await supabase
+//     .from("exams")
+//     .select("id")
+//     .eq("instructor_id", userId);
+
+//   if (examsError) throw new Error(examsError.message);
+
+//   const examIds = exams.map((e) => e.id);
+
+//   const { data: submissions, error: submissionsError } = await supabase
+//     .from("exam_submissions")
+//     .select(
+//       "status, total_score, full_mark, submitted_at, time_taken, reason, exams(id, title, instructor_name)",
+//     )
+//     .in("exam_id", examIds)
+//     .order("submitted_at", { ascending: false })
+//     .limit(5);
+
+//   if (submissionsError) throw new Error(submissionsError.message);
+
+//   return submissions;
+// }
+
+export async function recentExams(userId) {
+  const { data, error } = await supabase
+    .from("exam_results_view")
+    .select(
+      "id, title, student_name, department, grade, status, total_score, full_mark, score_percentage, reason, submitted_at, user_id, exam_id",
+    )
+    .eq("instructor_id", userId)
+    .order("submitted_at", { ascending: false })
+    .limit(5);
+
+  if (error) throw new Error(error.message);
+  return data;
+}
