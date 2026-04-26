@@ -936,7 +936,9 @@ function HeroSection() {
               pointerEvents: "none",
             }}
           />
-          <HeroIllustration />
+          <div className='hp-hero-float'>
+            <HeroIllustration />
+          </div>
         </div>
       </div>
 

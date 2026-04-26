@@ -74,3 +74,28 @@
     --hp-duration-md: 400ms;
     --hp-duration-lg: 700ms;
 }
+
+@keyframes hp-hero-float {
+
+    0%,
+    100% {
+        transform: translate3d(0, -12px, 0);
+    }
+
+    50% {
+        transform: translate3d(0, 12px, 0);
+    }
+}
+
+.hp-hero-float {
+    width: min(100%, 500px);
+    animation: hp-hero-float 3.6s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.hp-hero-float>svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
