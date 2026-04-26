@@ -42,7 +42,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
             <GraduationCap size={50} />
             <div className='flex flex-col items-start'>
               <h1 className='text-primary flex items-center justify-center rounded-md text-xl font-bold'>
-                Clarify
+              Exam.io
               </h1>
               <p className='text-primary-faint text-xs font-medium'>
                 {role === "student"

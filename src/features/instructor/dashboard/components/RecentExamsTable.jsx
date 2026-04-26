@@ -91,7 +91,7 @@ function RecentExamsTable() {
 
   return (
     <div className='bg-surface border-border relative overflow-hidden rounded-2xl border'>
-      <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(108,142,245,0.05)_0%,transparent_70%)]' />
+      <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(212,175,88,0.05)_0%,transparent_70%)]' />
 
       <div className='relative flex items-center justify-between px-5 py-4 sm:px-6'>
         <div>

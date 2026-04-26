@@ -51,7 +51,7 @@ function GenericTable({ columns, data }) {
                 className='border-border flex items-center justify-between border-b py-2 text-sm last:border-0'
               >
                 {/* Label على الشمال */}
-                <span className='text-muted min-w-25'>{col.label}</span>
+                <span className='text-text-muted min-w-25'>{col.label}</span>
 
                 {/* Value على اليمين */}
                 <span className='text-text text-right'>

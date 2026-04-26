@@ -34,7 +34,7 @@ const CustomDot = (props) => {
           cx={cx}
           cy={cy}
           r={10}
-          fill='#6C8EF5'
+          fill='var(--color-primary)'
           opacity={0.12}
           style={{ animation: "pulseRing 2s ease-in-out infinite" }}
         />
@@ -43,8 +43,8 @@ const CustomDot = (props) => {
         cx={cx}
         cy={cy}
         r={isLast ? 5 : 4}
-        fill={isLast ? "#6C8EF5" : "#0F1117"}
-        stroke='#6C8EF5'
+        fill={isLast ? "var(--color-primary)" : "var(--color-bg)"}
+        stroke='var(--color-primary)'
         strokeWidth={2}
         style={{
           animation: `dotPop 0.4s cubic-bezier(0.34,1.56,0.64,1) ${0.9 + index * 0.08}s both`,
@@ -66,7 +66,7 @@ function LineChart({
   return (
     <div className='bg-surface border-border relative h-full overflow-hidden rounded-2xl border p-5 sm:p-6'>
       {/* BG glow */}
-      <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(108,142,245,0.06)_0%,transparent_70%)]' />
+      <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(212,175,88,0.06)_0%,transparent_70%)]' />
 
       <div className='relative'>
         <h3 className='font-display text-text text-sm font-semibold sm:text-base'>
@@ -81,14 +81,14 @@ function LineChart({
           >
             <defs>
               <linearGradient id='lineAreaGrad' x1='0' y1='0' x2='0' y2='1'>
-                <stop offset='0%' stopColor='#6C8EF5' stopOpacity={0.3} />
-                <stop offset='100%' stopColor='#6C8EF5' stopOpacity={0} />
+                <stop offset='0%' stopColor='var(--color-primary)' stopOpacity={0.3} />
+                <stop offset='100%' stopColor='var(--color-primary)' stopOpacity={0} />
               </linearGradient>
             </defs>
 
             <CartesianGrid
               strokeDasharray='3 4'
-              stroke='#2E3250'
+              stroke='var(--color-border)'
               strokeWidth={0.5}
               vertical={false}
             />
@@ -96,7 +96,7 @@ function LineChart({
             <XAxis
               dataKey={xKey}
               tick={{
-                fill: "#7B82A8",
+                fill: "var(--color-text-muted)",
                 fontSize: 11,
                 fontFamily: "JetBrains Mono",
               }}
@@ -111,7 +111,7 @@ function LineChart({
               domain={[0, 100]}
               ticks={[0, 20, 40, 60, 80, 100]}
               tick={{
-                fill: "#7B82A8",
+                fill: "var(--color-text-muted)",
                 fontSize: 11,
                 fontFamily: "JetBrains Mono",
               }}
@@ -124,7 +124,7 @@ function LineChart({
             <Tooltip
               content={<CustomTooltip />}
               cursor={{
-                stroke: "#6C8EF5",
+                stroke: "var(--color-primary)",
                 strokeWidth: 1,
                 strokeDasharray: "3 3",
               }}
@@ -133,11 +133,11 @@ function LineChart({
             <Area
               type='monotone'
               dataKey={yKey}
-              stroke='#6C8EF5'
+              stroke='var(--color-primary)'
               strokeWidth={2}
               fill='url(#lineAreaGrad)'
               dot={(props) => <CustomDot {...props} dataLength={data.length} />}
-              activeDot={{ r: 6, fill: "#6C8EF5", strokeWidth: 0 }}
+              activeDot={{ r: 6, fill: "var(--color-primary)", strokeWidth: 0 }}
             />
           </AreaChart>
         </ResponsiveContainer>

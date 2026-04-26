@@ -85,14 +85,14 @@ function ExamCard({ exam, index }) {
       animate='visible'
       variants={cardVariants}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
-      className='bg-surface border-border hover:border-primary/50 group relative flex flex-col gap-4 overflow-hidden rounded-[12px] border p-5 transition-all duration-200 hover:shadow-[0_0_32px_rgba(108,142,245,0.12)]'
+      className='bg-surface border-border hover:border-primary/50 group relative flex flex-col gap-4 overflow-hidden rounded-[12px] border p-5 transition-all duration-200 hover:shadow-[0_0_32px_rgba(212,175,88,0.12)]'
     >
       {/* Glow */}
       <div
         className='pointer-events-none absolute inset-0 opacity-100'
         style={{
           background:
-            "radial-gradient(circle at 50% 5%, rgba(108,142,245,0.18) 0%, transparent 70%)",
+            "radial-gradient(circle at 50% 5%, rgba(212,175,88,0.16) 0%, transparent 70%)",
         }}
       />
 

@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { FiArrowRight } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
-const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
+const COLORS_TOP = ["#D4AF58", "#EDD88A", "#4A7CFF", "#D4AF58"];
 
 function LandingPage() {
   const color = useMotionValue(COLORS_TOP[0]);
@@ -25,7 +25,7 @@ function LandingPage() {
     });
   }, []);
 
-  const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 50%, ${color})`;
+  const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #0A0C0F 50%, ${color})`;
   const border = useMotionTemplate`1px solid ${color}`;
   const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
 

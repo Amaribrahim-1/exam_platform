@@ -72,15 +72,15 @@ function LoginForm() {
 
   /* ---- ألوان المشروع ---- */
   const colors = {
-    bg: "#0F1117",
-    surface: "#1A1D2E",
-    surface2: "#232741",
-    border: "#2E3250",
-    primary: "#6C8EF5",
-    primaryGlow: "rgba(108,142,245,0.15)",
-    accent: "#5ECFB1",
-    text: "#E8EAF6",
-    textMuted: "#7B82A8",
+    bg: "var(--color-bg)",
+    surface: "var(--color-surface)",
+    surface2: "var(--color-surface-2)",
+    border: "var(--color-border)",
+    primary: "var(--color-primary)",
+    primaryGlow: "rgba(212,175,88,0.14)",
+    accent: "var(--color-accent)",
+    text: "var(--color-text)",
+    textMuted: "var(--color-text-muted)",
   };
 
   if (isLoggingInWithGoogle) return <Loader />;
@@ -111,7 +111,7 @@ function LoginForm() {
           height: "50vh",
           borderRadius: "0 0 50% 50%",
           background:
-            "radial-gradient(ellipse, rgba(108,142,245,0.12) 0%, transparent 70%)",
+            "radial-gradient(ellipse, rgba(212,175,88,0.1) 0%, transparent 70%)",
           filter: "blur(40px)",
           pointerEvents: "none",
         }}
@@ -127,7 +127,7 @@ function LoginForm() {
           width: "50vw",
           height: "40vh",
           background:
-            "radial-gradient(ellipse, rgba(94,207,177,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse, rgba(74,124,255,0.08) 0%, transparent 70%)",
           filter: "blur(40px)",
           pointerEvents: "none",
         }}
@@ -390,8 +390,8 @@ function LoginForm() {
                   width: "100%",
                   height: 42,
                   borderRadius: 10,
-                  background: `linear-gradient(135deg, ${colors.primary}, #5a7de8)`,
-                  color: "white",
+                  background: `linear-gradient(135deg, ${colors.primary}, var(--color-warning))`,
+                  color: "var(--color-bg)",
                   border: "none",
                   fontWeight: 600,
                   fontSize: 14,
@@ -400,7 +400,7 @@ function LoginForm() {
                   alignItems: "center",
                   justifyContent: "center",
                   gap: 6,
-                  boxShadow: `0 4px 20px rgba(108,142,245,0.35)`,
+                  boxShadow: "0 4px 20px rgba(212,175,88,0.3)",
                   fontFamily: '"DM Sans", sans-serif',
                 }}
               >
@@ -524,7 +524,7 @@ function LoginForm() {
 
             <style>{`
               @keyframes spin { to { transform: rotate(360deg); } }
-              input::placeholder { color: #7B82A8 !important; }
+              input::placeholder { color: var(--color-text-muted) !important; }
             `}</style>
           </div>
         </motion.div>

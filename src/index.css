@@ -12,18 +12,22 @@
 
 /* 3. Theme Configuration */
 @theme {
-    --color-bg: #0F1117;
-    --color-surface: #1A1D2E;
-    --color-surface-2: #232741;
-    --color-border: #2E3250;
-    --color-primary: #6C8EF5;
-    --color-primary-glow: rgba(108, 142, 245, 0.2);
-    --color-accent: #5ECFB1;
-    --color-warning: #F5A623;
-    --color-danger: #E05C6A;
-    --color-text: #E8EAF6;
-    --color-text-muted: #7B82A8;
-    --color-text-faint: #3D4166;
+    --color-bg: #0D1117;
+    --color-surface: #111318;
+    --color-surface-2: #161A22;
+    --color-border: rgba(255, 255, 255, 0.07);
+    --color-primary: #D4AF58;
+    --color-primary-glow: rgba(212, 175, 88, 0.08);
+    --color-accent: #4A7CFF;
+    --color-success: #2DD4BF;
+    --color-warning: #EDD88A;
+    --color-danger: #C85D6A;
+    --color-emerald: #10B981;
+    --color-lime: #84CC16;
+    --color-cyan: #22D3EE;
+    --color-text: #F0EDE6;
+    --color-text-muted: #9A9690;
+    --color-text-faint: #5A5750;
 
     --spacing-xs: 4px;
     --spacing-sm: 8px;
@@ -46,7 +50,7 @@
 
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.4);
-    --shadow-glow: 0 0 24px rgba(108, 142, 245, 0.2);
+    --shadow-glow: 0 0 24px rgba(212, 175, 88, 0.12);
 
     --animate-pulse-red: pulse-red 1s infinite;
     --animate-shake: shake 0.4s ease-in-out;
@@ -207,6 +211,14 @@
 @layer base {
     body {
         background-color: var(--color-bg);
+        background-image:
+            radial-gradient(ellipse at 50% -8%, rgba(212, 175, 88, 0.042) 0%, transparent 58%),
+            radial-gradient(ellipse at 90% 18%, rgba(74, 124, 255, 0.032) 0%, transparent 52%),
+            linear-gradient(rgba(212, 175, 88, 0.017) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(212, 175, 88, 0.017) 1px, transparent 1px),
+            linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, transparent 40%, rgba(0, 0, 0, 0.22) 100%);
+        background-size: 100% 100%, 100% 100%, 52px 52px, 52px 52px, 100% 100%;
+        background-position: center top, center center, center, center, center;
         color: var(--color-text);
         font-family: var(--font-sans);
         -webkit-font-smoothing: antialiased;

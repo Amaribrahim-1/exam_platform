@@ -29,7 +29,7 @@ const Modal = ({
           <h2 className='text-text text-lg font-bold'>{title}</h2>
           <button
             onClick={onClose}
-            className='text-muted hover:text-danger cursor-pointer p-1 transition-colors'
+            className='text-text-muted hover:text-danger cursor-pointer p-1 transition-colors'
           >
             <X size={22} />
           </button>

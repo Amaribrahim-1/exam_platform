@@ -65,7 +65,7 @@ function PieChart({
   return (
     <div className='bg-surface border-border relative h-full overflow-hidden rounded-2xl border p-5 sm:p-6'>
       {/* BG glow */}
-      <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(94,207,177,0.05)_0%,transparent_70%)]' />
+      <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(212,175,88,0.05)_0%,transparent_70%)]' />
 
       <div className='relative'>
         <h3 className='font-display text-text text-sm font-semibold sm:text-base'>
@@ -138,13 +138,17 @@ function PieChart({
                   />
                   <span className='text-text-muted text-xs'>{entry.name}</span>
                 </div>
-                <div className='flex items-baseline gap-2'>
-                  <span className='font-display text-text text-lg leading-none font-semibold'>
-                    {entry.value}
-                  </span>
-                  <span className='text-text-faint font-mono text-[11px]'>
-                    {total > 0 ? Math.round((entry.value / total) * 100) : 0}%
-                  </span>
+                <div className='flex items-baseline gap-3'>
+                  <div className='w-6 text-right'>
+                    <span className='font-display text-text text-lg leading-none font-semibold'>
+                      {entry.value}
+                    </span>
+                  </div>
+                  <div className='w-10 text-right'>
+                    <span className='text-text-faint font-mono text-[11px]'>
+                      {total > 0 ? Math.round((entry.value / total) * 100) : 0}%
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}

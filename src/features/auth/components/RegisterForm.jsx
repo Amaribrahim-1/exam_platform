@@ -93,16 +93,16 @@ function RegisterForm() {
 
   /* ── colors ── */
   const colors = {
-    bg: "#0F1117",
-    surface: "#1A1D2E",
-    surface2: "#232741",
-    border: "#2E3250",
-    primary: "#6C8EF5",
-    primaryGlow: "rgba(108,142,245,0.15)",
-    accent: "#5ECFB1",
-    danger: "#E05C6A",
-    text: "#E8EAF6",
-    textMuted: "#7B82A8",
+    bg: "var(--color-bg)",
+    surface: "var(--color-surface)",
+    surface2: "var(--color-surface-2)",
+    border: "var(--color-border)",
+    primary: "var(--color-primary)",
+    primaryGlow: "rgba(212,175,88,0.14)",
+    accent: "var(--color-accent)",
+    danger: "var(--color-danger)",
+    text: "var(--color-text)",
+    textMuted: "var(--color-text-muted)",
   };
 
   /* ── reusable style helpers ── */
@@ -132,7 +132,7 @@ function RegisterForm() {
         : field === "confirm" && passwordMismatch
           ? "0 0 0 3px rgba(224,92,106,0.12)"
           : field === "confirm" && passwordMatch
-            ? "0 0 0 3px rgba(94,207,177,0.12)"
+            ? "0 0 0 3px rgba(74,124,255,0.12)"
             : "none",
     boxSizing: "border-box",
   });
@@ -174,7 +174,7 @@ function RegisterForm() {
           height: "50vh",
           borderRadius: "0 0 50% 50%",
           background:
-            "radial-gradient(ellipse, rgba(108,142,245,0.1) 0%, transparent 70%)",
+            "radial-gradient(ellipse, rgba(212,175,88,0.1) 0%, transparent 70%)",
           filter: "blur(40px)",
           pointerEvents: "none",
         }}
@@ -188,7 +188,7 @@ function RegisterForm() {
           width: "50vw",
           height: "40vh",
           background:
-            "radial-gradient(ellipse, rgba(94,207,177,0.07) 0%, transparent 70%)",
+            "radial-gradient(ellipse, rgba(74,124,255,0.08) 0%, transparent 70%)",
           filter: "blur(40px)",
           pointerEvents: "none",
         }}
@@ -308,7 +308,7 @@ function RegisterForm() {
                       position: "relative",
                       transition: "border-color 0.2s",
                       boxShadow: avatar
-                        ? "0 0 16px rgba(94,207,177,0.2)"
+                        ? "0 0 16px rgba(74,124,255,0.2)"
                         : "none",
                     }}
                   >
@@ -576,8 +576,8 @@ function RegisterForm() {
                   marginTop: 8,
                   background: passwordMismatch
                     ? colors.surface2
-                    : `linear-gradient(135deg, ${colors.primary}, #5a7de8)`,
-                  color: passwordMismatch ? colors.textMuted : "white",
+                    : `linear-gradient(135deg, ${colors.primary}, var(--color-warning))`,
+                  color: passwordMismatch ? colors.textMuted : "var(--color-bg)",
                   border: `1px solid ${passwordMismatch ? colors.border : "transparent"}`,
                   fontWeight: 600,
                   fontSize: 14,
@@ -588,7 +588,7 @@ function RegisterForm() {
                   gap: 6,
                   boxShadow: passwordMismatch
                     ? "none"
-                    : "0 4px 20px rgba(108,142,245,0.3)",
+                    : "0 4px 20px rgba(212,175,88,0.3)",
                   transition: "all 0.2s",
                   fontFamily: '"DM Sans", sans-serif',
                 }}
@@ -714,7 +714,7 @@ function RegisterForm() {
 
             <style>{`
               @keyframes spin { to { transform: rotate(360deg); } }
-              input::placeholder { color: #7B82A8 !important; }
+              input::placeholder { color: var(--color-text-muted) !important; }
             `}</style>
           </div>
         </motion.div>
