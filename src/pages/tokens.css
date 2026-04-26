@@ -1,0 +1,76 @@
+/* ============================================
+   Exam.io Homepage — Design Tokens
+   Scope: Homepage only, isolated from project
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+:root {
+    /* ── Color Palette ── */
+    --hp-bg-base: #0A0C0F;
+    --hp-bg-surface: #111318;
+    --hp-bg-card: #161A22;
+    --hp-bg-card-hover: #1C2030;
+
+    --hp-border: rgba(255, 255, 255, 0.07);
+    --hp-border-accent: rgba(212, 175, 88, 0.35);
+
+    --hp-gold: #D4AF58;
+    --hp-gold-light: #EDD88A;
+    --hp-gold-dim: rgba(212, 175, 88, 0.15);
+    --hp-gold-glow: rgba(212, 175, 88, 0.08);
+
+    --hp-text-primary: #F0EDE6;
+    --hp-text-secondary: #9A9690;
+    --hp-text-muted: #5A5750;
+
+    --hp-accent-blue: #4A7CFF;
+    --hp-accent-teal: #2DD4BF;
+
+    /* ── Typography ── */
+    --hp-font-display: 'Playfair Display', Georgia, serif;
+    --hp-font-body: 'DM Sans', system-ui, sans-serif;
+
+    --hp-text-xs: 0.75rem;
+    --hp-text-sm: 0.875rem;
+    --hp-text-base: 1rem;
+    --hp-text-lg: 1.125rem;
+    --hp-text-xl: 1.25rem;
+    --hp-text-2xl: 1.5rem;
+    --hp-text-3xl: 1.875rem;
+    --hp-text-4xl: 2.5rem;
+    --hp-text-5xl: 3.5rem;
+    --hp-text-6xl: 4.5rem;
+
+    /* ── Spacing ── */
+    --hp-space-1: 0.25rem;
+    --hp-space-2: 0.5rem;
+    --hp-space-3: 0.75rem;
+    --hp-space-4: 1rem;
+    --hp-space-6: 1.5rem;
+    --hp-space-8: 2rem;
+    --hp-space-12: 3rem;
+    --hp-space-16: 4rem;
+    --hp-space-20: 5rem;
+    --hp-space-24: 6rem;
+    --hp-space-32: 8rem;
+
+    /* ── Radius ── */
+    --hp-radius-sm: 6px;
+    --hp-radius-md: 12px;
+    --hp-radius-lg: 20px;
+    --hp-radius-xl: 32px;
+    --hp-radius-full: 9999px;
+
+    /* ── Shadows ── */
+    --hp-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
+    --hp-shadow-gold: 0 0 40px rgba(212, 175, 88, 0.12), 0 0 80px rgba(212, 175, 88, 0.06);
+    --hp-shadow-glow: 0 0 60px rgba(74, 124, 255, 0.15);
+
+    /* ── Transitions ── */
+    --hp-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --hp-ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+    --hp-duration-sm: 200ms;
+    --hp-duration-md: 400ms;
+    --hp-duration-lg: 700ms;
+}
