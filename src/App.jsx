@@ -37,6 +37,7 @@ import ResetPasswordPage from "./features/auth/components/ResetPasswordPage";
 import InstructorExamHistoryPage from "./features/instructor/exam-history/InstructorExamHistoryPage";
 import InstructorProfilePage from "./features/instructor/profile/InstructorProfilePage";
 import InstructorResultPage from "./features/instructor/results/InstructorResultPage";
+import HomePage from "./pages/HomePage";
 import AvailableExamsPage from "./features/student/available-exams/AvailableExamsPage";
 import StudentDashboardPage from "./features/student/dashboard/StudentDashboardPage";
 import StudentExamsHistoryPage from "./features/student/exam-history/StudentExamsHistoryPage";
@@ -56,6 +57,10 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
+    path: "/",
+    element: <HomePage />,
+  },
+  {
     path: "/login",
     element: <LoginForm />,
   },
@@ -67,10 +72,6 @@ const router = createBrowserRouter([
   {
     path: "/reset-password",
     element: <ResetPasswordPage />,
-  },
-  {
-    path: "/",
-    element: <Navigate to='/home' replace />,
   },
   {
     path: "/home",
