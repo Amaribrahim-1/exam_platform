@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import { Flip, ToastContainer } from "react-toastify";
 
-import ExamWizardProvider from "./features/instructor/exam-wizard/context/ExamWizardContext";
 import AdminLayout from "./layouts/AdminLayout";
 import InstructorLayout from "./layouts/InstructorLayout";
 import StudentLayout from "./layouts/StudentLayout";
@@ -17,7 +16,7 @@ import RoleRoute from "./components/RoleRoute";
 
 import DashboardPage from "./features/instructor/dashboard/InstructorDashboardPage";
 import ExamsManagementPage from "./features/instructor/exam-management/ExamManagementPage";
-import CreateExamPage from "./features/instructor/exam-wizard/CreateExamPage";
+import ExamWizardPage from "./features/instructor/exam-wizard/ExamWizardPage";
 import StudentsPage from "./features/instructor/students/StudentsPage";
 
 import LoginForm from "./features/auth/components/LoginForm";
@@ -94,14 +93,8 @@ const router = createBrowserRouter([
             children: [
               { index: true, element: <Navigate to='dashboard' replace /> },
               { path: "dashboard", element: <DashboardPage /> },
-              {
-                path: "exam-wizard",
-                element: (
-                  <ExamWizardProvider>
-                    <CreateExamPage />
-                  </ExamWizardProvider>
-                ),
-              },
+              { path: "exam-wizard", element: <ExamWizardPage /> },
+              { path: "exam-wizard/:examId", element: <ExamWizardPage /> },
               { path: "exams-management", element: <ExamsManagementPage /> },
               { path: "students", element: <StudentsPage /> },
               { path: "exams-history", element: <InstructorExamHistoryPage /> },

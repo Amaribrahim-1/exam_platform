@@ -12,8 +12,6 @@ function QuestionBuilderStep({ step, onNext, onBack }) {
     questions,
     questionType,
     setQuestionType,
-    handleAddMCQ,
-    handleAddTrueFalse,
     handleDelete,
     handleEdit,
     editingQuestionId,
@@ -28,12 +26,12 @@ function QuestionBuilderStep({ step, onNext, onBack }) {
   }
 
   return (
-    <div className='gap-lg flex flex-col'>
-      <div className='space-y-md border-border bg-surface p-lg rounded-lg border'>
-        <h3 className='text-text text-sm font-bold tracking-wide uppercase'>
+    <div className="gap-lg flex flex-col">
+      <div className="space-y-md border-border bg-surface p-lg rounded-lg border">
+        <h3 className="text-text text-sm font-bold tracking-wide uppercase">
           Add New Question
         </h3>
-        <div className='gap-md flex items-center'>
+        <div className="gap-md flex items-center">
           <button
             onClick={() => setQuestionType("MCQ")}
             disabled={editingQuestionId !== null}
@@ -66,10 +64,8 @@ function QuestionBuilderStep({ step, onNext, onBack }) {
           </button>
         </div>
 
-        {questionType === "MCQ" && <MCQForm onAdd={handleAddMCQ} />}
-        {questionType === "TrueFalse" && (
-          <TrueFalseForm onAdd={handleAddTrueFalse} />
-        )}
+        {questionType === "MCQ" && <MCQForm />}
+        {questionType === "TrueFalse" && <TrueFalseForm />}
 
         {/* Buttons Section */}
         <div
@@ -77,10 +73,10 @@ function QuestionBuilderStep({ step, onNext, onBack }) {
         >
           {step > 1 && (
             <Button
-              variation='secondary'
-              size='md'
+              variation="secondary"
+              size="md"
               onClick={onBack}
-              type='button'
+              type="button"
               disabled={editingQuestionId !== null}
             >
               ← Back
@@ -88,9 +84,9 @@ function QuestionBuilderStep({ step, onNext, onBack }) {
           )}
           <Button
             onClick={handleNext}
-            variation='primary'
-            size='md'
-            type='button'
+            variation="primary"
+            size="md"
+            type="button"
             disabled={editingQuestionId !== null}
           >
             Next (Review & Publish) →

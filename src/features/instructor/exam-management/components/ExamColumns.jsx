@@ -5,12 +5,7 @@ import {
   DIFFICULTY_STYLES,
 } from "../../../../Utils/constants";
 
-export const examColumns = (
-  setDeletingId,
-  navigate,
-  setEditingExamId,
-  setEditingExamData,
-) => [
+export const examColumns = (setDeletingId, navigate) => [
   { key: "title", label: "Exam title" },
   { key: "subject", label: "Subject" },
   { key: "startDate", label: "Start Date" },
@@ -37,23 +32,19 @@ export const examColumns = (
   {
     key: "id",
     label: "Actions",
-    render: (id, row) => (
+    render: (id) => (
       <>
         <button
           onClick={() => setDeletingId(id)}
-          className='text-text-muted hover:text-danger hover:bg-danger/10 cursor-pointer rounded p-2 transition-all'
-          title='Delete'
+          className="text-text-muted hover:text-danger hover:bg-danger/10 cursor-pointer rounded p-2 transition-all"
+          title="Delete"
         >
           <Trash2 size={18} />
         </button>
         <button
-          onClick={() => {
-            setEditingExamId(id);
-            setEditingExamData(row);
-            navigate(`/instructor/exam-wizard`);
-          }}
-          className='text-text-muted hover:text-primary hover:bg-primary/10 cursor-pointer rounded p-2 transition-all'
-          title='Edit'
+          onClick={() => navigate(`/instructor/exam-wizard/${id}`)}
+          className="text-text-muted hover:text-primary hover:bg-primary/10 cursor-pointer rounded p-2 transition-all"
+          title="Edit"
         >
           <Pencil size={18} />
         </button>

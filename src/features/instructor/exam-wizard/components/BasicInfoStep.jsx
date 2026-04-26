@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import Button from "../../../../components/Button";
 import FormRow from "../../../../components/FormRow";
 import { useExamData } from "../hooks/useExamData";
-import { formatDateForInput } from "@/Utils/formatDate";
 
 const GRADES = ["Grade 1", "Grade 2", "Grade 3", "Grade 4"];
 const DEPARTMENTS = [
@@ -14,24 +13,7 @@ const DEPARTMENTS = [
 const DIFFICULTIES = ["Easy", "Medium", "Hard"];
 
 function BasicInfoStep({ onNext }) {
-  const editingExamData =
-    JSON.parse(localStorage.getItem("editing-exam-details")) || null;
-
-  const editingExamDetails = editingExamData && {
-    title: editingExamData?.title,
-    subject: editingExamData?.subject,
-    duration: parseInt(editingExamData?.duration),
-    difficulty: editingExamData?.difficulty,
-    startDate: formatDateForInput(editingExamData?.start_date),
-    endDate: formatDateForInput(editingExamData?.end_date),
-    grade: editingExamData?.grade,
-    department: editingExamData?.department,
-  };
-
-  const examDetailsSaved =
-    JSON.parse(localStorage.getItem("exam-details")) || null;
-
-  const defaultValues = examDetailsSaved || editingExamDetails || {};
+  const { examDetails, handleExamDetails, isEditMode } = useExamData();
 
   const {
     register,
@@ -39,28 +21,13 @@ function BasicInfoStep({ onNext }) {
     handleSubmit,
     reset,
   } = useForm({
-    values: defaultValues,
+    values: examDetails,
   });
-  // const {
-  //   register,
-  //   formState: { errors },
-  //   handleSubmit,
-  //   reset,
-  // } = useForm({
-  //   values: localStorage.getItem("exam-details")
-  //     ? JSON.parse(localStorage.getItem("exam-details"))
-  //     : editingExamData
-  //       ? editingExamDataED
-  //       : {},
-  // });
-
-  const { handleExamDetails } = useExamData();
 
   function onSubmit(data) {
     handleExamDetails({
+      ...examDetails,   // preserve id, instructor_id, etc. in edit mode
       ...data,
-      status: "draft",
-      instructorId: "d3608b52-2c2d-4b00-b898-2241f9329279",
     });
     onNext();
   }
@@ -72,53 +39,52 @@ function BasicInfoStep({ onNext }) {
   `;
 
   return (
-    <div className='bg-surface p-lg rounded-md'>
-      <h2 className='text-text mb-lg text-2xl font-bold'>Exam Details</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className='gap-lg flex flex-col'>
+    <div className="bg-surface p-lg rounded-md">
+      <h2 className="text-text mb-lg text-2xl font-bold">Exam Details</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="gap-lg flex flex-col">
         {/* Exam Name & Subject */}
-        <div className='gap-lg grid grid-cols-1 md:grid-cols-2'>
-          <FormRow label='Exam Name' error={errors.title?.message} required>
+        <div className="gap-lg grid grid-cols-1 md:grid-cols-2">
+          <FormRow label="Exam Name" error={errors.title?.message} required>
             <input
               {...register("title", { required: "Exam title is required" })}
-              placeholder='e.g. Midterm — Data Structures'
+              placeholder="e.g. Midterm — Data Structures"
               className={inputClass(errors.title)}
             />
           </FormRow>
 
-          <FormRow label='Subject' error={errors.subject?.message} required>
+          <FormRow label="Subject" error={errors.subject?.message} required>
             <input
               {...register("subject", { required: "Subject is required" })}
-              placeholder='e.g. Data Structures'
+              placeholder="e.g. Data Structures"
               className={inputClass(errors.subject)}
             />
           </FormRow>
         </div>
 
         {/* Duration & Difficulty */}
-        <div className='gap-lg grid grid-cols-1 md:grid-cols-2'>
+        <div className="gap-lg grid grid-cols-1 md:grid-cols-2">
           <FormRow
-            label='Duration (minutes)'
+            label="Duration (minutes)"
             error={errors.duration?.message}
             required
           >
             <input
-              type='number'
-              placeholder='e.g. 60'
-              min='1'
+              type="number"
+              placeholder="e.g. 60"
+              min="1"
               {...register("duration", { required: "Required", min: 1 })}
               className={inputClass(errors.duration)}
             />
           </FormRow>
 
           <FormRow
-            label='Difficulty'
+            label="Difficulty"
             error={errors.difficulty?.message}
             required
           >
             <select
               {...register("difficulty", { required: "Select difficulty" })}
               className={inputClass(errors.difficulty)}
-              placeholder='easy'
             >
               {DIFFICULTIES.map((d) => (
                 <option key={d} value={d.toLowerCase()}>
@@ -129,15 +95,15 @@ function BasicInfoStep({ onNext }) {
           </FormRow>
         </div>
 
-        {/* Start Date & Time & End Date & Time */}
-        <div className='gap-lg grid grid-cols-1 md:grid-cols-2'>
+        {/* Dates */}
+        <div className="gap-lg grid grid-cols-1 md:grid-cols-2">
           <FormRow
-            label='Start Date & Time'
+            label="Start Date & Time"
             error={errors.startDate?.message}
             required
           >
             <input
-              type='datetime-local'
+              type="datetime-local"
               {...register("startDate", {
                 required: "Date & time is required",
                 setValueAs: (v) => (v ? new Date(v).toISOString() : v),
@@ -146,12 +112,12 @@ function BasicInfoStep({ onNext }) {
             />
           </FormRow>
           <FormRow
-            label='End Date & Time'
+            label="End Date & Time"
             error={errors.endDate?.message}
             required
           >
             <input
-              type='datetime-local'
+              type="datetime-local"
               {...register("endDate", {
                 required: "Date & time is required",
                 setValueAs: (v) => (v ? new Date(v).toISOString() : v),
@@ -160,11 +126,10 @@ function BasicInfoStep({ onNext }) {
             />
           </FormRow>
 
-          <FormRow label='Grade' error={errors.grade?.message} required>
+          <FormRow label="Grade" error={errors.grade?.message} required>
             <select
               {...register("grade", { required: "Select Grade" })}
               className={inputClass(errors.grade)}
-              placeholder='Grade 1'
             >
               {GRADES.map((g) => (
                 <option key={g} value={g}>
@@ -175,14 +140,13 @@ function BasicInfoStep({ onNext }) {
           </FormRow>
 
           <FormRow
-            label='Department'
+            label="Department"
             error={errors.department?.message}
             required
           >
             <select
               {...register("department", { required: "Select Department" })}
               className={inputClass(errors.department)}
-              placeholder='General'
             >
               {DEPARTMENTS.map((d) => (
                 <option key={d} value={d}>
@@ -193,28 +157,31 @@ function BasicInfoStep({ onNext }) {
           </FormRow>
         </div>
 
-        {/* Buttons Section */}
+        {/* Buttons */}
         <div className={`mt-lg gap-md flex items-center justify-end`}>
-          <Button
-            variation='secondary'
-            size='md'
-            onClick={() => {
-              reset({
-                title: "",
-                subject: "",
-                duration: "",
-                difficulty: "",
-                startDate: "",
-                endDate: "",
-              });
-              localStorage.removeItem("exam-details");
-              localStorage.removeItem("editing-exam-details");
-            }}
-          >
-            Clear Data
-          </Button>
+          {!isEditMode && (
+            <Button
+              variation="secondary"
+              size="md"
+              type="button"
+              onClick={() => {
+                reset({
+                  title: "",
+                  subject: "",
+                  duration: "",
+                  difficulty: "",
+                  startDate: "",
+                  endDate: "",
+                  grade: "",
+                  department: "",
+                });
+              }}
+            >
+              Clear Data
+            </Button>
+          )}
 
-          <Button variation='primary' size='md' type='submit'>
+          <Button variation="primary" size="md" type="submit">
             Next (Add Questions) →
           </Button>
         </div>

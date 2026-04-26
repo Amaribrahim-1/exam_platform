@@ -3,7 +3,6 @@ import ExamActions from "@/components/ExamActions";
 import GenericTable from "@/components/GenericTable";
 import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
-// import useExamFilters from "@/hooks/useExamFilters";
 import Empty from "@/components/Empty";
 import useUser from "@/features/auth/hooks/useUser";
 import useExamFilters from "@/hooks/useExamFilters";
@@ -27,8 +26,6 @@ function ExamsTable() {
 
   const { deleteExam, isDeleting } = useDeleteExam();
   const [deletingId, setDeletingId] = useState(null);
-  const [editingExamId, setEditingExamId] = useState(null);
-  const [editingExamData, setEditingExamData] = useState(null);
   const { updateStatus } = useUpdateStatus();
   const navigate = useNavigate();
 
@@ -66,28 +63,12 @@ function ExamsTable() {
 
   const examsCount = sortedExams?.length;
 
-  const columns = examColumns(
-    setDeletingId,
-    navigate,
-    setEditingExamId,
-    setEditingExamData,
-  );
+  const columns = examColumns(setDeletingId, navigate);
   const examToDelete = instructorExams?.find((e) => e.id === deletingId);
 
   useEffect(() => {
-    if (editingExamId) {
-      localStorage.setItem("editing-exam-id", editingExamId);
-      localStorage.setItem(
-        "editing-exam-details",
-        JSON.stringify(editingExamData),
-      );
-    }
-  }, [editingExamId, editingExamData]);
-
-  useEffect(() => {
-    // update status if end date is passed
+    // Auto-close expired exams
     instructorExams?.forEach((e) => {
-      e.end_date < new Date();
       if (e.status === "active" && new Date(e.end_date) < new Date()) {
         updateStatus(
           { examId: e.id, status: "closed" },
@@ -106,13 +87,13 @@ function ExamsTable() {
 
   if (!instructorExams?.length)
     return (
-      <div className='flex h-full items-center justify-center p-6'>
-        <Empty message='No exams found, create one now'>
+      <div className="flex h-full items-center justify-center p-6">
+        <Empty message="No exams found, create one now">
           <Button
             onClick={() => navigate("/instructor/exam-wizard")}
-            variation='primary'
-            size='md'
-            className='shadow-glow mt-8 transition-transform hover:scale-105'
+            variation="primary"
+            size="md"
+            className="shadow-glow mt-8 transition-transform hover:scale-105"
           >
             + New Exam
           </Button>
@@ -121,22 +102,19 @@ function ExamsTable() {
     );
 
   return (
-    <div className='space-y-10'>
-      <div className='flex items-center justify-between'>
-        <div className='space-y-1'>
-          <h1 className='text-2xl font-bold'>Exam Management</h1>
-          {/* <p className='text-text-muted'>
-            Manage, edit, and track all your exams.
-          </p> */}
-          <p className='text-text-muted mt-1 text-sm'>
-            {examsCount} {examsCount === 1 ? "exam" : "exams"} found, let's
+    <div className="space-y-10">
+      <div className="flex items-center justify-between">
+        <div className="space-y-1">
+          <h1 className="text-2xl font-bold">Exam Management</h1>
+          <p className="text-text-muted mt-1 text-sm">
+            {examsCount} {examsCount === 1 ? "exam" : "exams"} found, let&apos;s
             manage them
           </p>
         </div>
         <Button
           onClick={() => navigate("/instructor/exam-wizard")}
-          variation='primary'
-          size='md'
+          variation="primary"
+          size="md"
         >
           + New Exam
         </Button>
@@ -154,7 +132,7 @@ function ExamsTable() {
         <Modal
           isOpen={isFilterOpen}
           onClose={() => setIsFilterOpen(false)}
-          title='Filter By'
+          title="Filter By"
           pad={false}
         >
           <FilterExamsModal
@@ -175,18 +153,18 @@ function ExamsTable() {
           data={sortedExams}
         />
       ) : (
-        <Empty message='No exams found' />
+        <Empty message="No exams found" />
       )}
 
       <Modal
         isOpen={deletingId !== null}
         onClose={() => setDeletingId(null)}
-        title='Delete Exam'
+        title="Delete Exam"
         actions={
           <>
             <button
               onClick={() => setDeletingId(null)}
-              className='border-border text-text hover:bg-surface/50 cursor-pointer rounded-lg border px-4 py-2 font-medium transition-colors'
+              className="border-border text-text hover:bg-surface/50 cursor-pointer rounded-lg border px-4 py-2 font-medium transition-colors"
             >
               Cancel
             </button>
@@ -196,7 +174,7 @@ function ExamsTable() {
                 setDeletingId(null);
               }}
               disabled={isDeleting}
-              className='bg-danger/20 text-danger border-danger/30 hover:bg-danger/30 cursor-pointer rounded-lg border px-4 py-2 font-medium transition-colors disabled:opacity-50'
+              className="bg-danger/20 text-danger border-danger/30 hover:bg-danger/30 cursor-pointer rounded-lg border px-4 py-2 font-medium transition-colors disabled:opacity-50"
             >
               {isDeleting ? "Deleting..." : "Delete Exam"}
             </button>

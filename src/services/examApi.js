@@ -43,7 +43,8 @@ export async function fetchExams() {
     .eq("grade", profile?.grade)
     .or(
       `department.eq.${profile?.department.toLowerCase()},department.eq.General`,
-    );
+    )
+    .order("created_at", { ascending: false });
 
   if (error) throw new Error(error.message);
 
@@ -120,6 +121,40 @@ export async function updateExamStatus(examId, newStatus) {
     .single();
 
   if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export async function updateExam(examId, examDetails) {
+  const { data, error } = await supabase
+    .from("exams")
+    .update(examDetails)
+    .eq("id", examId)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export async function updateExamQuestions(examId, questions) {
+  // Delete existing questions first, then re-insert updated ones
+  const { error: deleteError } = await supabase
+    .from("questions")
+    .delete()
+    .eq("exam_id", examId);
+
+  if (deleteError) throw new Error(deleteError.message);
+
+  const questionsWithExamId = questions.map((q) => ({ ...q, exam_id: examId }));
+
+  const { data, error: insertError } = await supabase
+    .from("questions")
+    .insert(questionsWithExamId)
+    .select();
+
+  if (insertError) throw new Error(insertError.message);
 
   return data;
 }

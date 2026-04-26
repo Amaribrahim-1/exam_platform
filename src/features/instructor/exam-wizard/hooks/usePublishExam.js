@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { publishExam as publishExamApi } from "../../../../services/examApi";
-import { useExamData } from "../hooks/useExamData";
+import { useExamData } from "./useExamData";
 
 function usePublishExam() {
   const navigate = useNavigate();
@@ -19,15 +19,14 @@ function usePublishExam() {
       publishExamApi(examDetails, examQuestions),
     onSuccess: () => {
       toast.success("Exam published successfully!");
-      navigate("/instructor/exams-management");
       queryClient.invalidateQueries({ queryKey: ["instructorExams"] });
       queryClient.invalidateQueries({ queryKey: ["studentExams"] });
       clearExamData();
+      navigate("/instructor/exams-management");
     },
     onError: (error) => {
+      console.error(error);
       toast.error("Failed to publish exam. Please try again.");
-      console.log(error);
-      navigate("/instructor/exams-management");
     },
   });
 

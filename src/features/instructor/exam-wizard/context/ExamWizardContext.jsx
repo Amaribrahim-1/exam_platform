@@ -1,22 +1,15 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { toast } from "react-toastify";
 
 const ExamWizardContext = createContext();
 
-function ExamWizardProvider({ children }) {
-  const [questions, setQuestions] = useState(() => {
-    const saved = localStorage.getItem("exam-questions");
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  const [examDetails, setExamDetails] = useState(() => {
-    const saved = localStorage.getItem("exam-details");
-    return saved ? JSON.parse(saved) : {};
-  });
-
+function ExamWizardProvider({ children, initialExam = {}, initialQuestions = [] }) {
+  const [questions, setQuestions] = useState(initialQuestions);
+  const [examDetails, setExamDetails] = useState(initialExam);
   const [questionType, setQuestionType] = useState("MCQ");
-
   const [editingQuestionId, setEditingQuestionId] = useState(null);
+
+  const isEditMode = Boolean(initialExam?.id);
 
   function handleAddQuestion(questionData) {
     if (editingQuestionId) {
@@ -25,7 +18,7 @@ function ExamWizardProvider({ children }) {
           q.id === editingQuestionId ? { ...questionData, id: q.id } : q,
         ),
       );
-      setEditingQuestionId(null); // لازم نصفر الـ ID بعد التعديل
+      setEditingQuestionId(null);
     } else {
       setQuestions((prev) => [...prev, { ...questionData, id: Date.now() }]);
     }
@@ -33,24 +26,16 @@ function ExamWizardProvider({ children }) {
 
   function handleDelete(id) {
     setQuestions((prev) => prev.filter((question) => question.id !== id));
-
     toast.success("Question deleted successfully!");
   }
 
   function handleExamDetails(details) {
     setExamDetails(details);
-
-    // setExamDetails((prev) => {
-    //   const updated = { ...prev, ...details };
-    //   return updated;
-    // });
   }
 
   function clearExamData() {
     setQuestions([]);
     setExamDetails({});
-    localStorage.removeItem("exam-questions");
-    localStorage.removeItem("exam-details");
   }
 
   function handleEdit(id) {
@@ -58,11 +43,8 @@ function ExamWizardProvider({ children }) {
 
     if (questionToEdit) {
       setQuestionType(questionToEdit.type);
-
       setEditingQuestionId(id);
 
-      // setTimeout is used to ensure that the form is rendered before we try to scroll,
-      // preventing potential issues with the element not being found
       setTimeout(() => {
         const element = document.getElementById("main-content");
         if (element) {
@@ -72,24 +54,10 @@ function ExamWizardProvider({ children }) {
     }
   }
 
-  useEffect(
-    function () {
-      // Temporarily using localStorage to persist questions, can be replaced with API calls later
-      localStorage.setItem("exam-questions", JSON.stringify(questions));
-    },
-    [questions],
-  );
-
-  useEffect(
-    function () {
-      localStorage.setItem("exam-details", JSON.stringify(examDetails));
-    },
-    [examDetails],
-  );
-
   return (
     <ExamWizardContext.Provider
       value={{
+        isEditMode,
         questions,
         handleAddQuestion,
         handleDelete,
