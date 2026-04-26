@@ -13,6 +13,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import useCheckSubmitted from "../hooks/useCheckSubmitted";
 import { GraduationCap, LayoutGrid } from "lucide-react";
+import ExamInstructionsModal from "./ExamInstructionsModal";
+import { useState } from "react";
 
 const difficultyConfig = {
   easy: { color: "bg-accent/20 text-accent", label: "Easy" },
@@ -52,6 +54,7 @@ function getExamStatus(exam, isSubmitted = false) {
 function ExamCard({ exam, index }) {
   const navigate = useNavigate();
   const { user } = useUser();
+  const [showInstructions, setShowInstructions] = useState(false);
 
   const { alreadySubmitted } = useCheckSubmitted({
     examId: exam?.id,
@@ -65,11 +68,10 @@ function ExamCard({ exam, index }) {
 
   const handleClick = () => {
     if (alreadySubmitted) {
-      // navigate to exam result
       navigate(`/student/exam-result/${exam.id}`);
       return;
     }
-    navigate(`/student/exam-session/${exam.id}`);
+    setShowInstructions(true); // ✅ افتح المودال الأول
   };
 
   if (exam.status !== "active" || status === "missed") {
@@ -208,6 +210,15 @@ function ExamCard({ exam, index }) {
           className='transition-transform duration-200 group-hover:translate-x-1'
         />
       </motion.button>
+
+      <ExamInstructionsModal
+        isOpen={showInstructions}
+        onClose={() => setShowInstructions(false)}
+        onConfirm={() => {
+          setShowInstructions(false);
+          navigate(`/student/exam-session/${exam.id}`);
+        }}
+      />
     </motion.div>
   );
 }
