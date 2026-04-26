@@ -11,6 +11,8 @@ function InstructorDashboardPage() {
   const { instructorExamsPerformance, isInstructorExamsPerformanceFetching } =
     useInstructorExamsPerformance();
 
+  console.log(instructorExamsPerformance);
+
   const date = new Date().toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -47,7 +49,7 @@ function InstructorDashboardPage() {
           <LineChart
             data={instructorExamsPerformance}
             isLoading={isInstructorExamsPerformanceFetching}
-            xKey='date'
+            xKey='title'
             yKey='average'
             title='Exams Performance Over Time'
             subtitle='Average score per exam'

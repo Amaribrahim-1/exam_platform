@@ -50,6 +50,7 @@ function StudentDashboardPage() {
           <LineChart
             data={studentPerformance}
             isLoading={isStudentPerformanceFetching}
+            xKey='title'
           />
         </div>
         <div className='lg:col-span-1'>

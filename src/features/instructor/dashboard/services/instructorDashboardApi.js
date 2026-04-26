@@ -75,28 +75,28 @@ export async function getInstructorExamsPerformance(userId) {
   if (submissionsError) throw new Error(submissionsError.message);
   if (submissions.length === 0) return [];
 
-  return exams.map((exam) => {
-    const examSubmissions = submissions.filter((s) => s.exam_id === exam.id);
-
-    const average =
-      examSubmissions.length > 0
-        ? Math.round(
-            examSubmissions.reduce(
-              (acc, s) => acc + (s.total_score / s.full_mark) * 100,
-              0,
-            ) / examSubmissions.length,
-          )
-        : 0;
-
-    return {
-      date: new Date(exam.start_date).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      }),
-      title: exam.title,
-      average,
-    };
-  });
+  return exams
+    .filter((exam) => submissions.some((s) => s.exam_id === exam.id)) // ✅ السطر الجديد
+    .map((exam) => {
+      const examSubmissions = submissions.filter((s) => s.exam_id === exam.id);
+      const average =
+        examSubmissions.length > 0
+          ? Math.round(
+              examSubmissions.reduce(
+                (acc, s) => acc + (s.total_score / s.full_mark) * 100,
+                0,
+              ) / examSubmissions.length,
+            )
+          : 0;
+      return {
+        date: new Date(exam.start_date).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+        }),
+        title: exam.title,
+        average,
+      };
+    });
 }
 
 export async function recentExams(userId) {

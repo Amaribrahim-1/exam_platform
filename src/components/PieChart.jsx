@@ -10,7 +10,7 @@ import Loader from "./Loader";
 const CustomTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className='bg-surface-2 border-border rounded-xl border px-4 py-3 shadow-lg'>
+    <div className='bg-surface-2 border-border z-50 rounded-xl border px-4 py-3 shadow-lg backdrop-blur-md'>
       <p className='text-text-muted mb-1 text-xs'>{payload[0].name}</p>
       <p className='font-display text-text text-xl font-semibold'>
         {payload[0].value}
@@ -105,12 +105,15 @@ function PieChart({
                     />
                   ))}
                 </Pie>
-                <Tooltip content={<CustomTooltip />} />
+                <Tooltip
+                  content={<CustomTooltip />}
+                  wrapperStyle={{ zIndex: 100 }}
+                />
               </RechartsPieChart>
             </ResponsiveContainer>
 
             {/* Center total */}
-            <div className='pointer-events-none absolute inset-0 flex flex-col items-center justify-center'>
+            <div className='pointer-events-none absolute inset-0 z-0 flex flex-col items-center justify-center'>
               <span className='font-display text-text text-2xl leading-none font-bold'>
                 {total}
               </span>

@@ -71,9 +71,11 @@ function ExamSessionProvider({ children }) {
       (new Date(examSession.end_date) - new Date()) / 1000,
     );
     const duration = examSession.duration * 60;
+    const startTime = remaining > duration ? duration : remaining;
 
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setTimerSec(remaining > duration ? duration : remaining);
+    setTimerSec(startTime);
+    localStorage.setItem("startTime", startTime.toString()); // ✅ احفظه
   }, [examSession]);
 
   // ── handlers ────────────────────────────────────────────────────────────────
@@ -93,11 +95,9 @@ function ExamSessionProvider({ children }) {
 
   const handleSubmit = useCallback(
     (reason) => {
-      const remaining = Math.floor(
-        (new Date(examSession.end_date) - new Date()) / 1000,
-      );
-      const duration = examSession.duration * 60;
-      const startTime = remaining > duration ? duration : remaining;
+      const startTime =
+        Number(localStorage.getItem("startTime")) || examSession.duration * 60;
+      const timeTaken = startTime - timerSec;
 
       setTimerSec(null);
 
@@ -105,8 +105,7 @@ function ExamSessionProvider({ children }) {
         examId: examSession.id,
         userId: user.id,
         answers: userAnswers,
-        // timeTaken: examSession.duration * 60 - timerSec,
-        timeTaken: startTime - timerSec,
+        timeTaken: timeTaken,
         reason,
       });
 
@@ -114,6 +113,7 @@ function ExamSessionProvider({ children }) {
       localStorage.removeItem("currentQ");
       localStorage.removeItem("flagged");
       localStorage.removeItem("timer");
+      localStorage.removeItem("startTime");
       localStorage.removeItem("examId");
     },
     [submitExam, userAnswers, user, examSession, timerSec],

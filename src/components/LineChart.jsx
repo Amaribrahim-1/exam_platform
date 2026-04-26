@@ -60,7 +60,7 @@ function LineChart({
   xKey = "date",
   yKey = "score",
   title = " Performance Over Time",
-  subtitle = "Score trend across recent exams",
+  subtitle = "Score trend across exams summissions",
 }) {
   if (isLoading) return <Loader />;
   return (
@@ -104,9 +104,7 @@ function LineChart({
               tickLine={false}
               padding={{ left: 30, right: 30 }}
               interval='preserveStartEnd'
-              tickFormatter={(v) =>
-                v.length > 10 ? `${v.slice(0, 10)}...` : v
-              }
+              tickFormatter={(v) => (v.length > 10 ? `${v.slice(0, 5)}...` : v)}
             />
 
             <YAxis

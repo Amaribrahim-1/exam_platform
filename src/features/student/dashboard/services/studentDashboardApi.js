@@ -41,7 +41,7 @@ export async function getStudentDashboardStats(userId) {
 export async function getStudentPerformanceOverTime(userId) {
   const { data, error } = await supabase
     .from("exam_submissions")
-    .select("total_score, full_mark, submitted_at")
+    .select("total_score, full_mark, submitted_at, exams(title)")
     .eq("user_id", userId)
     .not("total_score", "is", null)
     .not("full_mark", "is", null)
@@ -51,10 +51,11 @@ export async function getStudentPerformanceOverTime(userId) {
   if (error) throw new Error(error.message);
 
   return data.map((s) => ({
-    date: new Date(s.submitted_at).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-    }),
+    // date: new Date(s.submitted_at).toLocaleDateString("en-US", {
+    //   month: "short",
+    //   day: "numeric",
+    // }),
+    title: s.exams.title,
     score: Math.round((s.total_score / s.full_mark) * 100),
   }));
 }
