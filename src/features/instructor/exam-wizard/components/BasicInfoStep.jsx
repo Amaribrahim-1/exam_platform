@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import Button from "../../../../components/Button";
 import FormRow from "../../../../components/FormRow";
 import { useExamData } from "../hooks/useExamData";
+import { formatDateForInput } from "../../../../Utils/formatDate";
 
 const GRADES = ["Grade 1", "Grade 2", "Grade 3", "Grade 4"];
 const DEPARTMENTS = [
@@ -21,7 +22,11 @@ function BasicInfoStep({ onNext }) {
     handleSubmit,
     reset,
   } = useForm({
-    values: examDetails,
+    values: {
+      ...examDetails,
+      startDate: formatDateForInput(examDetails?.startDate),
+      endDate: formatDateForInput(examDetails?.endDate),
+    },
   });
 
   function onSubmit(data) {
@@ -159,27 +164,25 @@ function BasicInfoStep({ onNext }) {
 
         {/* Buttons */}
         <div className={`mt-lg gap-md flex items-center justify-end`}>
-          {!isEditMode && (
-            <Button
-              variation="secondary"
-              size="md"
-              type="button"
-              onClick={() => {
-                reset({
-                  title: "",
-                  subject: "",
-                  duration: "",
-                  difficulty: "",
-                  startDate: "",
-                  endDate: "",
-                  grade: "",
-                  department: "",
-                });
-              }}
-            >
-              Clear Data
-            </Button>
-          )}
+          <Button
+            variation="secondary"
+            size="md"
+            type="button"
+            onClick={() => {
+              reset({
+                title: "",
+                subject: "",
+                duration: "",
+                difficulty: "",
+                startDate: "",
+                endDate: "",
+                grade: "",
+                department: "",
+              });
+            }}
+          >
+            Clear Data
+          </Button>
 
           <Button variation="primary" size="md" type="submit">
             Next (Add Questions) →

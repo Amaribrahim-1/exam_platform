@@ -10,9 +10,11 @@ function Sidebar({ isOpen, onClose, navItems }) {
   const { user } = useUser();
   const role = user?.role || "Student";
   const displayAvatar = user?.avatar || "/default_image.avif";
-
   const { examId } = useParams();
-  const isExamSession = examId && !location.pathname.includes("exam-result");
+  const isExamSession =
+    examId &&
+    !location.pathname.includes("exam-result") &&
+    !location.pathname.includes("instructor");
 
   return (
     <>

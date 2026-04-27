@@ -21,6 +21,10 @@ export const formatTime = (duration) => {
 
 export const formatDateForInput = (dateString) => {
   if (!dateString) return "";
-  const date = new Date(dateString);
-  return date.toISOString().slice(0, 16);
+  try {
+    const date = new Date(dateString);
+    return format(date, "yyyy-MM-dd'T'HH:mm");
+  } catch (e) {
+    return "";
+  }
 };
