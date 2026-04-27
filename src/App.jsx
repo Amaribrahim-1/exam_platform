@@ -47,6 +47,8 @@ import StudentResultPage from "./features/student/results/StudentResultPage";
 import CompleteProfilePage from "./features/student/profile/CompleteProfilePage";
 import { useEffect } from "react";
 import { fetchExams } from "./services/examApi";
+import NotFound from "./pages/NotFound";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -162,7 +164,7 @@ const router = createBrowserRouter([
 
   {
     path: "*",
-    element: <Empty message='Page not found' />,
+    element: <NotFound />,
   },
 ]);
 
@@ -177,7 +179,7 @@ function App() {
   // }, []);
 
   return (
-    <>
+    <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
         <RouterProvider router={router} />
@@ -194,7 +196,7 @@ function App() {
         pauseOnHover
         transition={Flip}
       />
-    </>
+    </ErrorBoundary>
   );
 }
 

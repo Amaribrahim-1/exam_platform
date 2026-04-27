@@ -122,7 +122,7 @@ function QuestionPreviewCard({ questions, handleDelete, handleEdit }) {
             <TrashIcon size={24} />
           </div>
           <h3 className="text-lg font-bold text-text">Are you sure?</h3>
-          <p className="text-text-muted text-sm max-w-[15rem]">
+          <p className="text-text-muted text-sm max-w-[22rem]">
             This action cannot be undone. This will permanently delete the question from this exam.
           </p>
         </div>
