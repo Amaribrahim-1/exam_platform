@@ -4,6 +4,7 @@ import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import PageHeader from "../../../components/PageHeader";
 import ProgressIndicator from "../../../components/ProgressIndicator";
 import Loader from "../../../components/Loader";
+import Button from "../../../components/Button";
 
 import ExamWizardProvider from "./context/ExamWizardContext";
 import BasicInfoStep from "./components/BasicInfoStep";
@@ -106,12 +107,13 @@ function ExamWizardPage() {
       <div className="flex flex-col items-center justify-center p-16 gap-4">
         <h2 className="text-2xl font-bold text-red-600">Cannot Edit Exam</h2>
         <p className="text-gray-600">This exam already has student submissions and cannot be edited.</p>
-        <button
+        <Button
           onClick={() => navigate(-1)}
-          className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          variation="primary"
+          size="md"
         >
           Go Back
-        </button>
+        </Button>
       </div>
     );
   }

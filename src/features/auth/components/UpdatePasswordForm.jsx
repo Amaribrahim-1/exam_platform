@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { FiLock } from "react-icons/fi";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader";
+import Button from "@/components/Button";
 
 function UpdatePasswordForm() {
   const {
@@ -172,12 +173,13 @@ function UpdatePasswordForm() {
             </p>
           )}
         </div>
-        <button
+        <Button
           type='submit'
-          className='bg-surface-2 hover:bg-border text-text border-border w-full cursor-pointer rounded-[8px] border py-2.5 text-sm font-medium transition-colors'
+          variation='secondary'
+          className='w-full py-2.5'
         >
           Update Password
-        </button>
+        </Button>
       </div>
     </form>
   );

@@ -4,6 +4,7 @@ import useUpdateUser from "@/hooks/useUpdateUser";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FiSave } from "react-icons/fi";
+import Button from "@/components/Button";
 import { useNavigate } from "react-router-dom";
 import Loader from "@/components/Loader";
 
@@ -111,13 +112,15 @@ function CompleteProfilePage() {
             )}
           </div>
 
-          <button
+          <Button
             disabled={isUpdating}
-            className='bg-primary hover:bg-primary/80 mt-1 flex w-full cursor-pointer items-center justify-center gap-2 rounded-[8px] py-2.5 text-sm font-medium text-white transition-colors disabled:opacity-50'
+            variation='primary'
+            className='mt-1 flex w-full items-center justify-center gap-2 py-2.5'
+            type="submit"
           >
             <FiSave size={14} />
             {isUpdating ? "Saving..." : "Save & Continue"}
-          </button>
+          </Button>
         </form>
       </div>
     </div>

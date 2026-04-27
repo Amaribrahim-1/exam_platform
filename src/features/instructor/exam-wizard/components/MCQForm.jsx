@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import ErrorMessage from "../../../../components/ErrorMessage";
 import { useExamData } from "../hooks/useExamData";
+import Button from "../../../../components/Button";
 
 function MCQForm() {
   const {
@@ -127,15 +128,16 @@ function MCQForm() {
         </div>
       </div>
 
-      <button
+      <Button
         type='submit'
-        className='bg-primary px-lg py-md text-bg hover:bg-opacity-90 w-full cursor-pointer rounded-lg font-bold transition-all active:scale-95'
+        variation='primary'
+        className='w-full py-md'
       >
         {editingQuestionId ? "Update MCQ Question" : "Add MCQ Question"}
-      </button>
+      </Button>
 
       {editingQuestionId && (
-        <button
+        <Button
           onClick={() => {
             reset({
               question: "",
@@ -146,10 +148,11 @@ function MCQForm() {
             setEditingQuestionId(null);
           }}
           type='button'
-          className='bg-surface-2 px-lg py-md text-text hover:bg-opacity-90 w-full cursor-pointer rounded-lg font-bold transition-all active:scale-95'
+          variation='secondary'
+          className='w-full py-md'
         >
           Cancel
-        </button>
+        </Button>
       )}
     </form>
   );

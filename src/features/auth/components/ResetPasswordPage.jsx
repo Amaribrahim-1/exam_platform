@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiLock, FiSave } from "react-icons/fi";
 import { toast } from "react-toastify";
+import Button from "@/components/Button";
 
 function ResetPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -133,14 +134,15 @@ function ResetPasswordPage() {
             )}
           </div>
 
-          <button
+          <Button
             type='submit'
             disabled={isLoading}
-            className='bg-primary hover:bg-primary/80 mt-1 flex w-full cursor-pointer items-center justify-center gap-2 rounded-[8px] py-2.5 text-sm font-medium text-white transition-colors disabled:opacity-50'
+            variation='primary'
+            className='mt-1 flex w-full items-center justify-center gap-2 py-2.5'
           >
             <FiSave size={14} />
             {isLoading ? "Updating..." : "Update Password"}
-          </button>
+          </Button>
         </form>
       </div>
     </div>

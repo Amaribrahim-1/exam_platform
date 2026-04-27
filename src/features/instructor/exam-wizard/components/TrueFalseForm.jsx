@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useExamData } from "../hooks/useExamData";
 import ErrorMessage from "../../../../components/ErrorMessage";
+import Button from "../../../../components/Button";
 
 function TrueFalseForm() {
   TrueFalseForm;
@@ -118,15 +119,16 @@ function TrueFalseForm() {
         <ErrorMessage message={errors.marks?.message} />
       </div>
 
-      <button
+      <Button
         type='submit'
-        className='bg-accent px-lg py-md text-bg hover:bg-opacity-90 w-full cursor-pointer rounded-lg font-bold transition-all active:scale-95'
+        variation='accent'
+        className='w-full py-md'
       >
         {editingQuestionId ? "Update Question" : "Add True/False Question"}
-      </button>
+      </Button>
 
       {editingQuestionId && (
-        <button
+        <Button
           onClick={() => {
             reset({
               question: "",
@@ -137,10 +139,11 @@ function TrueFalseForm() {
             setEditingQuestionId(null);
           }}
           type='button'
-          className='bg-surface-2 px-lg py-md text-text hover:bg-opacity-90 w-full cursor-pointer rounded-lg font-bold transition-all active:scale-95'
+          variation='secondary'
+          className='w-full py-md'
         >
           Cancel
-        </button>
+        </Button>
       )}
     </form>
   );

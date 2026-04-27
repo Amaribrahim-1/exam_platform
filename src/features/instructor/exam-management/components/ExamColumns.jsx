@@ -1,5 +1,6 @@
 import StatusBadge from "../components/StatusBadge";
 import { Pencil, Trash2 } from "lucide-react";
+import Button from "@/components/Button";
 import {
   DIFFICULTY_LABELS,
   DIFFICULTY_STYLES,
@@ -34,20 +35,24 @@ export const examColumns = (onAction) => [
     label: "Actions",
     render: (id) => (
       <>
-        <button
+        <Button
           onClick={() => onAction("delete", id)}
-          className="text-text-muted hover:text-danger hover:bg-danger/10 cursor-pointer rounded p-2 transition-all"
+          variation="ghost"
+          size="icon"
+          className="hover:text-danger hover:bg-danger/10 text-text-muted"
           title="Delete"
         >
           <Trash2 size={18} />
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => onAction("edit", id)}
-          className="text-text-muted hover:text-primary hover:bg-primary/10 cursor-pointer rounded p-2 transition-all"
+          variation="ghost"
+          size="icon"
+          className="hover:text-primary hover:bg-primary/10 text-text-muted"
           title="Edit"
         >
           <Pencil size={18} />
-        </button>
+        </Button>
       </>
     ),
   },

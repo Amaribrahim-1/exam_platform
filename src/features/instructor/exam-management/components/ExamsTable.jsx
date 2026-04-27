@@ -186,7 +186,7 @@ function ExamsTable() {
               variation="primary"
               size="md"
             >
-              Go Back
+              OK
             </Button>
           ) : selectedAction.type === "delete" && !isLoadingSubmissions ? (
             <>
@@ -220,7 +220,7 @@ function ExamsTable() {
           <div className="flex flex-col items-center justify-center p-8 gap-4">
             <h2 className="text-xl font-bold text-red-600">Action Denied</h2>
             <p className="text-gray-600 text-center">
-              This exam already has student submissions and cannot be {selectedAction.type === "delete" ? "deleted. Change its status to Draft or Ended instead." : "edited."}
+              This exam already has student submissions and cannot be {selectedAction.type === "delete" ? "deleted" : "edited"}.
             </p>
           </div>
         ) : selectedAction.type === "delete" ? (

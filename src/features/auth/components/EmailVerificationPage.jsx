@@ -2,6 +2,7 @@ import { forgotPassword } from "@/services/userApi";
 import { useState } from "react";
 import { FiMail, FiSend } from "react-icons/fi";
 import { toast } from "react-toastify";
+import Button from "@/components/Button";
 
 function EmailVerificationPage() {
   const [email, setEmail] = useState("");
@@ -59,14 +60,15 @@ function EmailVerificationPage() {
             </div>
           </div>
 
-          <button
+          <Button
             type='submit'
             disabled={isLoading}
-            className='bg-primary hover:bg-primary/80 mt-1 flex w-full cursor-pointer items-center justify-center gap-2 rounded-[8px] py-2.5 text-sm font-medium text-white transition-colors disabled:opacity-50'
+            variation='primary'
+            className='mt-1 flex w-full items-center justify-center gap-2 py-2.5'
           >
             <FiSend size={14} />
             {isLoading ? "Sending..." : "Send Reset Link"}
-          </button>
+          </Button>
         </form>
       </div>
     </div>
