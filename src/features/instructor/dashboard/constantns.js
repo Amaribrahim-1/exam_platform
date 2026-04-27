@@ -31,7 +31,7 @@ export const INSTRUCTOR_STATS_CONFIG = [
     color: "text-indigo-500",
     bg: "bg-indigo-500/10",
     border: "border-indigo-500/60",
-    glow: "hover:shadow-[0_8px_32px_rgba(217,70,239,0.15)]",
+    glow: "hover:shadow-[0_8px_32px_rgba(99,102,241,0.15)]",
     accent: "bg-indigo-500",
     format: (v) => `${v}%`,
   },

@@ -57,7 +57,9 @@ function StatsCards({ STATS_CONFIG, stats, isLoading }) {
 
           {/* Value */}
           <div
-            className={`relative font-display text-3xl leading-none font-bold sm:text-4xl ${config.color}`}
+            className={`relative font-display text-3xl leading-none font-bold sm:text-4xl ${
+              config.key === "totalExams" ? "text-primary" : "text-text"
+            }`}
             style={{
               animation: `numberRoll 0.5s ease ${0.3 + i * 0.07}s both`,
             }}
