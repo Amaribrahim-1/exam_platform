@@ -94,6 +94,7 @@ function CompleteProfilePage() {
             >
               <option value=''>Select Department</option>
               {[
+                "General",
                 "Computer Science",
                 "Information Systems",
                 "Information Technology",

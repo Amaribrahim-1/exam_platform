@@ -9,7 +9,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
   const pageTitle = location.pathname.includes("instructor");
   const { user } = useUser();
   const role = user?.role || "Student";
-  const displayAvatar = user?.avatar || "/default_avatar.png";
+  const displayAvatar = user?.avatar || "/default_image.avif";
 
   const { examId } = useParams();
   const isExamSession = examId && !location.pathname.includes("exam-result");
@@ -42,7 +42,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
             <GraduationCap size={50} />
             <div className='flex flex-col items-start'>
               <h1 className='text-primary flex items-center justify-center rounded-md text-xl font-bold'>
-              Exam.io
+                Exam.io
               </h1>
               <p className='text-primary-faint text-xs font-medium'>
                 {role === "student"

@@ -7,18 +7,11 @@ import { toast } from "react-toastify";
 function Navbar({ onMenuClick }) {
   const { logout, isLoggingOut } = useLogout();
   const { user } = useUser();
-  const displayAvatar = user?.avatar || "/default_avatar.png";
+  const displayAvatar = user?.avatar || "/default_image.avif";
   const { examId } = useParams();
   const location = useLocation();
   const isExamSession = examId && !location.pathname.includes("exam-result");
 
-  // const greetings = {
-  //   student: "Welcome back, Good luck on your exams today!",
-  //   instructor: "Welcome back, Ready to manage your exams today?",
-  //   admin: "Welcome back!",
-  // };
-
-  // const greeting = "Welcome back!";
 
   return (
     <header className='border-border bg-surface px-md md:px-xl py-sm gap-md md:gap-lg flex items-center border-b md:col-span-1'>

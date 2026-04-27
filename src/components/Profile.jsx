@@ -35,7 +35,7 @@ function Profile({ extraFields = [], profileHook }) {
 
   const [avatar, setAvatar] = useState(null);
 
-  const displayAvatar = avatar || avatarUrl || "/default_avatar.png";
+  const displayAvatar = avatar || avatarUrl || "/default_image.avif";
 
   const fileRef = useRef();
   function handleAvatar(e) {
