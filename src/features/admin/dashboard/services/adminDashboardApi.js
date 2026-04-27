@@ -1,6 +1,6 @@
 import supabase from "@/services/supabase";
 
-export async function getAdminDashboardStats() {
+export async function getAdminDashboardStats(adminId) {
   const { data: exams, error: examsError } = await supabase
     .from("exams")
     .select("id");
@@ -20,13 +20,13 @@ export async function getAdminDashboardStats() {
     .from("student_profiles")
     .select("id");
   if (studentsError) throw new Error(studentsError.message);
-  const totalStudents = students.length;
+  const totalStudents = students.filter((s) => s.id !== adminId).length;
 
   const { data: instructors, error: instructorsError } = await supabase
     .from("instructor_profiles")
     .select("id");
   if (instructorsError) throw new Error(instructorsError.message);
-  const totalInstructors = instructors.length;
+  const totalInstructors = instructors.filter((i) => i.id !== adminId).length;
 
   const passed = submissions.filter((s) => s.status === "Passed").length;
   const failed = submissions.filter((s) => s.status === "Failed").length;
