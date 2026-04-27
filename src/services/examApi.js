@@ -160,3 +160,14 @@ export async function updateExamQuestions(examId, questions) {
 
   return data;
 }
+
+export async function checkExamHasSubmissions(examId) {
+  const { count, error } = await supabase
+    .from("exam_submissions")
+    .select("*", { count: "exact", head: true })
+    .eq("exam_id", examId);
+
+  if (error) throw new Error(error.message);
+
+  return count > 0;
+}

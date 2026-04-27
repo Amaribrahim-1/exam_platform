@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 
 import PageHeader from "../../../components/PageHeader";
 import ProgressIndicator from "../../../components/ProgressIndicator";
@@ -11,6 +11,7 @@ import QuestionBuilderStep from "./components/QuestionBuilderStep";
 import ReviewStep from "./components/ReviewStep";
 
 import { fetchExam, fetchExamQuestions } from "../../../services/examApi";
+import useCheckSubmissions from "@/hooks/useCheckSubmissions";
 import { formatDateForInput } from "@/Utils/formatDate";
 
 // Map DB columns → form field names
@@ -74,7 +75,10 @@ function ExamWizardInner({ isEditMode }) {
 
 function ExamWizardPage() {
   const { examId } = useParams();
+  const navigate = useNavigate();
   const isEditMode = Boolean(examId);
+
+  const { hasSubmissions, isLoadingSubmissions } = useCheckSubmissions(isEditMode ? examId : null);
 
   const { data: examData, isLoading: isLoadingExam } = useQuery({
     queryKey: ["exam", examId],
@@ -88,10 +92,26 @@ function ExamWizardPage() {
     enabled: isEditMode,
   });
 
-  if (isEditMode && (isLoadingExam || isLoadingQuestions)) {
+  if (isEditMode && (isLoadingExam || isLoadingQuestions || isLoadingSubmissions)) {
     return (
       <div className="flex items-center justify-center p-16">
         <Loader />
+      </div>
+    );
+  }
+
+  if (isEditMode && hasSubmissions) {
+
+    return (
+      <div className="flex flex-col items-center justify-center p-16 gap-4">
+        <h2 className="text-2xl font-bold text-red-600">Cannot Edit Exam</h2>
+        <p className="text-gray-600">This exam already has student submissions and cannot be edited.</p>
+        <button
+          onClick={() => navigate(-1)}
+          className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        >
+          Go Back
+        </button>
       </div>
     );
   }

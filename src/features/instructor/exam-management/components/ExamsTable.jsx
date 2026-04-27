@@ -10,6 +10,7 @@ import { formatDate } from "@/Utils/formatDate";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useCheckSubmissions from "@/hooks/useCheckSubmissions";
 import useDeleteExam from "../hooks/useDeleteExam";
 import useUpdateStatus from "../hooks/useUpdateStatus";
 import DeleteExamModal from "./DeleteExamModal";
@@ -25,9 +26,19 @@ function ExamsTable() {
   );
 
   const { deleteExam, isDeleting } = useDeleteExam();
-  const [deletingId, setDeletingId] = useState(null);
+  const [selectedAction, setSelectedAction] = useState({ type: null, examId: null });
   const { updateStatus } = useUpdateStatus();
   const navigate = useNavigate();
+
+  const { hasSubmissions, isLoadingSubmissions } = useCheckSubmissions(selectedAction.examId);
+
+  useEffect(() => {
+    // Auto-navigate to edit page if it's an edit action and there are no submissions
+    if (selectedAction.type === "edit" && !isLoadingSubmissions && hasSubmissions === false) {
+      navigate(`/instructor/exam-wizard/${selectedAction.examId}`);
+      setSelectedAction({ type: null, examId: null });
+    }
+  }, [selectedAction, isLoadingSubmissions, hasSubmissions, navigate]);
 
   const examData = instructorExams?.map((exam) => ({
     ...exam,
@@ -63,8 +74,8 @@ function ExamsTable() {
 
   const examsCount = sortedExams?.length;
 
-  const columns = examColumns(setDeletingId, navigate);
-  const examToDelete = instructorExams?.find((e) => e.id === deletingId);
+  const columns = examColumns((type, examId) => setSelectedAction({ type, examId }));
+  const examToDelete = instructorExams?.find((e) => e.id === selectedAction.examId);
 
   useEffect(() => {
     // Auto-close expired exams
@@ -157,31 +168,64 @@ function ExamsTable() {
       )}
 
       <Modal
-        isOpen={deletingId !== null}
-        onClose={() => setDeletingId(null)}
-        title="Delete Exam"
+        isOpen={Boolean(selectedAction.type)}
+        onClose={() => setSelectedAction({ type: null, examId: null })}
+        title={
+          hasSubmissions
+            ? selectedAction.type === "delete"
+              ? "Cannot Delete Exam"
+              : "Cannot Edit Exam"
+            : selectedAction.type === "delete"
+              ? "Delete Exam"
+              : "Loading..."
+        }
         actions={
-          <>
-            <button
-              onClick={() => setDeletingId(null)}
-              className="border-border text-text hover:bg-surface/50 cursor-pointer rounded-lg border px-4 py-2 font-medium transition-colors"
+          hasSubmissions ? (
+            <Button
+              onClick={() => setSelectedAction({ type: null, examId: null })}
+              variation="primary"
+              size="md"
             >
-              Cancel
-            </button>
-            <button
-              onClick={() => {
-                deleteExam(deletingId);
-                setDeletingId(null);
-              }}
-              disabled={isDeleting}
-              className="bg-danger/20 text-danger border-danger/30 hover:bg-danger/30 cursor-pointer rounded-lg border px-4 py-2 font-medium transition-colors disabled:opacity-50"
-            >
-              {isDeleting ? "Deleting..." : "Delete Exam"}
-            </button>
-          </>
+              Go Back
+            </Button>
+          ) : selectedAction.type === "delete" && !isLoadingSubmissions ? (
+            <>
+              <Button
+                onClick={() => setSelectedAction({ type: null, examId: null })}
+                variation="secondary"
+                size="md"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  deleteExam(selectedAction.examId);
+                  setSelectedAction({ type: null, examId: null });
+                }}
+                disabled={isDeleting || isLoadingSubmissions}
+                variation="danger"
+                size="md"
+              >
+                {isDeleting ? "Deleting..." : "Delete Exam"}
+              </Button>
+            </>
+          ) : null
         }
       >
-        <DeleteExamModal examToDelete={examToDelete} />
+        {isLoadingSubmissions ? (
+          <div className="flex items-center justify-center p-8">
+            <Loader />
+          </div>
+        ) : hasSubmissions ? (
+          <div className="flex flex-col items-center justify-center p-8 gap-4">
+            <h2 className="text-xl font-bold text-red-600">Action Denied</h2>
+            <p className="text-gray-600 text-center">
+              This exam already has student submissions and cannot be {selectedAction.type === "delete" ? "deleted. Change its status to Draft or Ended instead." : "edited."}
+            </p>
+          </div>
+        ) : selectedAction.type === "delete" ? (
+          <DeleteExamModal examToDelete={examToDelete} />
+        ) : null}
       </Modal>
     </div>
   );
