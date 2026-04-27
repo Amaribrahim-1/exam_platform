@@ -48,6 +48,8 @@ export async function fetchExams() {
 
   if (error) throw new Error(error.message);
 
+  console.log(exams);
+
   return exams;
 }
 

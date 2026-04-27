@@ -45,6 +45,8 @@ import ExamSessionPage from "./features/student/exam-session/ExamSessionPage";
 import StudentProfilePage from "./features/student/profile/StudentProfilePage";
 import StudentResultPage from "./features/student/results/StudentResultPage";
 import CompleteProfilePage from "./features/student/profile/CompleteProfilePage";
+import { useEffect } from "react";
+import { fetchExams } from "./services/examApi";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -165,6 +167,15 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  // useEffect(() => {
+  //   async function fetchExamsss() {
+  //     const exams = await fetchExams();
+  //     console.log(exams);
+  //   }
+
+  //   fetchExamsss();
+  // }, []);
+
   return (
     <>
       <QueryClientProvider client={queryClient}>

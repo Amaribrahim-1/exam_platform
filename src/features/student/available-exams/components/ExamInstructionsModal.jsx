@@ -1,4 +1,5 @@
 import Modal from "@/components/Modal";
+import Button from "@/components/Button";
 
 const RULES = [
   { icon: "🚫", text: "Do not switch tabs or leave the exam window" },
