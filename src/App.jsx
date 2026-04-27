@@ -169,15 +169,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  // useEffect(() => {
-  //   async function fetchExamsss() {
-  //     const exams = await fetchExams();
-  //     console.log(exams);
-  //   }
-
-  //   fetchExamsss();
-  // }, []);
-
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
