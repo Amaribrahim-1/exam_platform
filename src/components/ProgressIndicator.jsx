@@ -19,7 +19,7 @@ function ProgressIndicator({ step_param }) {
           {/* Step Circle */}
           <div className='flex flex-col items-center'>
             <div
-              className={`flex h-12 w-12 items-center justify-center rounded-full text-sm font-bold transition-all duration-300 ${
+              className={`flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold transition-all duration-300 sm:h-12 sm:w-12 sm:text-sm ${
                 step.id < step_param
                   ? "bg-primary text-text"
                   : step.id === step_param
@@ -30,7 +30,7 @@ function ProgressIndicator({ step_param }) {
               {step.id < step_param ? "✓" : step.id}
             </div>
             <p
-              className={`mt-2 text-xs font-medium transition-colors duration-300 ${
+              className={`mt-1 hidden text-xs font-medium transition-colors duration-300 sm:mt-2 sm:block ${
                 step.id <= step_param ? "text-text" : "text-text-muted"
               }`}
             >
@@ -41,7 +41,7 @@ function ProgressIndicator({ step_param }) {
           {/* Connecting Line */}
           {index < steps.length - 1 && (
             <div
-              className='mx-2 mb-6 h-1 flex-1 rounded-full transition-all duration-300'
+              className='mx-1 mb-0 h-1 flex-1 rounded-full transition-all duration-300 sm:mx-2 sm:mb-6'
               style={{
                 backgroundColor:
                   step.id < step_param

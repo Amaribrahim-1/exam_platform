@@ -31,7 +31,7 @@ function QuestionBuilderStep({ step, onNext, onBack }) {
         <h3 className="text-text text-sm font-bold tracking-wide uppercase">
           Add New Question
         </h3>
-        <div className="gap-md flex items-center">
+        <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => setQuestionType("MCQ")}
             disabled={editingQuestionId !== null}
@@ -69,7 +69,7 @@ function QuestionBuilderStep({ step, onNext, onBack }) {
 
         {/* Buttons Section */}
         <div
-          className={`mt-lg flex items-center ${step > 1 ? "justify-between" : "justify-end"}`}
+          className={`mt-lg flex flex-wrap items-center gap-3 ${step > 1 ? "justify-between" : "justify-end"}`}
         >
           {step > 1 && (
             <Button

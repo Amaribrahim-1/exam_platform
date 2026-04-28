@@ -163,7 +163,7 @@ function BasicInfoStep({ onNext }) {
         </div>
 
         {/* Buttons */}
-        <div className={`mt-lg gap-md flex items-center justify-end`}>
+        <div className={`mt-lg gap-3 flex flex-wrap items-center justify-end`}>
           <Button
             variation="secondary"
             size="md"

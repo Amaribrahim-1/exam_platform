@@ -5,7 +5,7 @@ function GenericTable({ columns, data }) {
     <div>
       {/* ===== Desktop: Table ===== */}
       <div className='border-border bg-surface hidden rounded-md border px-4 py-3 lg:block'>
-        <table className='w-full border-collapse'>
+        <table className='w-full border-collapse table-fixed'>
           {/* Header */}
           <thead className='bg-surface'>
             <tr>
@@ -28,7 +28,11 @@ function GenericTable({ columns, data }) {
                 className='border-border hover:bg-surface border-b transition-colors last:border-0'
               >
                 {columns.map((col) => (
-                  <td key={col.key} className='text-text px-4 py-3 text-[13px]'>
+                  <td
+                    key={col.key}
+                    className='text-text max-w-[180px] truncate px-4 py-3 text-[13px]'
+                    title={typeof row[col.key] === 'string' ? row[col.key] : undefined}
+                  >
                     {col.render ? col.render(row[col.key], row) : row[col.key]}
                   </td>
                 ))}
@@ -48,13 +52,13 @@ function GenericTable({ columns, data }) {
             {columns.map((col) => (
               <div
                 key={col.key}
-                className='border-border flex items-center justify-between border-b py-2 text-sm last:border-0'
+                className='border-border flex items-start justify-between border-b py-2 text-sm last:border-0'
               >
                 {/* Label على الشمال */}
-                <span className='text-text-muted min-w-25'>{col.label}</span>
+                <span className='text-text-muted min-w-25 shrink-0'>{col.label}</span>
 
                 {/* Value على اليمين */}
-                <span className='text-text text-right'>
+                <span className='text-text ml-2 break-all text-right'>
                   {col.render ? col.render(row[col.key], row) : row[col.key]}
                 </span>
               </div>

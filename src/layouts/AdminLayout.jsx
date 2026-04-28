@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { BookOpen, FileBarChart, LayoutDashboardIcon, Users } from "lucide-react";
+import {
+  BookOpen,
+  FileBarChart,
+  LayoutDashboardIcon,
+  Users,
+} from "lucide-react";
 
 import Main from "../components/Main";
 import Navbar from "../components/Navbar";
@@ -17,16 +22,6 @@ const adminNavItems = [
     to: "/admin/users",
     label: "User Management",
     icon: <Users />,
-  },
-  {
-    to: "/admin/exams",
-    label: "Exam Oversight",
-    icon: <BookOpen />,
-  },
-  {
-    to: "/admin/reports",
-    label: "Reports",
-    icon: <FileBarChart />,
   },
 ];
 

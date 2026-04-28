@@ -35,7 +35,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
 
       {/* Sidebar */}
       <aside
-        className={`border-border bg-surface p-md md:p-md fixed z-50 flex flex-col border-r transition-all duration-300 ease-in-out md:static md:row-span-2 ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"} h-screen w-65 overflow-y-auto md:h-auto md:overflow-visible`}
+        className={`border-border bg-surface p-md md:p-md fixed z-50 flex flex-col border-r transition-all duration-300 ease-in-out md:static md:row-span-2 ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"} h-screen w-65 overflow-hidden md:h-auto md:overflow-visible`}
       >
         {/* Close Button for Mobile */}
         <button
@@ -65,7 +65,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
           </div>
         </NavLink>
         {/* Navigation Links */}
-        <nav className='space-y-sm flex-1'>
+        <nav className='space-y-sm flex-1 overflow-y-auto'>
           <p className='text-text-faint px-sm mb-lg text-xs font-bold tracking-widest uppercase'>
             Menu
           </p>
@@ -92,7 +92,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
         )}
 
         {/* User Profile Card (Bottom) */}
-        <div className='p-sm bg-surface-2 border-border gap-sm mt-auto flex items-center rounded-lg border'>
+        <div className='p-sm bg-surface-2 border-border gap-sm mt-auto flex shrink-0 items-center rounded-lg border'>
           <div className='border-border text-primary bg-surface-2 group-hover:border-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-sm font-bold transition-colors'>
             <img
               src={displayAvatar}

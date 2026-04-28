@@ -56,10 +56,10 @@ function UpdatePasswordForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='bg-surface border-border flex flex-col gap-5 rounded-[12px] border p-6'
+      className='bg-surface border-border flex flex-col gap-4 rounded-[12px] border p-5'
     >
       <h3 className='text-text text-base font-semibold'>Change Password</h3>
-      <div className='flex flex-col gap-4'>
+      <div className='flex flex-col gap-3'>
         <div>
           <div className='mb-1.5 flex items-center justify-between'>
             <label className={labelClass}>Current Password</label>
@@ -175,7 +175,7 @@ function UpdatePasswordForm() {
         </div>
         <Button
           type='submit'
-          variation='secondary'
+          variation='primary'
           className='w-full py-2.5'
         >
           Update Password

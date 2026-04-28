@@ -46,7 +46,7 @@ function ResultSummaryCard({ examResults }) {
 
       <div className='flex flex-col items-center gap-6 px-8 py-10'>
         {/* badges */}
-        <div className='flex items-center gap-3'>
+        <div className='flex flex-wrap items-center justify-center gap-2'>
           <span
             className={`rounded-full border px-3 py-1 text-xs font-semibold ${
               status === "Passed"
@@ -81,7 +81,7 @@ function ResultSummaryCard({ examResults }) {
         <div className='bg-border h-px w-full' />
 
         {/* stats */}
-        <div className='divide-border flex w-full items-center justify-center divide-x'>
+        <div className='grid w-full grid-cols-2 gap-3 sm:flex sm:items-center sm:justify-center sm:divide-x sm:divide-border sm:gap-0'>
           <Stat value={correct} label='Correct' colorClass='text-accent' />
           <Stat value={wrong} label='Wrong' colorClass='text-danger' />
           <Stat value={skipped} label='Skipped' colorClass='text-text-muted' />

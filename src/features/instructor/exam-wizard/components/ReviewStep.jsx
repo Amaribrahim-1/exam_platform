@@ -126,7 +126,7 @@ function ReviewStep({ step, onBack }) {
 
       {/* Stats */}
       <div className="bg-surface-2 border-border p-lg rounded-lg border">
-        <div className="gap-md grid grid-cols-4">
+        <div className="gap-md grid grid-cols-2 sm:grid-cols-4">
           {stats.map((stat, idx) => (
             <div
               key={idx}
@@ -135,7 +135,7 @@ function ReviewStep({ step, onBack }) {
               <p className="text-text-muted mb-sm text-xs font-semibold uppercase">
                 {stat.label}
               </p>
-              <p className="text-text text-xl font-bold">{stat.value}</p>
+              <p className="text-text text-lg font-bold sm:text-xl">{stat.value}</p>
             </div>
           ))}
         </div>
@@ -146,7 +146,7 @@ function ReviewStep({ step, onBack }) {
 
       {/* Buttons */}
       <div
-        className={`mt-lg flex items-center ${step > 1 ? "justify-between" : "justify-end"}`}
+        className={`mt-lg flex flex-wrap items-center gap-3 ${step > 1 ? "justify-between" : "justify-end"}`}
       >
         {step > 1 && (
           <Button variation="secondary" size="md" onClick={onBack} type="button">

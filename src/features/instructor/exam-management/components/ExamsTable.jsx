@@ -114,9 +114,9 @@ function ExamsTable() {
 
   return (
     <div className="space-y-10">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
-          <h1 className="text-2xl font-bold">Exam Management</h1>
+          <h1 className="text-xl font-bold sm:text-2xl">Exam Management</h1>
           <p className="text-text-muted mt-1 text-sm">
             {examsCount} {examsCount === 1 ? "exam" : "exams"} found, let&apos;s
             manage them
@@ -126,6 +126,7 @@ function ExamsTable() {
           onClick={() => navigate("/instructor/exam-wizard")}
           variation="primary"
           size="md"
+          className="w-full sm:w-auto"
         >
           + New Exam
         </Button>

@@ -21,11 +21,12 @@ const Modal = ({
 
       {/* Modal Box */}
       <div
-        className={`bg-surface border-border animate-fade-scale relative overflow-hidden rounded-lg border shadow-2xl`}
+        className={`bg-surface border-border animate-fade-scale relative flex w-full max-w-[90vw] flex-col overflow-hidden rounded-lg border shadow-2xl sm:max-w-lg`}
+        style={{ maxHeight: '90dvh' }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className='border-border bg-surface-2 flex items-center justify-between border-b px-6 py-4'>
+        <div className='border-border bg-surface-2 flex shrink-0 items-center justify-between border-b px-6 py-4'>
           <h2 className='text-text text-lg font-bold'>{title}</h2>
           <button
             onClick={onClose}
@@ -36,11 +37,11 @@ const Modal = ({
         </div>
 
         {/* Content */}
-        <div className={`text-text ${pad && "px-6 py-6"}`}>{children}</div>
+        <div className={`text-text overflow-y-auto ${pad && "px-6 py-6"}`}>{children}</div>
 
         {/* Footer */}
         {actions && (
-          <div className='border-border bg-surface-2 flex items-center justify-end gap-3 border-t px-6 py-4'>
+          <div className='border-border bg-surface-2 flex shrink-0 items-center justify-end gap-3 border-t px-6 py-4'>
             {actions}
           </div>
         )}
