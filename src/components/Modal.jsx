@@ -21,7 +21,7 @@ const Modal = ({
 
       {/* Modal Box */}
       <div
-        className={`bg-surface border-border animate-fade-scale relative flex w-full max-w-[90vw] flex-col overflow-hidden rounded-lg border shadow-2xl sm:max-w-lg`}
+        className={`bg-surface border-border animate-fade-scale relative flex w-full max-w-[90vw] flex-col overflow-hidden rounded-lg border shadow-2xl sm:max-w-150`}
         style={{ maxHeight: '90dvh' }}
         onClick={(e) => e.stopPropagation()}
       >

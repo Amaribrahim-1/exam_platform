@@ -26,16 +26,26 @@ function ExamsTable() {
   );
 
   const { deleteExam, isDeleting } = useDeleteExam();
-  const [selectedAction, setSelectedAction] = useState({ type: null, examId: null });
+  const [selectedAction, setSelectedAction] = useState({
+    type: null,
+    examId: null,
+  });
   const { updateStatus } = useUpdateStatus();
   const navigate = useNavigate();
 
-  const { hasSubmissions, isLoadingSubmissions } = useCheckSubmissions(selectedAction.examId);
+  const { hasSubmissions, isLoadingSubmissions } = useCheckSubmissions(
+    selectedAction.examId,
+  );
 
   useEffect(() => {
     // Auto-navigate to edit page if it's an edit action and there are no submissions
-    if (selectedAction.type === "edit" && !isLoadingSubmissions && hasSubmissions === false) {
+    if (
+      selectedAction.type === "edit" &&
+      !isLoadingSubmissions &&
+      hasSubmissions === false
+    ) {
       navigate(`/instructor/exam-wizard/${selectedAction.examId}`);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedAction({ type: null, examId: null });
     }
   }, [selectedAction, isLoadingSubmissions, hasSubmissions, navigate]);
@@ -74,8 +84,12 @@ function ExamsTable() {
 
   const examsCount = sortedExams?.length;
 
-  const columns = examColumns((type, examId) => setSelectedAction({ type, examId }));
-  const examToDelete = instructorExams?.find((e) => e.id === selectedAction.examId);
+  const columns = examColumns((type, examId) =>
+    setSelectedAction({ type, examId }),
+  );
+  const examToDelete = instructorExams?.find(
+    (e) => e.id === selectedAction.examId,
+  );
 
   useEffect(() => {
     // Auto-close expired exams
@@ -98,13 +112,13 @@ function ExamsTable() {
 
   if (!instructorExams?.length)
     return (
-      <div className="flex h-full items-center justify-center p-6">
-        <Empty message="No exams found, create one now">
+      <div className='flex h-full items-center justify-center p-6'>
+        <Empty message='No exams found, create one now'>
           <Button
             onClick={() => navigate("/instructor/exam-wizard")}
-            variation="primary"
-            size="md"
-            className="shadow-glow mt-8 transition-transform hover:scale-105"
+            variation='primary'
+            size='md'
+            className='shadow-glow mt-8 transition-transform hover:scale-105'
           >
             + New Exam
           </Button>
@@ -113,20 +127,20 @@ function ExamsTable() {
     );
 
   return (
-    <div className="space-y-10">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-1">
-          <h1 className="text-xl font-bold sm:text-2xl">Exam Management</h1>
-          <p className="text-text-muted mt-1 text-sm">
+    <div className='space-y-10'>
+      <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
+        <div className='space-y-1'>
+          <h1 className='text-xl font-bold sm:text-2xl'>Exam Management</h1>
+          <p className='text-text-muted mt-1 text-sm'>
             {examsCount} {examsCount === 1 ? "exam" : "exams"} found, let&apos;s
             manage them
           </p>
         </div>
         <Button
           onClick={() => navigate("/instructor/exam-wizard")}
-          variation="primary"
-          size="md"
-          className="w-full sm:w-auto"
+          variation='primary'
+          size='md'
+          className='w-full sm:w-auto'
         >
           + New Exam
         </Button>
@@ -144,7 +158,7 @@ function ExamsTable() {
         <Modal
           isOpen={isFilterOpen}
           onClose={() => setIsFilterOpen(false)}
-          title="Filter By"
+          title='Filter By'
           pad={false}
         >
           <FilterExamsModal
@@ -165,7 +179,7 @@ function ExamsTable() {
           data={sortedExams}
         />
       ) : (
-        <Empty message="No exams found" />
+        <Empty message='No exams found' />
       )}
 
       <Modal
@@ -184,8 +198,8 @@ function ExamsTable() {
           hasSubmissions ? (
             <Button
               onClick={() => setSelectedAction({ type: null, examId: null })}
-              variation="primary"
-              size="md"
+              variation='primary'
+              size='md'
             >
               OK
             </Button>
@@ -193,8 +207,8 @@ function ExamsTable() {
             <>
               <Button
                 onClick={() => setSelectedAction({ type: null, examId: null })}
-                variation="secondary"
-                size="md"
+                variation='secondary'
+                size='md'
               >
                 Cancel
               </Button>
@@ -204,8 +218,8 @@ function ExamsTable() {
                   setSelectedAction({ type: null, examId: null });
                 }}
                 disabled={isDeleting || isLoadingSubmissions}
-                variation="danger"
-                size="md"
+                variation='danger'
+                size='md'
               >
                 {isDeleting ? "Deleting..." : "Delete Exam"}
               </Button>
@@ -214,14 +228,15 @@ function ExamsTable() {
         }
       >
         {isLoadingSubmissions ? (
-          <div className="flex items-center justify-center p-8">
+          <div className='flex items-center justify-center p-8'>
             <Loader />
           </div>
         ) : hasSubmissions ? (
-          <div className="flex flex-col items-center justify-center p-8 gap-4">
-            <h2 className="text-xl font-bold text-red-600">Action Denied</h2>
-            <p className="text-gray-600 text-center">
-              This exam already has student submissions and cannot be {selectedAction.type === "delete" ? "deleted" : "edited"}.
+          <div className='flex flex-col items-center justify-center gap-4 p-8'>
+            <h2 className='text-xl font-bold text-red-600'>Action Denied</h2>
+            <p className='text-center text-gray-600'>
+              This exam already has student submissions and cannot be{" "}
+              {selectedAction.type === "delete" ? "deleted" : "edited"}.
             </p>
           </div>
         ) : selectedAction.type === "delete" ? (

@@ -23,6 +23,7 @@ function useUpdateExam(examId) {
       queryClient.invalidateQueries({ queryKey: ["instructorExams"] });
       queryClient.invalidateQueries({ queryKey: ["exam", examId] });
       queryClient.invalidateQueries({ queryKey: ["questions", examId] });
+      queryClient.invalidateQueries({ queryKey: ["studentExams"] });
       clearExamData();
       navigate("/instructor/exams-management");
     },
