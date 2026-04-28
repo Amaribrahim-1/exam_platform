@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
@@ -7,48 +8,50 @@ import {
 } from "react-router-dom";
 import { Flip, ToastContainer } from "react-toastify";
 
+// ── Layouts & guards (small shells – kept eager) ──────────────────────────────
 import AdminLayout from "./layouts/AdminLayout";
 import InstructorLayout from "./layouts/InstructorLayout";
 import StudentLayout from "./layouts/StudentLayout";
-
 import ProtectedRoute from "./components/ProtectedRoute";
 import RoleRoute from "./components/RoleRoute";
-
-import DashboardPage from "./features/instructor/dashboard/InstructorDashboardPage";
-import ExamsManagementPage from "./features/instructor/exam-management/ExamManagementPage";
-import ExamWizardPage from "./features/instructor/exam-wizard/ExamWizardPage";
-import StudentsPage from "./features/instructor/students/StudentsPage";
-
-import LoginForm from "./features/auth/components/LoginForm";
-import RegisterForm from "./features/auth/components/RegisterForm";
-
-// Admin pages
-import AdminDashboardPage from "./features/admin/dashboard/AdminDashboardPage";
-import ExamOversightPage from "./features/admin/exam-oversight/ExamOversightPage";
-import ReportsPage from "./features/admin/reports/ReportsPage";
-import UserManagementPage from "./features/admin/user-management/UserManagementPage";
-
-// Student pages
-import Empty from "./components/Empty";
-import LandingPage from "./components/LandingPage";
-import EmailVerificationPage from "./features/auth/components/EmailVerificationPage";
-import ResetPasswordPage from "./features/auth/components/ResetPasswordPage";
-import InstructorExamHistoryPage from "./features/instructor/exam-history/InstructorExamHistoryPage";
-import InstructorProfilePage from "./features/instructor/profile/InstructorProfilePage";
-import InstructorResultPage from "./features/instructor/results/InstructorResultPage";
-import HomePage from "./pages/HomePage";
-import AvailableExamsPage from "./features/student/available-exams/AvailableExamsPage";
-import StudentDashboardPage from "./features/student/dashboard/StudentDashboardPage";
-import StudentExamsHistoryPage from "./features/student/exam-history/StudentExamsHistoryPage";
-import ExamSessionProvider from "./features/student/exam-session/context/ExamSessionContext";
-import ExamSessionPage from "./features/student/exam-session/ExamSessionPage";
-import StudentProfilePage from "./features/student/profile/StudentProfilePage";
-import StudentResultPage from "./features/student/results/StudentResultPage";
-import CompleteProfilePage from "./features/student/profile/CompleteProfilePage";
-import { useEffect } from "react";
-import { fetchExams } from "./services/examApi";
-import NotFound from "./pages/NotFound";
 import ErrorBoundary from "./components/ErrorBoundary";
+import PageLoader from "./components/PageLoader";
+import ExamSessionProvider from "./features/student/exam-session/context/ExamSessionContext";
+
+// ── Auth pages ────────────────────────────────────────────────────────────────
+const LoginForm              = lazy(() => import("./features/auth/components/LoginForm"));
+const RegisterForm           = lazy(() => import("./features/auth/components/RegisterForm"));
+const EmailVerificationPage  = lazy(() => import("./features/auth/components/EmailVerificationPage"));
+const ResetPasswordPage      = lazy(() => import("./features/auth/components/ResetPasswordPage"));
+
+// ── Public / shared pages ─────────────────────────────────────────────────────
+const HomePage               = lazy(() => import("./pages/HomePage"));
+const LandingPage            = lazy(() => import("./components/LandingPage"));
+const NotFound               = lazy(() => import("./pages/NotFound"));
+
+// ── Instructor pages ──────────────────────────────────────────────────────────
+const DashboardPage              = lazy(() => import("./features/instructor/dashboard/InstructorDashboardPage"));
+const ExamsManagementPage        = lazy(() => import("./features/instructor/exam-management/ExamManagementPage"));
+const ExamWizardPage             = lazy(() => import("./features/instructor/exam-wizard/ExamWizardPage"));
+const StudentsPage               = lazy(() => import("./features/instructor/students/StudentsPage"));
+const InstructorExamHistoryPage  = lazy(() => import("./features/instructor/exam-history/InstructorExamHistoryPage"));
+const InstructorProfilePage      = lazy(() => import("./features/instructor/profile/InstructorProfilePage"));
+const InstructorResultPage       = lazy(() => import("./features/instructor/results/InstructorResultPage"));
+
+// ── Admin pages ───────────────────────────────────────────────────────────────
+const AdminDashboardPage   = lazy(() => import("./features/admin/dashboard/AdminDashboardPage"));
+const ExamOversightPage    = lazy(() => import("./features/admin/exam-oversight/ExamOversightPage"));
+const ReportsPage          = lazy(() => import("./features/admin/reports/ReportsPage"));
+const UserManagementPage   = lazy(() => import("./features/admin/user-management/UserManagementPage"));
+
+// ── Student pages ─────────────────────────────────────────────────────────────
+const CompleteProfilePage      = lazy(() => import("./features/student/profile/CompleteProfilePage"));
+const StudentDashboardPage     = lazy(() => import("./features/student/dashboard/StudentDashboardPage"));
+const AvailableExamsPage       = lazy(() => import("./features/student/available-exams/AvailableExamsPage"));
+const ExamSessionPage          = lazy(() => import("./features/student/exam-session/ExamSessionPage"));
+const StudentResultPage        = lazy(() => import("./features/student/results/StudentResultPage"));
+const StudentExamsHistoryPage  = lazy(() => import("./features/student/exam-history/StudentExamsHistoryPage"));
+const StudentProfilePage       = lazy(() => import("./features/student/profile/StudentProfilePage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -173,7 +176,10 @@ function App() {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
-        <RouterProvider router={router} />
+        {/* Suspense catches every lazy page chunk while it's being downloaded */}
+        <Suspense fallback={<PageLoader />}>
+          <RouterProvider router={router} />
+        </Suspense>
       </QueryClientProvider>
       <ToastContainer
         position='top-center'
