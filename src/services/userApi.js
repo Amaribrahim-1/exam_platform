@@ -93,7 +93,7 @@ export async function resetPassword(newPassword) {
 
 export async function forgotPassword(email) {
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `http://localhost:5173/reset-password`,
+    redirectTo: `https://exam-platform-7r4y.vercel.app/reset-password`,
   });
 
   if (error) throw new Error(error.message);
