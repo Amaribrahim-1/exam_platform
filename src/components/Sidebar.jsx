@@ -1,6 +1,12 @@
 import useUser from "@/features/auth/hooks/useUser";
 import { GraduationCap, X } from "lucide-react";
-import { NavLink, useLocation, useParams } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { seedExams } from "../services/seedExams";
 import SidebarLink from "./SidebarLink";
 
@@ -11,6 +17,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
   const role = user?.role || "Student";
   const displayAvatar = user?.avatar || "/default_image.avif";
   const { examId } = useParams();
+  const navigate = useNavigate();
   const isExamSession =
     examId &&
     !location.pathname.includes("exam-result") &&
@@ -87,11 +94,13 @@ function Sidebar({ isOpen, onClose, navItems }) {
         {/* User Profile Card (Bottom) */}
         <div className='p-sm bg-surface-2 border-border gap-sm mt-auto flex items-center rounded-lg border'>
           <div className='border-border text-primary bg-surface-2 group-hover:border-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-sm font-bold transition-colors'>
-            <img
-              src={displayAvatar}
-              alt={user?.fullName}
-              className='h-full w-full rounded-full object-cover'
-            />
+            <Link to={`${user?.role}/profile`}>
+              <img
+                src={displayAvatar}
+                alt={user?.fullName}
+                className='h-full w-full rounded-full object-cover'
+              />
+            </Link>
           </div>
           <div className='flex-1 overflow-hidden'>
             <p className='text-text truncate text-sm font-bold'>
