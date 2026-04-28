@@ -35,25 +35,21 @@ function Navbar({ onMenuClick }) {
 
           {/* Avatar Circle */}
           <div className='border-border text-primary bg-surface-2 group-hover:border-primary flex h-10 w-10 items-center justify-center rounded-full border text-sm font-bold transition-colors'>
-            <Link to={`${user?.role}/profile`}>
-              <img
-                src={displayAvatar}
-                alt={user?.fullName}
-                className='h-full w-full rounded-full object-cover'
-              />
-            </Link>
-          </div>
-        </div>
-
-        {/* Mobile Avatar */}
-        <div className='border-border text-primary bg-surface-2 flex h-8 w-8 items-center justify-center rounded-full border text-xs font-bold md:hidden'>
-          <Link to={`${user?.role}/profile`}>
             <img
               src={displayAvatar}
               alt={user?.fullName}
               className='h-full w-full rounded-full object-cover'
             />
-          </Link>
+          </div>
+        </div>
+
+        {/* Mobile Avatar */}
+        <div className='border-border text-primary bg-surface-2 flex h-8 w-8 items-center justify-center rounded-full border text-xs font-bold md:hidden'>
+          <img
+            src={displayAvatar}
+            alt={user?.fullName}
+            className='h-full w-full rounded-full object-cover'
+          />
         </div>
 
         {user && (
