@@ -215,24 +215,22 @@ exam_platform/
 ### Exam Lifecycle
 
 ```mermaid
-sequenceDiagram
-    participant I as Instructor
-    participant DB as Supabase DB
-    participant S as Student
-    participant RT as Supabase Realtime
-
-    I->>DB: Create exam (metadata + questions) via Wizard
-    I->>DB: Publish exam (status = active)
-    S->>DB: Fetch available exams (filtered by grade/dept)
-    S->>DB: Open exam session (fetch exam + shuffled questions)
-    loop During Exam
-        S->>S: Track answers, timer, flags in Context + localStorage
-        RT-->>S: Exam status update (force-submit if closed early)
-    end
-    S->>DB: Submit (insert into exam_submissions)
-    DB-->>S: Result calculated from canonical DB questions
-    S->>DB: View result & history
-    I->>DB: View submission-level analytics
+flowchart TD
+    A["👨‍🏫 Instructor\nCreates exam via Wizard\n(metadata + questions)"] --> B["📦 Supabase DB\nStores exam + questions"]
+    B --> C["📢 Instructor publishes\nexam  ➜  status = active"]
+    C --> D["🎓 Student\nFetches available exams\nfiltered by grade & dept"]
+    D --> E["🚀 Student opens\nexam-session/:examId\nFetches shuffled questions"]
+    E --> F["⏱️ Exam in progress\nAnswers + timer + flags\ntracked in Context & localStorage"]
+    F --> G{"Early close\nby instructor?"}
+    G -- "Yes (Realtime event)" --> H["⚠️ Force auto-submit\nreason = time_up / cheat"]
+    G -- "No" --> I{"Timer\nreached 0?"}
+    I -- "Yes" --> H
+    I -- "No" --> J["✅ Student submits\nmanually"]
+    H --> K["💾 Insert into\nexam_submissions"]
+    J --> K
+    K --> L["📊 Score calculated\nfrom DB questions"]
+    L --> M["🎓 Student views\nresult & history"]
+    L --> N["👨‍🏫 Instructor views\nsubmission analytics"]
 ```
 
 ### Question Randomisation (Anti-Cheat)
