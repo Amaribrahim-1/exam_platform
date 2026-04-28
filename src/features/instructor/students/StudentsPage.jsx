@@ -66,13 +66,13 @@ function StudentsPage() {
           {studentsCount} {studentsCount === 1 ? "student" : "students"} found
         </p>
       </div>
-      <div className={`flex items-center gap-2 sm:gap-4`}>
+      <div className='flex flex-wrap items-center gap-2 sm:gap-3'>
         <input
           onChange={(e) => setSearch(e.target.value)}
           value={search}
           type='search'
-          className={`bg-surface-2 p-md text-text text-md w-10/12 flex-1 rounded-md font-medium sm:w-9/12`}
-          placeholder={`Search By Name`}
+          className='bg-surface-2 p-md text-text text-md min-w-0 flex-1 rounded-md font-medium'
+          placeholder='Search By Name'
         />
         <select
           onChange={(e) => {
@@ -81,7 +81,7 @@ function StudentsPage() {
               : searchParams.set("grade", e.target.value);
             setSearchParams(searchParams);
           }}
-          className='bg-surface-2 p-md text-text w-2/12 rounded-md text-base font-medium'
+          className='bg-surface-2 p-md text-text min-w-[130px] flex-1 rounded-md text-sm font-medium sm:flex-none'
         >
           <option value='all'>All Grades</option>
           {GRADES.map((g) => (
@@ -98,7 +98,7 @@ function StudentsPage() {
               : searchParams.set("department", e.target.value);
             setSearchParams(searchParams);
           }}
-          className='bg-surface-2 p-md text-text w-2/12 rounded-md text-base font-medium'
+          className='bg-surface-2 p-md text-text min-w-[150px] flex-1 rounded-md text-sm font-medium sm:flex-none'
         >
           <option value='all'>All Departments</option>
           {DEPARTMENTS.map((d) => (

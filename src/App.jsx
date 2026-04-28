@@ -43,6 +43,7 @@ const AdminDashboardPage   = lazy(() => import("./features/admin/dashboard/Admin
 const ExamOversightPage    = lazy(() => import("./features/admin/exam-oversight/ExamOversightPage"));
 const ReportsPage          = lazy(() => import("./features/admin/reports/ReportsPage"));
 const UserManagementPage   = lazy(() => import("./features/admin/user-management/UserManagementPage"));
+const AdminProfilePage     = lazy(() => import("./features/admin/profile/AdminProfilePage"));
 
 // ── Student pages ─────────────────────────────────────────────────────────────
 const CompleteProfilePage      = lazy(() => import("./features/student/profile/CompleteProfilePage"));
@@ -128,6 +129,7 @@ const router = createBrowserRouter([
               { path: "users", element: <UserManagementPage /> },
               { path: "exams", element: <ExamOversightPage /> },
               { path: "reports", element: <ReportsPage /> },
+              { path: "profile", element: <AdminProfilePage /> },
             ],
           },
         ],

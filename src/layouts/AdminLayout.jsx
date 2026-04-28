@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import {
   BookOpen,
+  CircleUser,
   FileBarChart,
   LayoutDashboardIcon,
   Users,
@@ -22,6 +23,11 @@ const adminNavItems = [
     to: "/admin/users",
     label: "User Management",
     icon: <Users />,
+  },
+  {
+    to: "/admin/profile",
+    label: "Profile",
+    icon: <CircleUser />,
   },
 ];
 

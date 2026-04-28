@@ -11,6 +11,7 @@ function Navbar({ onMenuClick }) {
   const displayAvatar = user?.avatar || "/default_image.avif";
   const location = useLocation();
   const isExamSession = examId && !location.pathname.includes("exam-result");
+  const profileRoute = user?.role ? `/${user.role}/profile` : "#";
 
   return (
     <header className='border-border bg-surface px-md md:px-xl py-sm gap-md md:gap-lg flex items-center border-b md:col-span-1'>
@@ -25,32 +26,40 @@ function Navbar({ onMenuClick }) {
 
       {/* Right Section */}
       <div className='gap-md md:gap-lg flex flex-1 items-center justify-end'>
-        <div className='group hidden cursor-pointer items-center gap-4 md:flex'>
-          {/* Name and Role */}
+        <div className='hidden items-center gap-4 md:flex'>
+          {/* Name */}
           <div className='flex flex-col text-right'>
             <span className='text-text text-base leading-none font-bold'>
               {user?.fullName}
             </span>
           </div>
 
-          {/* Avatar Circle */}
-          <div className='border-border text-primary bg-surface-2 group-hover:border-primary flex h-10 w-10 items-center justify-center rounded-full border text-sm font-bold transition-colors'>
+          {/* Avatar — Desktop */}
+          <Link
+            to={profileRoute}
+            title='Go to profile'
+            className='border-border text-primary bg-surface-2 hover:border-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-sm font-bold transition-colors'
+          >
             <img
               src={displayAvatar}
               alt={user?.fullName}
               className='h-full w-full rounded-full object-cover'
             />
-          </div>
+          </Link>
         </div>
 
-        {/* Mobile Avatar */}
-        <div className='border-border text-primary bg-surface-2 flex h-8 w-8 items-center justify-center rounded-full border text-xs font-bold md:hidden'>
+        {/* Avatar — Mobile */}
+        <Link
+          to={profileRoute}
+          title='Go to profile'
+          className='border-border text-primary bg-surface-2 hover:border-primary flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-xs font-bold transition-colors md:hidden'
+        >
           <img
             src={displayAvatar}
             alt={user?.fullName}
             className='h-full w-full rounded-full object-cover'
           />
-        </div>
+        </Link>
 
         {user && (
           <button

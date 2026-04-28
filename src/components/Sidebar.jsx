@@ -92,8 +92,13 @@ function Sidebar({ isOpen, onClose, navItems }) {
         )}
 
         {/* User Profile Card (Bottom) */}
-        <div className='p-sm bg-surface-2 border-border gap-sm mt-auto flex shrink-0 items-center rounded-lg border'>
-          <div className='border-border text-primary bg-surface-2 group-hover:border-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-sm font-bold transition-colors'>
+        <Link
+          to={`/${role}/profile`}
+          onClick={onClose}
+          className='p-sm bg-surface-2 border-border gap-sm mt-auto flex shrink-0 items-center rounded-lg border transition-all hover:border-primary/50 hover:shadow-sm'
+          title='Go to profile'
+        >
+          <div className='border-border text-primary bg-surface-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-colors'>
             <img
               src={displayAvatar}
               alt={user?.fullName}
@@ -112,7 +117,7 @@ function Sidebar({ isOpen, onClose, navItems }) {
                   : "Admin"}
             </p>
           </div>
-        </div>
+        </Link>
       </aside>
     </>
   );
