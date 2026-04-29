@@ -16,18 +16,20 @@ export async function getAdminDashboardStats(adminId) {
   if (submissionsError) throw new Error(submissionsError.message);
   const totalSubmissions = submissions.length;
 
+  // 3. Fetch Students Count (بناءً على الـ View اللي بتفلتر الـ Role)
   const { data: students, error: studentsError } = await supabase
-    .from("student_profiles")
+    .from("students_view")
     .select("id");
   if (studentsError) throw new Error(studentsError.message);
+  // الـ View أصلاً بتشيل الأدمن لو الـ Role بتاعه مش student
   const totalStudents = students.filter((s) => s.id !== adminId).length;
 
+  // 4. Fetch Instructors Count (بناءً على الـ View)
   const { data: instructors, error: instructorsError } = await supabase
-    .from("instructor_profiles")
+    .from("instructors_view")
     .select("id");
   if (instructorsError) throw new Error(instructorsError.message);
   const totalInstructors = instructors.filter((i) => i.id !== adminId).length;
-
   const passed = submissions.filter((s) => s.status === "Passed").length;
   const failed = submissions.filter((s) => s.status === "Failed").length;
 
