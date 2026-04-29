@@ -5,15 +5,15 @@ function GenericTable({ columns, data }) {
     <div>
       {/* ===== Desktop: Table ===== */}
       <div className='border-border bg-surface hidden rounded-md border lg:block'>
-        <div className='w-full overflow-x-auto'>
-          <table className='w-full border-collapse table-auto'>
+        <div className='min-h-72 w-full overflow-x-auto'>
+          <table className='w-full table-auto border-collapse'>
             {/* Header */}
             <thead className='bg-surface'>
               <tr>
                 {columns.map((col) => (
                   <th
                     key={col.key}
-                    className='border-border text-primary whitespace-nowrap border-b px-4 py-3 text-left text-[13px] font-bold tracking-wider uppercase'
+                    className='border-border text-primary border-b px-4 py-3 text-left text-[13px] font-bold tracking-wider whitespace-nowrap uppercase'
                   >
                     {col.label}
                   </th>
@@ -31,12 +31,18 @@ function GenericTable({ columns, data }) {
                   {columns.map((col) => (
                     <td
                       key={col.key}
-                      className='text-text px-4 py-3 text-[13px] align-middle'
+                      className='text-text px-4 py-3 align-middle text-[13px]'
                     >
-                      {col.render ? col.render(row[col.key], row) : (
+                      {col.render ? (
+                        col.render(row[col.key], row)
+                      ) : (
                         <span
                           className='block max-w-[200px] truncate'
-                          title={typeof row[col.key] === 'string' ? row[col.key] : undefined}
+                          title={
+                            typeof row[col.key] === "string"
+                              ? row[col.key]
+                              : undefined
+                          }
                         >
                           {row[col.key]}
                         </span>
@@ -63,10 +69,12 @@ function GenericTable({ columns, data }) {
                 className='border-border flex items-start justify-between border-b py-2 text-sm last:border-0'
               >
                 {/* Label على الشمال */}
-                <span className='text-text-muted min-w-[6rem] shrink-0 font-medium'>{col.label}</span>
+                <span className='text-text-muted min-w-[6rem] shrink-0 font-medium'>
+                  {col.label}
+                </span>
 
                 {/* Value على اليمين */}
-                <span className='text-text ml-2 break-words text-right'>
+                <span className='text-text ml-2 text-right break-words'>
                   {col.render ? col.render(row[col.key], row) : row[col.key]}
                 </span>
               </div>

@@ -17,42 +17,85 @@ import RoleRoute from "./components/RoleRoute";
 import ErrorBoundary from "./components/ErrorBoundary";
 import PageLoader from "./components/PageLoader";
 import ExamSessionProvider from "./features/student/exam-session/context/ExamSessionContext";
+import Loader from "./components/Loader";
 
 // ── Auth pages ────────────────────────────────────────────────────────────────
-const LoginForm              = lazy(() => import("./features/auth/components/LoginForm"));
-const RegisterForm           = lazy(() => import("./features/auth/components/RegisterForm"));
-const EmailVerificationPage  = lazy(() => import("./features/auth/components/EmailVerificationPage"));
-const ResetPasswordPage      = lazy(() => import("./features/auth/components/ResetPasswordPage"));
+const LoginForm = lazy(() => import("./features/auth/components/LoginForm"));
+const RegisterForm = lazy(
+  () => import("./features/auth/components/RegisterForm"),
+);
+const EmailVerificationPage = lazy(
+  () => import("./features/auth/components/EmailVerificationPage"),
+);
+const ResetPasswordPage = lazy(
+  () => import("./features/auth/components/ResetPasswordPage"),
+);
 
 // ── Public / shared pages ─────────────────────────────────────────────────────
-const HomePage               = lazy(() => import("./pages/HomePage"));
-const LandingPage            = lazy(() => import("./components/LandingPage"));
-const NotFound               = lazy(() => import("./pages/NotFound"));
+const HomePage = lazy(() => import("./pages/HomePage"));
+const LandingPage = lazy(() => import("./components/LandingPage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 // ── Instructor pages ──────────────────────────────────────────────────────────
-const DashboardPage              = lazy(() => import("./features/instructor/dashboard/InstructorDashboardPage"));
-const ExamsManagementPage        = lazy(() => import("./features/instructor/exam-management/ExamManagementPage"));
-const ExamWizardPage             = lazy(() => import("./features/instructor/exam-wizard/ExamWizardPage"));
-const StudentsPage               = lazy(() => import("./features/instructor/students/StudentsPage"));
-const InstructorExamHistoryPage  = lazy(() => import("./features/instructor/exam-history/InstructorExamHistoryPage"));
-const InstructorProfilePage      = lazy(() => import("./features/instructor/profile/InstructorProfilePage"));
-const InstructorResultPage       = lazy(() => import("./features/instructor/results/InstructorResultPage"));
+const DashboardPage = lazy(
+  () => import("./features/instructor/dashboard/InstructorDashboardPage"),
+);
+const ExamsManagementPage = lazy(
+  () => import("./features/instructor/exam-management/ExamManagementPage"),
+);
+const ExamWizardPage = lazy(
+  () => import("./features/instructor/exam-wizard/ExamWizardPage"),
+);
+const StudentsPage = lazy(
+  () => import("./features/instructor/students/StudentsPage"),
+);
+const InstructorExamHistoryPage = lazy(
+  () => import("./features/instructor/exam-history/InstructorExamHistoryPage"),
+);
+const InstructorProfilePage = lazy(
+  () => import("./features/instructor/profile/InstructorProfilePage"),
+);
+const InstructorResultPage = lazy(
+  () => import("./features/instructor/results/InstructorResultPage"),
+);
 
 // ── Admin pages ───────────────────────────────────────────────────────────────
-const AdminDashboardPage   = lazy(() => import("./features/admin/dashboard/AdminDashboardPage"));
-const ExamOversightPage    = lazy(() => import("./features/admin/exam-oversight/ExamOversightPage"));
-const ReportsPage          = lazy(() => import("./features/admin/reports/ReportsPage"));
-const UserManagementPage   = lazy(() => import("./features/admin/user-management/UserManagementPage"));
-const AdminProfilePage     = lazy(() => import("./features/admin/profile/AdminProfilePage"));
+const AdminDashboardPage = lazy(
+  () => import("./features/admin/dashboard/AdminDashboardPage"),
+);
+const ExamOversightPage = lazy(
+  () => import("./features/admin/exam-oversight/ExamOversightPage"),
+);
+const ReportsPage = lazy(() => import("./features/admin/reports/ReportsPage"));
+const UserManagementPage = lazy(
+  () => import("./features/admin/user-management/UserManagementPage"),
+);
+const AdminProfilePage = lazy(
+  () => import("./features/admin/profile/AdminProfilePage"),
+);
 
 // ── Student pages ─────────────────────────────────────────────────────────────
-const CompleteProfilePage      = lazy(() => import("./features/student/profile/CompleteProfilePage"));
-const StudentDashboardPage     = lazy(() => import("./features/student/dashboard/StudentDashboardPage"));
-const AvailableExamsPage       = lazy(() => import("./features/student/available-exams/AvailableExamsPage"));
-const ExamSessionPage          = lazy(() => import("./features/student/exam-session/ExamSessionPage"));
-const StudentResultPage        = lazy(() => import("./features/student/results/StudentResultPage"));
-const StudentExamsHistoryPage  = lazy(() => import("./features/student/exam-history/StudentExamsHistoryPage"));
-const StudentProfilePage       = lazy(() => import("./features/student/profile/StudentProfilePage"));
+const CompleteProfilePage = lazy(
+  () => import("./features/student/profile/CompleteProfilePage"),
+);
+const StudentDashboardPage = lazy(
+  () => import("./features/student/dashboard/StudentDashboardPage"),
+);
+const AvailableExamsPage = lazy(
+  () => import("./features/student/available-exams/AvailableExamsPage"),
+);
+const ExamSessionPage = lazy(
+  () => import("./features/student/exam-session/ExamSessionPage"),
+);
+const StudentResultPage = lazy(
+  () => import("./features/student/results/StudentResultPage"),
+);
+const StudentExamsHistoryPage = lazy(
+  () => import("./features/student/exam-history/StudentExamsHistoryPage"),
+);
+const StudentProfilePage = lazy(
+  () => import("./features/student/profile/StudentProfilePage"),
+);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -179,7 +222,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
         {/* Suspense catches every lazy page chunk while it's being downloaded */}
-        <Suspense fallback={<PageLoader />}>
+        <Suspense fallback={<Loader />}>
           <RouterProvider router={router} />
         </Suspense>
       </QueryClientProvider>
