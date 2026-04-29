@@ -33,10 +33,17 @@ export async function promoteToInstructor(userId) {
 }
 
 export async function deleteUser(userId) {
+  const { error: subError } = await supabase
+    .from("exam_submissions")
+    .delete()
+    .eq("user_id", userId);
+
+  if (subError)
+    throw new Error("Error deleting submissions: " + subError.message);
+
   const { error } = await supabase.rpc("delete_auth_user", {
     target_user_id: userId,
   });
 
   if (error) throw new Error(error.message);
 }
-

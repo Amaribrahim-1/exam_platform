@@ -49,7 +49,7 @@ function StatusBadge({ value, examId }) {
 
       {/* القائمة */}
       {isOpen && (
-        <div className='border-border bg-surface p- overflow absolute top-8 left-0 z-50 w-full rounded-lg border shadow-lg'>
+        <div className='border-border bg-surface p- overflow absolute top-full left-0 z-999 w-full rounded-lg border shadow-lg'>
           {Object.entries(STATUS_LABELS).map(([key, label]) => (
             <button
               key={key}
