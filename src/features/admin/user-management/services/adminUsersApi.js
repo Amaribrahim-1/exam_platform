@@ -32,18 +32,35 @@ export async function promoteToInstructor(userId) {
   if (error) throw new Error(error.message);
 }
 
+// export async function deleteUser(userId) {
+//   const { error: subError } = await supabase
+//     .from("exam_submissions")
+//     .delete()
+//     .eq("user_id", userId);
+
+//   if (subError)
+//     throw new Error("Error deleting submissions: " + subError.message);
+
+//   await supabase.from("student_profiles").delete().eq("id", userId);
+//   await supabase.from("instructor_profiles").delete().eq("id", userId);
+
+//   const { error } = await supabase.rpc("delete_auth_user", {
+//     target_user_id: userId,
+//   });
+
+//   if (error) throw new Error(error.message);
+// }
+
 export async function deleteUser(userId) {
-  const { error: subError } = await supabase
-    .from("exam_submissions")
-    .delete()
-    .eq("user_id", userId);
-
-  if (subError)
-    throw new Error("Error deleting submissions: " + subError.message);
-
+  // هنا إنت بتنادي الـ Function اللي إحنا لسه معدلينها في الـ SQL
   const { error } = await supabase.rpc("delete_auth_user", {
     target_user_id: userId,
   });
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    console.error("Error deleting user", error.message);
+    throw new Error(error.message);
+  }
+
+  return true;
 }
