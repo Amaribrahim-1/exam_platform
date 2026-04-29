@@ -3,8 +3,8 @@ import { publishExam } from "./examApi";
 const mockExams = [
   {
     examDetails: {
-      instructor_id: "204852be-0131-4fed-82db-d544a2742ece",
-      instructor_name: "Eng. Amar",
+      instructor_id: "6a21dbea-9802-4e43-9fdd-3748507dcf8b",
+      instructor_name: "Amar Ibrahim",
       title: "Mathematics Final Exam",
       subject: "Mathematics",
       start_date: new Date("2026-04-25T09:00:00").toISOString(),
@@ -43,8 +43,8 @@ const mockExams = [
   },
   {
     examDetails: {
-      instructor_id: "204852be-0131-4fed-82db-d544a2742ece",
-      instructor_name: "Eng. Amar",
+      instructor_id: "6a21dbea-9802-4e43-9fdd-3748507dcf8b",
+      instructor_name: "Amar Ibrahim",
       title: "Physics Mid-term",
       subject: "Physics",
       start_date: new Date("2026-04-26T10:00:00").toISOString(),
@@ -83,8 +83,8 @@ const mockExams = [
   },
   {
     examDetails: {
-      instructor_id: "204852be-0131-4fed-82db-d544a2742ece",
-      instructor_name: "Eng. Amar",
+      instructor_id: "6a21dbea-9802-4e43-9fdd-3748507dcf8b",
+      instructor_name: "Amar Ibrahim",
       title: "Data Structures Quiz",
       subject: "Computer Science",
       start_date: new Date("2026-04-27T09:00:00").toISOString(),
@@ -123,8 +123,8 @@ const mockExams = [
   },
   {
     examDetails: {
-      instructor_id: "204852be-0131-4fed-82db-d544a2742ece",
-      instructor_name: "Eng. Amar",
+      instructor_id: "6a21dbea-9802-4e43-9fdd-3748507dcf8b",
+      instructor_name: "Amar Ibrahim",
       title: "Database Systems Exam",
       subject: "Databases",
       start_date: new Date("2026-04-28T11:00:00").toISOString(),
@@ -173,8 +173,8 @@ const mockExams = [
   },
   {
     examDetails: {
-      instructor_id: "204852be-0131-4fed-82db-d544a2742ece",
-      instructor_name: "Eng. Amar",
+      instructor_id: "6a21dbea-9802-4e43-9fdd-3748507dcf8b",
+      instructor_name: "Amar Ibrahim",
       title: "Networking Fundamentals",
       subject: "Networking",
       start_date: new Date("2026-04-29T09:00:00").toISOString(),

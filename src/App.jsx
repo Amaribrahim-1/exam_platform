@@ -1,6 +1,6 @@
-import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { lazy, Suspense } from "react";
 import {
   createBrowserRouter,
   Navigate,
@@ -9,15 +9,14 @@ import {
 import { Flip, ToastContainer } from "react-toastify";
 
 // ── Layouts & guards (small shells – kept eager) ──────────────────────────────
+import ErrorBoundary from "./components/ErrorBoundary";
+import Loader from "./components/Loader";
+import ProtectedRoute from "./components/ProtectedRoute";
+import RoleRoute from "./components/RoleRoute";
+import ExamSessionProvider from "./features/student/exam-session/context/ExamSessionContext";
 import AdminLayout from "./layouts/AdminLayout";
 import InstructorLayout from "./layouts/InstructorLayout";
 import StudentLayout from "./layouts/StudentLayout";
-import ProtectedRoute from "./components/ProtectedRoute";
-import RoleRoute from "./components/RoleRoute";
-import ErrorBoundary from "./components/ErrorBoundary";
-import PageLoader from "./components/PageLoader";
-import ExamSessionProvider from "./features/student/exam-session/context/ExamSessionContext";
-import Loader from "./components/Loader";
 
 // ── Auth pages ────────────────────────────────────────────────────────────────
 const LoginForm = lazy(() => import("./features/auth/components/LoginForm"));

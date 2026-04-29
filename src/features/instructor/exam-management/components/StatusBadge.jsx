@@ -49,13 +49,13 @@ function StatusBadge({ value, examId }) {
 
       {/* القائمة */}
       {isOpen && (
-        <div className='border-border bg-surface p- overflow absolute top-full left-0 z-999 w-full rounded-lg border shadow-lg'>
+        <div className='border-border bg-surface absolute top-full bottom-full left-0 z-9999 w-full overflow-visible rounded-lg border opacity-100 shadow-lg'>
           {Object.entries(STATUS_LABELS).map(([key, label]) => (
             <button
               key={key}
               type='button'
               onClick={() => handleSelect(key)}
-              className={`text-md w-full px-3 py-2 text-left font-medium transition-colors hover:opacity-80 ${STATUS_STYLES[key]} ${selected === key ? "opacity-100" : "opacity-60"}`}
+              className={`text-md w-full px-3 py-2 text-left font-medium transition-colors hover:opacity-80 ${STATUS_STYLES[key]} ${selected === key ? "brightness-125 saturate-150" : "opacity-80 brightness-90 hover:opacity-100 hover:brightness-100"}`}
             >
               {label}
             </button>

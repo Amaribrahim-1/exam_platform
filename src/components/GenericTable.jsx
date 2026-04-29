@@ -5,7 +5,7 @@ function GenericTable({ columns, data }) {
     <div>
       {/* ===== Desktop: Table ===== */}
       <div className='border-border bg-surface hidden rounded-md border lg:block'>
-        <div className='min-h-72 w-full overflow-x-auto'>
+        <div className='relative w-full'>
           <table className='w-full table-auto border-collapse'>
             {/* Header */}
             <thead className='bg-surface'>
@@ -26,7 +26,7 @@ function GenericTable({ columns, data }) {
               {data.map((row, rowIndex) => (
                 <tr
                   key={rowIndex}
-                  className='border-border hover:bg-surface-2 border-b transition-colors last:border-0'
+                  className='border-border hover:bg-surface-2 relative border-b transition-colors last:border-0'
                 >
                   {columns.map((col) => (
                     <td

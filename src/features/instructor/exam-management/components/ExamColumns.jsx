@@ -8,7 +8,7 @@ import {
 
 export const examColumns = (onAction) => [
   { key: "title", label: "Exam title" },
-  { key: "subject", label: "Subject" },
+  // { key: "subject", label: "Subject" },
   { key: "startDate", label: "Start Date" },
   { key: "endDate", label: "End Date" },
   {
@@ -37,19 +37,19 @@ export const examColumns = (onAction) => [
       <>
         <Button
           onClick={() => onAction("delete", id)}
-          variation="ghost"
-          size="icon"
-          className="hover:text-danger hover:bg-danger/10 text-text-muted"
-          title="Delete"
+          variation='ghost'
+          size='icon'
+          className='hover:text-danger hover:bg-danger/10 text-text-muted'
+          title='Delete'
         >
           <Trash2 size={18} />
         </Button>
         <Button
           onClick={() => onAction("edit", id)}
-          variation="ghost"
-          size="icon"
-          className="hover:text-primary hover:bg-primary/10 text-text-muted"
-          title="Edit"
+          variation='ghost'
+          size='icon'
+          className='hover:text-primary hover:bg-primary/10 text-text-muted'
+          title='Edit'
         >
           <Pencil size={18} />
         </Button>
