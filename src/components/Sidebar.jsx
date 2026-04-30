@@ -82,20 +82,20 @@ function Sidebar({ isOpen, onClose, navItems }) {
             ))}
         </nav>
 
-        {pageTitle && (
+        {/* {pageTitle && (
           <button
             className='p-xs hover:text-primary bg-surface-2 border-border px-md py-md mb-lg text-text text-md cursor-pointer rounded-lg border font-bold transition-colors'
             onClick={() => seedExams()}
           >
             Generate 5 Fake Exams
           </button>
-        )}
+        )} */}
 
         {/* User Profile Card (Bottom) */}
         <Link
           to={`/${role}/profile`}
           onClick={onClose}
-          className='p-sm bg-surface-2 border-border gap-sm mt-auto flex shrink-0 items-center rounded-lg border transition-all hover:border-primary/50 hover:shadow-sm'
+          className='p-sm bg-surface-2 border-border gap-sm hover:border-primary/50 mt-auto flex shrink-0 items-center rounded-lg border transition-all hover:shadow-sm'
           title='Go to profile'
         >
           <div className='border-border text-primary bg-surface-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-colors'>
