@@ -34,13 +34,12 @@ export async function getInstructorDashboardStats(userId) {
         )
       : 0;
 
-  const { data: studentProfiles, error: studentProfilesError } = await supabase
-    .from("student_profiles")
+  const { data: students, error: studentsError } = await supabase
+    .from("students_view")
     .select("id");
-
-  if (studentProfilesError) throw new Error(studentProfilesError.message);
-
-  const totalStudents = studentProfiles.length;
+  if (studentsError) throw new Error(studentsError.message);
+  // الـ View أصلاً بتشيل الأدمن لو الـ Role بتاعه مش student
+  const totalStudents = students.length;
 
   const passed = submissions.filter((s) => s.status === "Passed").length;
   const failed = submissions.filter((s) => s.status === "Failed").length;

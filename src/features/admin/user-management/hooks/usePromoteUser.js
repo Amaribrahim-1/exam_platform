@@ -10,6 +10,7 @@ export default function usePromoteUser() {
     onSuccess: () => {
       toast.success("User promoted to instructor successfully");
       queryClient.invalidateQueries({ queryKey: ["adminUsers"] });
+      queryClient.invalidateQueries({ queryKey: ["adminStats"] });
     },
     onError: (err) => {
       toast.error(err.message);

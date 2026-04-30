@@ -10,6 +10,7 @@ export default function useDeleteUser() {
     onSuccess: () => {
       toast.success("User deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["adminUsers"] });
+      queryClient.invalidateQueries({ queryKey: ["adminStats"] });
     },
     onError: (err) => {
       toast.error(err.message);
