@@ -13,6 +13,7 @@ import Main from "../components/Main";
 import Navbar from "../components/Navbar";
 import ScrollToTop from "../components/ScrollToTop";
 import Sidebar from "../components/Sidebar";
+import DemoAccountsModal from "../components/DemoAccountsModal";
 
 const studentNavItems = [
   {
@@ -48,6 +49,7 @@ function StudentLayout() {
     <div className='bg-bg flex h-screen w-full flex-col font-sans md:grid md:grid-cols-[260px_1fr] md:grid-rows-[64px_1fr]'>
       {/* Mobile and Desktop Sidebar */}
       <ScrollToTop />
+      <DemoAccountsModal />
 
       <Sidebar
         isOpen={isSidebarOpen}
