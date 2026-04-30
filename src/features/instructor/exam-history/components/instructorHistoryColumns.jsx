@@ -42,7 +42,7 @@ export function instructorHistoryColumns() {
         <span
           className={`${
             value === "manual"
-              ? "text-primary bg-primary/10"
+              ? "text-accent bg-accent/10"
               : value === "cheat"
                 ? "text-danger bg-danger/10"
                 : "text-warning bg-warning/10"

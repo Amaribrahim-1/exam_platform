@@ -42,7 +42,7 @@ function RecentActivityTable() {
         <span
           className={`${
             value === "manual"
-              ? "text-primary bg-primary/10"
+              ? "text-accent bg-accent/10"
               : value === "cheat"
                 ? "text-danger bg-danger/10"
                 : "text-warning bg-warning/10"
@@ -84,7 +84,10 @@ function RecentActivityTable() {
       </div>
 
       <div className='relative overflow-x-auto p-3'>
-        <GenericTable columns={recentActivityColumns} data={recentActivityData} />
+        <GenericTable
+          columns={recentActivityColumns}
+          data={recentActivityData}
+        />
       </div>
     </div>
   );
